@@ -9,6 +9,11 @@
       "id": "generic",
       "name": "Generic Receipt",
       "thumbnail": "/assets/img/receipts/generic-thumb.png"
+    },
+    {
+      "id": "costco",
+      "name": "Costco Receipt",
+      "thumbnail": "/assets/img/receipts/costco-thumb.png"
     }
   ]
 }

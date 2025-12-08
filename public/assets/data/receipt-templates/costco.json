@@ -1,0 +1,138 @@
+{
+  "id": "costco",
+  "name": "Costco Receipt",
+  "thumbnail": "/assets/img/receipts/costco-thumb.png",
+  "settings": {
+    "currency": "$",
+    "currencyFormat": "prefix",
+    "font": "font1",
+    "textColor": "#000000",
+    "showBackground": {
+      "enabled": false,
+      "style": "1"
+    }
+  },
+  "sections": [
+    {
+      "id": "header-1",
+      "type": "header",
+      "alignment": "center",
+      "logo": {
+        "url": "/assets/img/receipts/costco-logo.png",
+        "size": 75
+      },
+      "businessDetails": "Warehouse #120\n1201 VANERI PKY\nGreenville, SC 29607",
+      "divider": {
+        "enabled": true,
+        "style": "---"
+      }
+    },
+    {
+      "id": "custom-member-1",
+      "type": "custom_message",
+      "alignment": "center",
+      "message": "VS Member 111872524850",
+      "divider": {
+        "enabled": false,
+        "style": "---"
+      }
+    },
+    {
+      "id": "items-1",
+      "type": "items_list",
+      "items": [
+        { "quantity": 1, "name": "E 336841 BREAD, DIST", "price": 23.20 },
+        { "quantity": 1, "name": "E 77693 GRAPE TOMATO", "price": 8.69 },
+        { "quantity": 1, "name": "E 358681 BUTTER KS", "price": 8.38 }
+      ],
+      "divider": {
+        "enabled": false,
+        "style": "---"
+      },
+      "totalLines": [
+        { "title": "Subtotal", "value": 39.58 },
+        { "title": "Tax", "value": 0.00 }
+      ],
+      "total": {
+        "title": "Total",
+        "value": 39.09
+      },
+      "increaseTotalSize": {
+        "enabled": false,
+        "percentage": "+50%"
+      },
+      "bottomDivider": {
+        "enabled": true,
+        "style": "---"
+      }
+    },
+    {
+      "id": "payment-1",
+      "type": "payment",
+      "paymentType": "card",
+      "lines": [
+        { "title": "Card number", "value": "**** **** **** 5822" },
+        { "title": "Card type", "value": "Debit" },
+        { "title": "Card entry", "value": "Chip" },
+        { "title": "Date/time", "value": "11/28/2019 11:38 AM" },
+        { "title": "Reference #", "value": "636185036052493108490" },
+        { "title": "Status", "value": "APPROVED" }
+      ],
+      "divider": {
+        "enabled": false,
+        "style": "---"
+      }
+    },
+    {
+      "id": "datetime-1",
+      "type": "datetime",
+      "alignment": "center",
+      "dateTime": "2025-08-29T17:28:06.000Z",
+      "divider": {
+        "enabled": true,
+        "style": "---"
+      }
+    },
+    {
+      "id": "barcode-1",
+      "type": "barcode",
+      "size": 50,
+      "length": 100,
+      "divider": {
+        "enabled": false,
+        "style": "---"
+      }
+    },
+    {
+      "id": "custom-cashier-1",
+      "type": "custom_message",
+      "alignment": "center",
+      "message": "OP # 278 Name: Joshua",
+      "divider": {
+        "enabled": false,
+        "style": "---"
+      }
+    },
+    {
+      "id": "custom-thanks-1",
+      "type": "custom_message",
+      "alignment": "center",
+      "message": "Thank you!\nPlease Come Again",
+      "divider": {
+        "enabled": false,
+        "style": "---"
+      }
+    },
+    {
+      "id": "datetime-2",
+      "type": "datetime",
+      "alignment": "center",
+      "dateTime": "2025-08-29T17:28:38.000Z",
+      "divider": {
+        "enabled": false,
+        "style": "---"
+      }
+    }
+  ]
+}
+

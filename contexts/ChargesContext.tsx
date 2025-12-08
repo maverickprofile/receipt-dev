@@ -171,6 +171,11 @@ export const ChargesContextProvider = ({ children }: ChargesContextProps) => {
      * Calculates the subtotal, total, and the total amount in words on the invoice.
      */
     const calculateTotal = () => {
+        // Guard: if itemsArray is undefined/null, skip calculation
+        if (!itemsArray || !Array.isArray(itemsArray)) {
+            return;
+        }
+
         // Here Number(item.total) fixes a bug where an extra zero appears
         // at the beginning of subTotal caused by toFixed(2) in item.total in single item
         // Reason: toFixed(2) returns string, not a number instance

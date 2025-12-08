@@ -12,6 +12,11 @@ const DynamicInvoiceTemplateSkeleton = () => {
 };
 
 const DynamicInvoiceTemplate = (props: InvoiceType) => {
+    // Guard: if props or props.details is undefined, show skeleton
+    if (!props?.details?.pdfTemplate) {
+        return <DynamicInvoiceTemplateSkeleton />;
+    }
+
     // Dynamic template component name
     const templateName = `InvoiceTemplate${props.details.pdfTemplate}`;
 
