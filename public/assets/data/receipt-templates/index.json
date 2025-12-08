@@ -1,0 +1,15 @@
+{
+  "templates": [
+    {
+      "id": "circle-k",
+      "name": "Circle K Receipt",
+      "thumbnail": "/assets/img/receipts/circle-k-thumb.png"
+    },
+    {
+      "id": "generic",
+      "name": "Generic Receipt",
+      "thumbnail": "/assets/img/receipts/generic-thumb.png"
+    }
+  ]
+}
+

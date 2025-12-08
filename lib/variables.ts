@@ -20,6 +20,10 @@ export const GENERATE_PDF_API = "/api/invoice/generate";
 export const SEND_PDF_API = "/api/invoice/send";
 export const EXPORT_INVOICE_API = "/api/invoice/export";
 
+// Receipt API endpoints
+export const GENERATE_RECEIPT_PDF_API = "/api/receipt/generate";
+export const EXPORT_RECEIPT_API = "/api/receipt/export";
+
 /**
  * External API endpoints
  */
@@ -30,6 +34,8 @@ export const CURRENCIES_API =
  * Local storage
  */
 export const LOCAL_STORAGE_INVOICE_DRAFT_KEY = "invoify:invoiceDraft";
+export const LOCAL_STORAGE_RECEIPT_DRAFT_KEY = "invoify:receiptDraft";
+export const LOCAL_STORAGE_SAVED_RECEIPTS_KEY = "invoify:savedReceipts";
 
 /**
  * Tailwind
@@ -177,6 +183,24 @@ export const FORM_DEFAULT_VALUES = {
     pdfTemplate: 1,
   },
 };
+
+/**
+ * Receipt templates path
+ */
+export const RECEIPT_TEMPLATES_PATH = "/assets/data/receipt-templates";
+
+/**
+ * Receipt section types
+ */
+export const RECEIPT_SECTION_TYPES = [
+  { value: "header", label: "Header", icon: "Layout" },
+  { value: "datetime", label: "Date & Time", icon: "Calendar" },
+  { value: "custom_message", label: "Custom message", icon: "MessageSquare" },
+  { value: "two_column", label: "Two column information", icon: "Info" },
+  { value: "items_list", label: "Items list", icon: "ShoppingCart" },
+  { value: "payment", label: "Payment", icon: "CreditCard" },
+  { value: "barcode", label: "Barcode", icon: "ScanLine" },
+] as const;
 
 /**
  * ? DEV Only

@@ -1,0 +1,550 @@
+"use client";
+
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+// Hooks
+import useToasts from "@/hooks/useToasts";
+
+// Variables
+import {
+  GENERATE_RECEIPT_PDF_API,
+  LOCAL_STORAGE_RECEIPT_DRAFT_KEY,
+  LOCAL_STORAGE_SAVED_RECEIPTS_KEY,
+  RECEIPT_TEMPLATES_PATH,
+} from "@/lib/variables";
+
+// Types & Schemas
+import {
+  ReceiptType,
+  ReceiptSection,
+  SettingsSection,
+  SectionType,
+  DEFAULT_SETTINGS,
+  DEFAULT_HEADER_SECTION,
+  DEFAULT_DATETIME_SECTION,
+  DEFAULT_CUSTOM_MESSAGE_SECTION,
+  DEFAULT_TWO_COLUMN_SECTION,
+  DEFAULT_ITEMS_LIST_SECTION,
+  DEFAULT_PAYMENT_SECTION,
+  DEFAULT_BARCODE_SECTION,
+  createSection,
+} from "@/lib/receipt-schemas";
+
+// =============================================================================
+// Context Types
+// =============================================================================
+
+interface ReceiptContextType {
+  // State
+  receipt: ReceiptType | null;
+  receiptPdf: Blob;
+  receiptPdfLoading: boolean;
+  savedReceipts: ReceiptType[];
+  pdfUrl: string | null;
+  isLoading: boolean;
+
+  // Template Operations
+  loadTemplate: (templateId: string) => Promise<void>;
+  resetToTemplate: () => void;
+
+  // Settings Operations
+  updateSettings: (settings: Partial<SettingsSection>) => void;
+
+  // Section Operations
+  addSection: (type: SectionType, index?: number) => void;
+  removeSection: (sectionId: string) => void;
+  updateSection: (sectionId: string, updates: Partial<ReceiptSection>) => void;
+  reorderSections: (startIndex: number, endIndex: number) => void;
+  duplicateSection: (sectionId: string) => void;
+
+  // PDF Operations
+  generatePdf: () => Promise<void>;
+  downloadPdf: () => void;
+  printPdf: () => void;
+  previewPdfInTab: () => void;
+  removeFinalPdf: () => void;
+
+  // Save/Load Operations
+  saveReceipt: () => void;
+  deleteReceipt: (index: number) => void;
+  loadReceipt: (receipt: ReceiptType) => void;
+  exportReceiptAsJson: () => void;
+  importReceipt: (file: File) => void;
+}
+
+const defaultReceiptContext: ReceiptContextType = {
+  receipt: null,
+  receiptPdf: new Blob(),
+  receiptPdfLoading: false,
+  savedReceipts: [],
+  pdfUrl: null,
+  isLoading: true,
+
+  loadTemplate: async () => {},
+  resetToTemplate: () => {},
+
+  updateSettings: () => {},
+
+  addSection: () => {},
+  removeSection: () => {},
+  updateSection: () => {},
+  reorderSections: () => {},
+  duplicateSection: () => {},
+
+  generatePdf: async () => {},
+  downloadPdf: () => {},
+  printPdf: () => {},
+  previewPdfInTab: () => {},
+  removeFinalPdf: () => {},
+
+  saveReceipt: () => {},
+  deleteReceipt: () => {},
+  loadReceipt: () => {},
+  exportReceiptAsJson: () => {},
+  importReceipt: () => {},
+};
+
+export const ReceiptContext = createContext<ReceiptContextType>(defaultReceiptContext);
+
+export const useReceiptContext = () => {
+  return useContext(ReceiptContext);
+};
+
+// =============================================================================
+// Provider Props
+// =============================================================================
+
+interface ReceiptContextProviderProps {
+  children: React.ReactNode;
+  templateId?: string;
+}
+
+// =============================================================================
+// Helper to get default section by type
+// =============================================================================
+
+const getDefaultSectionByType = (type: SectionType): Omit<ReceiptSection, "id"> => {
+  switch (type) {
+    case "header":
+      return DEFAULT_HEADER_SECTION;
+    case "datetime":
+      return DEFAULT_DATETIME_SECTION;
+    case "custom_message":
+      return DEFAULT_CUSTOM_MESSAGE_SECTION;
+    case "two_column":
+      return DEFAULT_TWO_COLUMN_SECTION;
+    case "items_list":
+      return DEFAULT_ITEMS_LIST_SECTION;
+    case "payment":
+      return DEFAULT_PAYMENT_SECTION;
+    case "barcode":
+      return DEFAULT_BARCODE_SECTION;
+    default:
+      return DEFAULT_CUSTOM_MESSAGE_SECTION;
+  }
+};
+
+// =============================================================================
+// Provider Component
+// =============================================================================
+
+export const ReceiptContextProvider = ({
+  children,
+  templateId,
+}: ReceiptContextProviderProps) => {
+  // Toasts
+  const { newInvoiceSuccess, pdfGenerationSuccess, saveInvoiceSuccess, importInvoiceError } =
+    useToasts();
+
+  // State
+  const [receipt, setReceipt] = useState<ReceiptType | null>(null);
+  const [originalTemplate, setOriginalTemplate] = useState<ReceiptType | null>(null);
+  const [receiptPdf, setReceiptPdf] = useState<Blob>(new Blob());
+  const [receiptPdfLoading, setReceiptPdfLoading] = useState<boolean>(false);
+  const [savedReceipts, setSavedReceipts] = useState<ReceiptType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Load saved receipts from localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedReceiptsJSON = window.localStorage.getItem(LOCAL_STORAGE_SAVED_RECEIPTS_KEY);
+      if (savedReceiptsJSON) {
+        try {
+          setSavedReceipts(JSON.parse(savedReceiptsJSON));
+        } catch (e) {
+          console.error("Error loading saved receipts:", e);
+        }
+      }
+    }
+  }, []);
+
+  // Persist receipt draft to localStorage
+  useEffect(() => {
+    if (typeof window === "undefined" || !receipt) return;
+
+    try {
+      window.localStorage.setItem(LOCAL_STORAGE_RECEIPT_DRAFT_KEY, JSON.stringify(receipt));
+    } catch (e) {
+      console.error("Error saving receipt draft:", e);
+    }
+  }, [receipt]);
+
+  // Load template on mount or when templateId changes
+  useEffect(() => {
+    if (templateId) {
+      loadTemplate(templateId);
+    }
+  }, [templateId]);
+
+  // PDF URL from blob
+  const pdfUrl = useMemo(() => {
+    if (receiptPdf.size > 0) {
+      return window.URL.createObjectURL(receiptPdf);
+    }
+    return null;
+  }, [receiptPdf]);
+
+  // =============================================================================
+  // Template Operations
+  // =============================================================================
+
+  const loadTemplate = useCallback(async (id: string) => {
+    setIsLoading(true);
+    try {
+      // First check localStorage for a draft
+      if (typeof window !== "undefined") {
+        const draftJSON = window.localStorage.getItem(LOCAL_STORAGE_RECEIPT_DRAFT_KEY);
+        if (draftJSON) {
+          const draft = JSON.parse(draftJSON);
+          if (draft.id === id) {
+            setReceipt(draft);
+            // Still load original template for reset functionality
+            const response = await fetch(`${RECEIPT_TEMPLATES_PATH}/${id}.json`);
+            if (response.ok) {
+              const templateData = await response.json();
+              setOriginalTemplate(templateData);
+            }
+            setIsLoading(false);
+            return;
+          }
+        }
+      }
+
+      // Load from template file
+      const response = await fetch(`${RECEIPT_TEMPLATES_PATH}/${id}.json`);
+      if (!response.ok) {
+        throw new Error(`Failed to load template: ${id}`);
+      }
+      const templateData: ReceiptType = await response.json();
+      setReceipt(templateData);
+      setOriginalTemplate(templateData);
+    } catch (error) {
+      console.error("Error loading template:", error);
+      // Create a minimal default receipt
+      const defaultReceipt: ReceiptType = {
+        id,
+        name: "New Receipt",
+        settings: DEFAULT_SETTINGS,
+        sections: [],
+      };
+      setReceipt(defaultReceipt);
+      setOriginalTemplate(defaultReceipt);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const resetToTemplate = useCallback(() => {
+    if (originalTemplate) {
+      setReceipt(JSON.parse(JSON.stringify(originalTemplate)));
+      setReceiptPdf(new Blob());
+      newInvoiceSuccess();
+    }
+  }, [originalTemplate, newInvoiceSuccess]);
+
+  // =============================================================================
+  // Settings Operations
+  // =============================================================================
+
+  const updateSettings = useCallback((updates: Partial<SettingsSection>) => {
+    setReceipt((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        settings: {
+          ...prev.settings,
+          ...updates,
+        },
+      };
+    });
+  }, []);
+
+  // =============================================================================
+  // Section Operations
+  // =============================================================================
+
+  const addSection = useCallback((type: SectionType, index?: number) => {
+    setReceipt((prev) => {
+      if (!prev) return prev;
+      const defaultSection = getDefaultSectionByType(type);
+      const newSection = createSection(defaultSection);
+      const newSections = [...prev.sections];
+
+      if (index !== undefined && index >= 0 && index <= newSections.length) {
+        newSections.splice(index, 0, newSection as ReceiptSection);
+      } else {
+        newSections.push(newSection as ReceiptSection);
+      }
+
+      return {
+        ...prev,
+        sections: newSections,
+      };
+    });
+  }, []);
+
+  const removeSection = useCallback((sectionId: string) => {
+    setReceipt((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        sections: prev.sections.filter((s) => s.id !== sectionId),
+      };
+    });
+  }, []);
+
+  const updateSection = useCallback((sectionId: string, updates: Partial<ReceiptSection>) => {
+    setReceipt((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.id === sectionId ? { ...section, ...updates } : section
+        ) as ReceiptSection[],
+      };
+    });
+  }, []);
+
+  const reorderSections = useCallback((startIndex: number, endIndex: number) => {
+    setReceipt((prev) => {
+      if (!prev) return prev;
+      const newSections = [...prev.sections];
+      const [removed] = newSections.splice(startIndex, 1);
+      newSections.splice(endIndex, 0, removed);
+      return {
+        ...prev,
+        sections: newSections,
+      };
+    });
+  }, []);
+
+  const duplicateSection = useCallback((sectionId: string) => {
+    setReceipt((prev) => {
+      if (!prev) return prev;
+      const sectionIndex = prev.sections.findIndex((s) => s.id === sectionId);
+      if (sectionIndex === -1) return prev;
+
+      const sectionToDuplicate = prev.sections[sectionIndex];
+      const duplicatedSection = {
+        ...JSON.parse(JSON.stringify(sectionToDuplicate)),
+        id: `${sectionToDuplicate.type}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      };
+
+      const newSections = [...prev.sections];
+      newSections.splice(sectionIndex + 1, 0, duplicatedSection);
+
+      return {
+        ...prev,
+        sections: newSections,
+      };
+    });
+  }, []);
+
+  // =============================================================================
+  // PDF Operations
+  // =============================================================================
+
+  const generatePdf = useCallback(async () => {
+    if (!receipt) return;
+
+    setReceiptPdfLoading(true);
+    try {
+      const response = await fetch(GENERATE_RECEIPT_PDF_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(receipt),
+      });
+
+      const result = await response.blob();
+      setReceiptPdf(result);
+
+      if (result.size > 0) {
+        pdfGenerationSuccess();
+      }
+    } catch (err) {
+      console.error("Error generating PDF:", err);
+    } finally {
+      setReceiptPdfLoading(false);
+    }
+  }, [receipt, pdfGenerationSuccess]);
+
+  const downloadPdf = useCallback(() => {
+    if (receiptPdf instanceof Blob && receiptPdf.size > 0) {
+      const url = window.URL.createObjectURL(receiptPdf);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${receipt?.name || "receipt"}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
+  }, [receiptPdf, receipt]);
+
+  const printPdf = useCallback(() => {
+    if (receiptPdf) {
+      const pdfUrl = URL.createObjectURL(receiptPdf);
+      const printWindow = window.open(pdfUrl, "_blank");
+      if (printWindow) {
+        printWindow.onload = () => {
+          printWindow.print();
+        };
+      }
+    }
+  }, [receiptPdf]);
+
+  const previewPdfInTab = useCallback(() => {
+    if (receiptPdf) {
+      const url = window.URL.createObjectURL(receiptPdf);
+      window.open(url, "_blank");
+    }
+  }, [receiptPdf]);
+
+  const removeFinalPdf = useCallback(() => {
+    setReceiptPdf(new Blob());
+  }, []);
+
+  // =============================================================================
+  // Save/Load Operations
+  // =============================================================================
+
+  const saveReceipt = useCallback(() => {
+    if (!receipt) return;
+
+    const savedReceiptsJSON = localStorage.getItem(LOCAL_STORAGE_SAVED_RECEIPTS_KEY);
+    const existingSavedReceipts: ReceiptType[] = savedReceiptsJSON
+      ? JSON.parse(savedReceiptsJSON)
+      : [];
+
+    const existingIndex = existingSavedReceipts.findIndex((r) => r.id === receipt.id);
+
+    if (existingIndex !== -1) {
+      existingSavedReceipts[existingIndex] = receipt;
+    } else {
+      existingSavedReceipts.push(receipt);
+    }
+
+    localStorage.setItem(LOCAL_STORAGE_SAVED_RECEIPTS_KEY, JSON.stringify(existingSavedReceipts));
+    setSavedReceipts(existingSavedReceipts);
+    saveInvoiceSuccess();
+  }, [receipt, saveInvoiceSuccess]);
+
+  const deleteReceipt = useCallback((index: number) => {
+    if (index >= 0 && index < savedReceipts.length) {
+      const updatedReceipts = [...savedReceipts];
+      updatedReceipts.splice(index, 1);
+      setSavedReceipts(updatedReceipts);
+      localStorage.setItem(LOCAL_STORAGE_SAVED_RECEIPTS_KEY, JSON.stringify(updatedReceipts));
+    }
+  }, [savedReceipts]);
+
+  const loadReceipt = useCallback((receiptToLoad: ReceiptType) => {
+    setReceipt(receiptToLoad);
+    setReceiptPdf(new Blob());
+  }, []);
+
+  const exportReceiptAsJson = useCallback(() => {
+    if (!receipt) return;
+
+    const dataStr = JSON.stringify(receipt, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = window.URL.createObjectURL(dataBlob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${receipt.name || "receipt"}.json`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }, [receipt]);
+
+  const importReceipt = useCallback(
+    (file: File) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const importedData = JSON.parse(event.target?.result as string);
+          setReceipt(importedData);
+          setReceiptPdf(new Blob());
+        } catch (error) {
+          console.error("Error parsing JSON file:", error);
+          importInvoiceError();
+        }
+      };
+      reader.readAsText(file);
+    },
+    [importInvoiceError]
+  );
+
+  // =============================================================================
+  // Context Value
+  // =============================================================================
+
+  return (
+    <ReceiptContext.Provider
+      value={{
+        receipt,
+        receiptPdf,
+        receiptPdfLoading,
+        savedReceipts,
+        pdfUrl,
+        isLoading,
+
+        loadTemplate,
+        resetToTemplate,
+
+        updateSettings,
+
+        addSection,
+        removeSection,
+        updateSection,
+        reorderSections,
+        duplicateSection,
+
+        generatePdf,
+        downloadPdf,
+        printPdf,
+        previewPdfInTab,
+        removeFinalPdf,
+
+        saveReceipt,
+        deleteReceipt,
+        loadReceipt,
+        exportReceiptAsJson,
+        importReceipt,
+      }}
+    >
+      {children}
+    </ReceiptContext.Provider>
+  );
+};
+

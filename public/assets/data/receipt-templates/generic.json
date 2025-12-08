@@ -1,0 +1,80 @@
+{
+  "id": "generic",
+  "name": "Generic Receipt",
+  "thumbnail": "/assets/img/receipts/generic-thumb.png",
+  "settings": {
+    "currency": "$",
+    "currencyFormat": "prefix",
+    "font": "font1",
+    "textColor": "#000000",
+    "showBackground": {
+      "enabled": false,
+      "style": "1"
+    }
+  },
+  "sections": [
+    {
+      "id": "header-1",
+      "type": "header",
+      "alignment": "center",
+      "logo": {
+        "url": "",
+        "size": 75
+      },
+      "businessDetails": "Your Business Name\n123 Main Street\nCity, State 12345",
+      "divider": {
+        "enabled": true,
+        "style": "---"
+      }
+    },
+    {
+      "id": "datetime-1",
+      "type": "datetime",
+      "alignment": "center",
+      "dateTime": "2025-01-01T12:00:00.000Z",
+      "divider": {
+        "enabled": true,
+        "style": "---"
+      }
+    },
+    {
+      "id": "items-1",
+      "type": "items_list",
+      "items": [
+        { "quantity": 1, "name": "Item 1", "price": 10.00 },
+        { "quantity": 2, "name": "Item 2", "price": 5.00 }
+      ],
+      "divider": {
+        "enabled": true,
+        "style": "---"
+      },
+      "totalLines": [
+        { "title": "Subtotal", "value": 20.00 },
+        { "title": "Tax", "value": 1.50 }
+      ],
+      "total": {
+        "title": "Total",
+        "value": 21.50
+      },
+      "increaseTotalSize": {
+        "enabled": true,
+        "percentage": "+50%"
+      },
+      "bottomDivider": {
+        "enabled": true,
+        "style": "---"
+      }
+    },
+    {
+      "id": "custom-1",
+      "type": "custom_message",
+      "alignment": "center",
+      "message": "Thank you for your purchase!",
+      "divider": {
+        "enabled": false,
+        "style": "---"
+      }
+    }
+  ]
+}
+

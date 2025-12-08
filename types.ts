@@ -7,6 +7,34 @@ import { FieldPath, UseFormReturn } from "react-hook-form";
 // Zod schemas
 import { InvoiceSchema, ItemSchema } from "@/lib/schemas";
 
+// Receipt schemas - re-export types
+export type {
+    ReceiptType,
+    ReceiptSection,
+    SettingsSection,
+    HeaderSection,
+    DateTimeSection,
+    CustomMessageSection,
+    TwoColumnSection,
+    ItemsListSection,
+    PaymentSection,
+    BarcodeSection,
+    SectionType,
+    Alignment,
+    CurrencyFormat,
+    DividerStyle,
+    DividerConfig,
+    FontStyle,
+    BackgroundStyle,
+    PaymentType,
+    ReceiptItem,
+    TotalLine,
+    PaymentLine,
+    KeyValuePair,
+    TemplateInfo,
+    TemplateIndex,
+} from "@/lib/receipt-schemas";
+
 // Form types
 export type InvoiceType = z.infer<typeof InvoiceSchema>;
 export type ItemType = z.infer<typeof ItemSchema>;
