@@ -11,6 +11,10 @@ import {
     greatVibes,
     outfit,
     parisienne,
+    robotoMono,
+    spaceMono,
+    inconsolata,
+    libreBarcode39,
 } from "@/lib/fonts";
 // SEO
 import { JSONLD, ROOTKEYWORDS } from "@/lib/seo";
@@ -87,7 +91,7 @@ export default async function LocaleLayout(props: {
                 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="aliabb" data-description="Support me on Buy me a coffee!" data-message="Thank you for using Invoify" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
             </head>
             <body
-                className={`${outfit.className} ${dancingScript.variable} ${parisienne.variable} ${greatVibes.variable} ${alexBrush.variable} antialiased bg-slate-100 dark:bg-slate-800`}
+                className={`${outfit.className} ${dancingScript.variable} ${parisienne.variable} ${greatVibes.variable} ${alexBrush.variable} ${robotoMono.variable} ${spaceMono.variable} ${inconsolata.variable} ${libreBarcode39.variable} antialiased bg-slate-100 dark:bg-slate-800`}
                 suppressHydrationWarning
             >
                 <NextIntlClientProvider locale={locale} messages={messages}>

@@ -1,0 +1,139 @@
+{
+    "id": "hotel-receipt",
+    "name": "Hotel Room Receipt",
+    "thumbnail": "/assets/img/receipts/hotel-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        },
+        "pdfSize": "A4"
+    },
+    "sections": [
+        {
+            "id": "header-hotel",
+            "type": "header",
+            "alignment": "left",
+            "showLogo": false,
+            "businessName": "123 Main St, Anytown, USA",
+            "address": "Phone: 025014446553\nFax: 025014446553\nhotelplazaworldwide@yahoo.com",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "guest-info",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "Guest Number",
+                    "value": "13123"
+                },
+                {
+                    "key": "Arrive Date",
+                    "value": "12/21/2025"
+                },
+                {
+                    "key": "No of Guest",
+                    "value": "1"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "Folio ID",
+                    "value": "1234567890"
+                },
+                {
+                    "key": "Depart Date",
+                    "value": "12/21/2025"
+                },
+                {
+                    "key": "Room Number",
+                    "value": "101"
+                }
+            ],
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "items-hotel",
+            "type": "items_list",
+            "headers": {
+                "qty": "Date",
+                "item": "Description",
+                "price": "Charges"
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "12/20/2025 - Room Charges",
+                    "price": 80.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "12/20/2025 - 0% Tax",
+                    "price": 0.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "12/21/2025 - Yoghurt",
+                    "price": 10.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 90.00
+                }
+            ],
+            "total": {
+                "title": "Balance",
+                "value": 90.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "payment-hotel",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "4932"
+            },
+            "customLines": [],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-hotel",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Thank You please Visit Again",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

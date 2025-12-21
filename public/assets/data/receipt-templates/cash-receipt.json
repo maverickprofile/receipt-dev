@@ -1,0 +1,97 @@
+{
+    "id": "cash-receipt",
+    "name": "Cash / Taxi Receipt",
+    "thumbnail": "/assets/img/receipts/cash-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-cash",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "businessName": "CASH_RECEIPT",
+            "address": "",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "trip-details",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "TERMINAL ID :    Z471051\nDRIVER ID :      Q763579\nCABNUMBER :      43\nDATE:            21/12/2025\nSTART TIME :     17:36\nEND TIME :       17:36\nPASSNUMBER:      4\nTRIPNUMBER :     76\nDISTANCE :       5 miles\nRATE :           4",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-cash",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "FARE",
+                    "price": 100.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "EXTRA",
+                    "price": 10.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "EXCISE TAX",
+                    "price": 0.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "RECOVERY",
+                    "price": 1.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "SUBTOTAL :",
+                    "value": 111.00
+                },
+                {
+                    "title": "TIP :",
+                    "value": 1.00
+                }
+            ],
+            "total": {
+                "title": "Total :",
+                "value": 112.00
+            },
+            "increaseTotalSize": {
+                "enabled": true,
+                "percentage": "+10%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

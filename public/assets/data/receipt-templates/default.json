@@ -1,0 +1,125 @@
+{
+    "id": "home-default",
+    "name": "Receipt Generator",
+    "thumbnail": "",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": false,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-default",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "logoUrl": "",
+            "logoWidth": 100,
+            "businessName": "Your Business Name",
+            "address": "123 Main Street\nYour City, ST 12345",
+            "phone": "(555) 123-4567",
+            "website": "www.yourbusiness.com",
+            "extraInfo": "",
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "datetime-default",
+            "type": "datetime",
+            "alignment": "center",
+            "dateTime": "2025-12-20T00:00:00.000Z",
+            "divider": {
+                "enabled": false,
+                "style": "---"
+            }
+        },
+        {
+            "id": "items-default",
+            "type": "items_list",
+            "headers": {
+                "qty": "Qty",
+                "item": "Item",
+                "price": "Price"
+            },
+            "items": [
+                {
+                    "quantity": 2,
+                    "name": "Sample Item 1",
+                    "price": 10.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "Sample Item 2",
+                    "price": 25.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 45.00
+                },
+                {
+                    "title": "Tax",
+                    "value": 3.60
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 48.60
+            },
+            "increaseTotalSize": {
+                "enabled": true,
+                "percentage": "+50%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "payment-default",
+            "type": "payment",
+            "method": "Credit Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "****-****-****-1234"
+            },
+            "customLines": [
+                {
+                    "title": "Card Type",
+                    "value": "VISA"
+                },
+                {
+                    "title": "Status",
+                    "value": "APPROVED"
+                }
+            ],
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "message-default",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Thank you for your purchase!\nPlease visit again soon.",
+            "divider": {
+                "enabled": false,
+                "style": "---"
+            }
+        }
+    ]
+}

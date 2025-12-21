@@ -2,13 +2,8 @@
 
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import type { DividerConfig as DividerConfigType, DividerStyle } from "@/lib/receipt-schemas";
 
 interface DividerConfigProps {
@@ -18,18 +13,18 @@ interface DividerConfigProps {
 }
 
 const DIVIDER_STYLES: { value: DividerStyle; label: string }[] = [
-  { value: "---", label: "Dashes (---)" },
-  { value: "===", label: "Equals (===)" },
-  { value: "...", label: "Dots (...)" },
-  { value: ":::", label: "Colons (:::)" },
-  { value: "***", label: "Stars (***)" },
-  { value: "blank", label: "Blank line" },
+  { value: "---", label: "---" },
+  { value: "===", label: "===" },
+  { value: "...", label: "..." },
+  { value: ":::", label: ":::" },
+  { value: "***", label: "***" },
+  { value: "blank", label: "\u00A0" },
 ];
 
 export default function DividerConfigComponent({
   value,
   onChange,
-  label = "Divider",
+  label = "Divider at the bottom",
 }: DividerConfigProps) {
   const handleEnabledChange = (enabled: boolean) => {
     onChange({ ...value, enabled });
@@ -47,18 +42,22 @@ export default function DividerConfigComponent({
       </div>
 
       {value.enabled && (
-        <Select value={value.style} onValueChange={handleStyleChange}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select style" />
-          </SelectTrigger>
-          <SelectContent>
-            {DIVIDER_STYLES.map((style) => (
-              <SelectItem key={style.value} value={style.value}>
-                {style.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex gap-2">
+          {DIVIDER_STYLES.map((style) => (
+            <Button
+              key={style.value}
+              type="button"
+              variant={value.style === style.value ? "default" : "outline"}
+              onClick={() => handleStyleChange(style.value)}
+              className={cn(
+                "flex-1 font-mono",
+                value.style === style.value && "bg-primary text-primary-foreground"
+              )}
+            >
+              {style.label}
+            </Button>
+          ))}
+        </div>
       )}
     </div>
   );

@@ -14,7 +14,146 @@
       "id": "costco",
       "name": "Costco Receipt",
       "thumbnail": "/assets/img/receipts/costco-thumb.png"
+    },
+    {
+      "id": "walgreens",
+      "name": "Walgreens",
+      "thumbnail": "/assets/img/receipts/walgreens-thumb.png"
+    },
+    {
+      "id": "ace",
+      "name": "Ace Hardware",
+      "thumbnail": "/assets/img/receipts/ace-thumb.png"
+    },
+    {
+      "id": "harbor-lane",
+      "name": "Harbor Lane Cafe",
+      "thumbnail": "/assets/img/receipts/harbor-thumb.png"
+    },
+    {
+      "id": "bar-receipt",
+      "name": "Bar / Pub Receipt",
+      "thumbnail": "/assets/img/receipts/bar-thumb.png"
+    },
+    {
+      "id": "famous-pharmacy",
+      "name": "Famous Pharmacy",
+      "thumbnail": "/assets/img/receipts/pharmacy-thumb.png"
+    },
+    {
+      "id": "hospital-receipt",
+      "name": "Hospital / Dental Proposal",
+      "thumbnail": "/assets/img/receipts/hospital-thumb.png"
+    },
+    {
+      "id": "toll-receipt",
+      "name": "Toll Receipt",
+      "thumbnail": "/assets/img/receipts/toll-thumb.png"
+    },
+    {
+      "id": "hotel-receipt",
+      "name": "Hotel Room Receipt",
+      "thumbnail": "/assets/img/receipts/hotel-thumb.png"
+    },
+    {
+      "id": "gst-invoice",
+      "name": "GST Invoice",
+      "thumbnail": "/assets/img/receipts/gst-thumb.png"
+    },
+    {
+      "id": "cash-receipt",
+      "name": "Cash / Taxi Receipt",
+      "thumbnail": "/assets/img/receipts/cash-thumb.png"
+    },
+    {
+      "id": "clothing-receipt",
+      "name": "Clothing Receipt",
+      "thumbnail": "/assets/img/receipts/clothing-thumb.png"
+    },
+    {
+      "id": "shoe-receipt",
+      "name": "Shoe Store Receipt",
+      "thumbnail": "/assets/img/receipts/shoe-thumb.png"
+    },
+    {
+      "id": "foot-locker",
+      "name": "Foot Locker Receipt",
+      "thumbnail": "/assets/img/receipts/foot-locker-thumb.png"
+    },
+    {
+      "id": "wells-fargo-atm",
+      "name": "Wells Fargo ATM Receipt",
+      "thumbnail": "/assets/img/receipts/wells-fargo-thumb.png"
+    },
+    {
+      "id": "walmart",
+      "name": "Walmart Receipt",
+      "thumbnail": "/assets/img/receipts/walmart-thumb.png"
+    },
+    {
+      "id": "balenciaga",
+      "name": "Balenciaga Receipt",
+      "thumbnail": "/assets/img/receipts/balenciaga-thumb.png"
+    },
+    {
+      "id": "target-receipt",
+      "name": "Target Receipt",
+      "thumbnail": "/assets/img/receipts/target-thumb.png"
+    },
+    {
+      "id": "lowes-receipt",
+      "name": "Lowe's Receipt",
+      "thumbnail": "/assets/img/receipts/lowes-thumb.png"
+    },
+    {
+      "id": "louis-vuitton",
+      "name": "Louis Vuitton Receipt",
+      "thumbnail": "/assets/img/receipts/louis-vuitton-thumb.png"
+    },
+    {
+      "id": "abortion-receipt",
+      "name": "Medical Service Receipt",
+      "thumbnail": "/assets/img/receipts/abortion-thumb.png"
+    },
+    {
+      "id": "saks-receipt",
+      "name": "Saks Fifth Avenue Receipt",
+      "thumbnail": "/assets/img/receipts/saks-thumb.png"
+    },
+    {
+      "id": "rolex",
+      "name": "Rolex Receipt",
+      "thumbnail": "/assets/img/receipts/rolex-thumb.png"
+    },
+    {
+      "id": "local-hotel",
+      "name": "Local Hotel Receipt",
+      "thumbnail": "/assets/img/receipts/local-hotel-thumb.png"
+    },
+    {
+      "id": "uber-receipt",
+      "name": "Uber Receipt",
+      "thumbnail": "/assets/img/receipts/uber-thumb.png"
+    },
+    {
+      "id": "dior-receipt",
+      "name": "Dior Receipt",
+      "thumbnail": "/assets/img/receipts/dior-thumb.png"
+    },
+    {
+      "id": "oil-change-receipt",
+      "name": "Oil Change Receipt",
+      "thumbnail": "/assets/img/receipts/oil-change-thumb.png"
+    },
+    {
+      "id": "stockx-receipt",
+      "name": "StockX Receipt",
+      "thumbnail": "/assets/img/receipts/stockx-thumb.png"
+    },
+    {
+      "id": "goat-receipt",
+      "name": "GOAT Receipt",
+      "thumbnail": "/assets/img/receipts/goat-thumb.png"
     }
   ]
 }
-

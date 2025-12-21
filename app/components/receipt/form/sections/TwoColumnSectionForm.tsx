@@ -48,94 +48,99 @@ export default function TwoColumnSectionForm({
 
   return (
     <div className="space-y-4">
-      {/* Column 1 */}
-      <div className="space-y-2">
-        <Label>Column 1</Label>
-        {value.column1.map((row, index) => (
-          <div key={index} className="flex gap-2">
-            <Input
-              placeholder="Key"
-              value={row.key}
-              onChange={(e) => updateColumn1(index, "key", e.target.value)}
-              className="flex-1"
-            />
-            <Input
-              placeholder="Value"
-              value={row.value}
-              onChange={(e) => updateColumn1(index, "value", e.target.value)}
-              className="flex-1"
-            />
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 gap-6">
+          {/* Column 1 */}
+          <div className="space-y-3">
+            <Label className="text-sm font-medium">Column 1</Label>
+            <div className="space-y-2">
+              {value.column1.map((row, index) => (
+                <div key={index} className="flex gap-2 items-center">
+                  <Input
+                    placeholder="Key"
+                    value={row.key}
+                    onChange={(e) => updateColumn1(index, "key", e.target.value)}
+                    className="flex-1 bg-background"
+                  />
+                  <Input
+                    placeholder="Value"
+                    value={row.value}
+                    onChange={(e) => updateColumn1(index, "value", e.target.value)}
+                    className="flex-1 bg-background"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removeColumn1Row(index)}
+                    className="h-10 w-10 shrink-0 text-destructive border-transparent hover:bg-destructive/10"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
             <Button
               type="button"
-              variant="ghost"
-              size="icon"
-              onClick={() => removeColumn1Row(index)}
-              disabled={value.column1.length === 1}
-              className="text-destructive hover:text-destructive"
+              variant="outline"
+              onClick={addColumn1Row}
+              className="w-full text-primary border-primary/20 hover:bg-primary/5 hover:text-primary"
             >
-              <Trash2 className="h-4 w-4" />
+              <Plus className="h-4 w-4 mr-2" />
+              Add line
             </Button>
           </div>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={addColumn1Row}
-          className="w-full"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add Row to Column 1
-        </Button>
-      </div>
 
-      {/* Column 2 */}
-      <div className="space-y-2">
-        <Label>Column 2</Label>
-        {value.column2.map((row, index) => (
-          <div key={index} className="flex gap-2">
-            <Input
-              placeholder="Key"
-              value={row.key}
-              onChange={(e) => updateColumn2(index, "key", e.target.value)}
-              className="flex-1"
-            />
-            <Input
-              placeholder="Value"
-              value={row.value}
-              onChange={(e) => updateColumn2(index, "value", e.target.value)}
-              className="flex-1"
-            />
+          {/* Column 2 */}
+          <div className="space-y-3">
+            <Label className="text-sm font-medium">Column 2</Label>
+            <div className="space-y-2">
+              {value.column2.map((row, index) => (
+                <div key={index} className="flex gap-2 items-center">
+                  <Input
+                    placeholder="Key"
+                    value={row.key}
+                    onChange={(e) => updateColumn2(index, "key", e.target.value)}
+                    className="flex-1 bg-background"
+                  />
+                  <Input
+                    placeholder="Value"
+                    value={row.value}
+                    onChange={(e) => updateColumn2(index, "value", e.target.value)}
+                    className="flex-1 bg-background"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removeColumn2Row(index)}
+                    className="h-10 w-10 shrink-0 text-destructive border-transparent hover:bg-destructive/10"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
             <Button
               type="button"
-              variant="ghost"
-              size="icon"
-              onClick={() => removeColumn2Row(index)}
-              disabled={value.column2.length === 1}
-              className="text-destructive hover:text-destructive"
+              variant="outline"
+              onClick={addColumn2Row}
+              className="w-full text-primary border-primary/20 hover:bg-primary/5 hover:text-primary"
             >
-              <Trash2 className="h-4 w-4" />
+              <Plus className="h-4 w-4 mr-2" />
+              Add line
             </Button>
           </div>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={addColumn2Row}
-          className="w-full"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add Row to Column 2
-        </Button>
-      </div>
+        </div>
 
-      {/* Divider */}
-      <DividerConfig
-        value={value.divider}
-        onChange={(divider) => onChange({ divider })}
-      />
+        {/* Divider */}
+        <DividerConfig
+          value={value.divider}
+          onChange={(divider) => onChange({ divider })}
+        />
+      </div>
     </div>
+
   );
 }
 

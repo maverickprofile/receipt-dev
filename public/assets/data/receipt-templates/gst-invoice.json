@@ -1,0 +1,130 @@
+{
+    "id": "gst-invoice",
+    "name": "GST Invoice",
+    "thumbnail": "/assets/img/receipts/gst-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#FF0000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        },
+        "pdfSize": "A4"
+    },
+    "sections": [
+        {
+            "id": "header-gst",
+            "type": "header",
+            "alignment": "left",
+            "showLogo": false,
+            "businessName": "Invoice",
+            "address": "STEELERS\n123 MAIN ST,\nANYTOWN, USA",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "invoice-meta",
+            "type": "two_column",
+            "column1": [],
+            "column2": [
+                {
+                    "key": "Invoice #",
+                    "value": "1234567890"
+                },
+                {
+                    "key": "Invoice Date",
+                    "value": "12/21/2025"
+                },
+                {
+                    "key": "PO#",
+                    "value": "23435567"
+                },
+                {
+                    "key": "Due Date",
+                    "value": "12/21/2025"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "bill-ship-to",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "BILL TO",
+                    "value": "John Doe\nCalifornian Street"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "SHIP TO",
+                    "value": "William Vengance\nCanada"
+                }
+            ],
+            "divider": {
+                "enabled": true,
+                "style": "bold"
+            }
+        },
+        {
+            "id": "items-gst",
+            "type": "items_list",
+            "headers": {
+                "qty": "QTY",
+                "item": "DESCRIPTION",
+                "price": "AMOUNT"
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "TV Panasonic",
+                    "price": 12000.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": true,
+                "style": "bold"
+            },
+            "totalLines": [
+                {
+                    "title": "SUBTOTAL",
+                    "value": 12000.00
+                },
+                {
+                    "title": "Sales Tax",
+                    "value": 0.00
+                }
+            ],
+            "total": {
+                "title": "TOTAL",
+                "value": 12000.00
+            },
+            "increaseTotalSize": {
+                "enabled": true,
+                "percentage": "+20%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "bold"
+            }
+        },
+        {
+            "id": "terms-gst",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "TERMS AND CONDITIONS\nPayment is due within 15days Please make\ncheckes payable to: East West Repair Inc",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

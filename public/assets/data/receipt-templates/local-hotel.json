@@ -1,0 +1,143 @@
+{
+    "id": "local-hotel",
+    "name": "Local Hotel Receipt",
+    "thumbnail": "/assets/img/receipts/local-hotel-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-hotel",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/hotel-icon.png",
+            "logoWidth": 80,
+            "businessName": "LOCAL HOTEL",
+            "address": "123 Main Street\nNew York, NY 10001",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "booking-info",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Check-in: 04/14/2025 3:00 PM\nCheck-out: 04/20/2025 11:00 AM\nGuest: C P\nRoom: 324",
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "items-hotel",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "5 NIGHTS STAY",
+                    "price": 750.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "1 Room Bar",
+                    "price": 42.43
+                },
+                {
+                    "quantity": 1,
+                    "name": "Room Tax",
+                    "price": 12.35
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 804.78
+                },
+                {
+                    "title": "Tax",
+                    "value": 0.00
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 804.78
+            },
+            "increaseTotalSize": {
+                "enabled": true,
+                "percentage": "+20%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "payment-hotel",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "Debit",
+                "cardNumber": "4932"
+            },
+            "customLines": [
+                {
+                    "title": "Card Number",
+                    "value": "**** **** **** 4932"
+                },
+                {
+                    "title": "Card Type",
+                    "value": "Debit"
+                },
+                {
+                    "title": "Card Entry",
+                    "value": "Chip"
+                },
+                {
+                    "title": "Date/Time",
+                    "value": "11/20/2019 11:09 AM"
+                },
+                {
+                    "title": "Reference #",
+                    "value": "62845285090245240585C"
+                },
+                {
+                    "title": "Status",
+                    "value": "APPROVED"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-hotel",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "04/14/2025 1:43 PM\nServer: #54 Sarah\nTerminal: #15\nBooking Reference #: 92147",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

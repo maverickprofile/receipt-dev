@@ -1,0 +1,157 @@
+{
+    "id": "shoe-receipt",
+    "name": "Shoe Store Receipt",
+    "thumbnail": "/assets/img/receipts/shoe-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-shoe",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/shoe-logo.png",
+            "logoWidth": 60,
+            "businessName": "Famous Footwear",
+            "address": "110 W 3rd St, New York, NY 10012, USA",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-shoe",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Sneakers",
+                    "price": 100.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "Sandals",
+                    "price": 200.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "Boots",
+                    "price": 500.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "SUBTOTAL",
+                    "value": 800.00
+                },
+                {
+                    "title": "SALES TAX",
+                    "value": 540.00
+                }
+            ],
+            "total": {
+                "title": "TOTAL",
+                "value": 1340.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "item-counts",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Number of Items Sold: 3\nNumber of Items Returned: 0",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-shoe",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "9898"
+            },
+            "customLines": [
+                {
+                    "title": "Acct No",
+                    "value": "************9898"
+                },
+                {
+                    "title": "Auth No",
+                    "value": "726408"
+                },
+                {
+                    "title": "Auth Date",
+                    "value": "12/21/2025 5:42 PM"
+                },
+                {
+                    "title": "Mode",
+                    "value": "Issuer"
+                },
+                {
+                    "title": "AID",
+                    "value": "A59372123987"
+                },
+                {
+                    "title": "TVR",
+                    "value": "0000008000"
+                },
+                {
+                    "title": "TSI",
+                    "value": "E800"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-section",
+            "type": "barcode",
+            "value": "12345678901234567890",
+            "displayValue": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-shoe",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Famous Footwear",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

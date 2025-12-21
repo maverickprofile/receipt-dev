@@ -1,0 +1,142 @@
+{
+    "id": "harbor-lane",
+    "name": "Harbor Lane Cafe",
+    "thumbnail": "/assets/img/receipts/harbor-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-harbor",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "logoUrl": "",
+            "logoWidth": 100,
+            "businessName": "HARBOR LANE CAFE",
+            "address": "3941 GREEN OAKS BLVD CHICAGO IL",
+            "phone": "",
+            "website": "",
+            "extraInfo": "",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "subheader-harbor",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Sale",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "datetime-harbor",
+            "type": "datetime",
+            "alignment": "center",
+            "dateTime": "2025-12-21T16:47:00.000Z",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "info-harbor",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "9898"
+            },
+            "customLines": [
+                {
+                    "title": "BATCH #",
+                    "value": "609056"
+                },
+                {
+                    "title": "APPR",
+                    "value": "662340"
+                },
+                {
+                    "title": "TRACE #",
+                    "value": "3"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-harbor",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "sandwiches",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "sandwiches",
+                    "price": 10.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "SUBTOTAL",
+                    "value": 10.00
+                },
+                {
+                    "title": "TAX",
+                    "value": 1.00
+                },
+                {
+                    "title": "TOTAL",
+                    "value": 11.00
+                },
+                {
+                    "title": "TIP",
+                    "value": 1.00
+                }
+            ],
+            "total": {
+                "title": "TOTAL",
+                "value": 12.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-harbor",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "APPROVED\nTHANKYOU\nCUSTOMER COPY",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

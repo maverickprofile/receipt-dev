@@ -1,0 +1,185 @@
+{
+    "id": "foot-locker",
+    "name": "Foot Locker Receipt",
+    "thumbnail": "/assets/img/receipts/foot-locker-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-fl",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/foot-locker-logo.png",
+            "logoWidth": 150,
+            "businessName": "Foot Locker",
+            "address": "Visit us at www.footlocker.com",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "store-meta-fl",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "STORE",
+                    "value": "8"
+                },
+                {
+                    "key": "CASHIER",
+                    "value": "Emily"
+                },
+                {
+                    "key": "ASSOCIATE",
+                    "value": "128970"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "REGISTER",
+                    "value": "7675"
+                }
+            ],
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "customer-copy-fl",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "CUSTOMER RECEIPT COPY",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-fl",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "12/21/2025  Jordan Retro 1 Low OG\n02257990835",
+                    "price": 140.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            },
+            "totalLines": [
+                {
+                    "title": "SUBTOTAL",
+                    "value": 140.00
+                },
+                {
+                    "title": "SALES TAX",
+                    "value": 14.00
+                }
+            ],
+            "total": {
+                "title": "TOTAL",
+                "value": 154.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "payment-fl",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "9898"
+            },
+            "customLines": [
+                {
+                    "title": "AMOUNT TENDERED",
+                    "value": "$154.00"
+                },
+                {
+                    "title": "Major Charge",
+                    "value": "$154.00"
+                },
+                {
+                    "title": "ACCT",
+                    "value": "************9898"
+                },
+                {
+                    "title": "APPROVAL",
+                    "value": "701575"
+                },
+                {
+                    "title": "Current Balance",
+                    "value": "0.00"
+                },
+                {
+                    "title": "CARD SWIPED",
+                    "value": ""
+                },
+                {
+                    "title": "TOTAL PAYMENT",
+                    "value": "$154.00"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "tax-analysis-fl",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "SALES TAX ANALYSIS\nCODE      RATE%      TAXABLE      TAX\nTotal     10         140.00       14.00\n\n\nTRANS: TN10LRGV54        12/21/2025 5:48 PM",
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "footer-policy-fl",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Merchandise returned\nwithout a receipt that is a\npart of our 'Multiple'\noffer promotion, will only\nbe credited in the amount\nof the 'Multiple' offer\nprice.\n\nNBA ALL STAR FTL\n330 West 34th Street,\nNew York City,\nNew York 10001, US\n\nBECOME A FOOT LOCKER VIP AND\nGET VALUABLE MEMBER-ONLY\nSAVINGS. BENEFITS AND ADVANCE\nPRODUCT INFORMATION. ENROLL\nIN-STORE OR GO TO\nWWW.FOOTLOCKER.COM/VIP TO\nLEARN MORE.\n\nThank You For Shopping With Foot Locker!",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-fl",
+            "type": "barcode",
+            "value": "2629563701952463",
+            "displayValue": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

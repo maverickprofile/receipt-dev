@@ -1,0 +1,133 @@
+{
+    "id": "dior-receipt",
+    "name": "Dior Receipt",
+    "thumbnail": "/assets/img/receipts/dior-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-dior",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/dior-logo.png",
+            "logoWidth": 120,
+            "businessName": "Dior",
+            "address": "Christian Dior Boutique\n21 E 57th St\nNew York, NY 10022",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "meta-dior",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Trans: 030888 Date: 11/20/19 11:09:05\nStore: 00101 Register: 2\nCashier: 0025050\nCustomer: ID: 009017438",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-dior",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "SAD WOMEN S.BAG 17H/S00\n9377055 - 185",
+                    "price": 4400.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 4400.00
+                },
+                {
+                    "title": "Tax",
+                    "value": 380.50
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 4780.50
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-dior",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "Debit",
+                "cardNumber": "4932"
+            },
+            "customLines": [
+                {
+                    "title": "Card Number",
+                    "value": "**** **** **** 4932"
+                },
+                {
+                    "title": "Card Type",
+                    "value": "Debit"
+                },
+                {
+                    "title": "Card Entry",
+                    "value": "Chip"
+                },
+                {
+                    "title": "Date/Time",
+                    "value": "11/20/2019 11:09 AM"
+                },
+                {
+                    "title": "Reference #",
+                    "value": "62845285090245240585C"
+                },
+                {
+                    "title": "Status",
+                    "value": "APPROVED"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-legal-dior",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "I agree to pay the above total\namount according to the card\nissuer's agreement. Items can be\nreturned within 30 days of receipt.\nProducts must be in their original\ncondition with all packaging intact.",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

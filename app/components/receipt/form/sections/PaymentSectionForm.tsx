@@ -1,107 +1,138 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import DividerConfig from "./DividerConfig";
-import type { PaymentSection, PaymentType, PaymentLine } from "@/lib/receipt-schemas";
+import type { PaymentSection, PaymentMethod, PaymentLine } from "@/lib/receipt-schemas";
 
 interface PaymentSectionFormProps {
   value: PaymentSection;
   onChange: (updates: Partial<PaymentSection>) => void;
 }
 
-const PAYMENT_TYPES: { value: PaymentType; label: string }[] = [
-  { value: "cash", label: "Cash" },
-  { value: "card", label: "Card" },
+const DEFAULT_CASH_LINES: PaymentLine[] = [
+  { title: "Cash", value: "20.00" },
+  { title: "Change", value: "3.45" },
+];
+
+const DEFAULT_CARD_LINES: PaymentLine[] = [
+  { title: "Card number", value: "**** **** **** 4922" },
+  { title: "Card type", value: "Debit" },
+  { title: "Card entry", value: "Chip" },
+  { title: "Date/time", value: "11/20/2019 11:09 AM" },
+  { title: "Reference #", value: "62845289260246240685C" },
+  { title: "Status", value: "APPROVED" },
 ];
 
 export default function PaymentSectionForm({ value, onChange }: PaymentSectionFormProps) {
+  const isCash = value.method === "Cash";
+
+  const handleModeChange = (mode: "Cash" | "Card") => {
+    if (mode === "Cash") {
+      onChange({
+        method: "Cash",
+        customLines: DEFAULT_CASH_LINES,
+      });
+    } else {
+      onChange({
+        method: "Credit Card",
+        customLines: DEFAULT_CARD_LINES,
+      });
+    }
+  };
+
   const updateLine = (index: number, field: keyof PaymentLine, newValue: string) => {
-    const newLines = [...value.lines];
+    const newLines = [...value.customLines];
     newLines[index] = { ...newLines[index], [field]: newValue };
-    onChange({ lines: newLines });
+    onChange({ customLines: newLines });
   };
 
   const addLine = () => {
     onChange({
-      lines: [...value.lines, { title: "", value: "" }],
+      customLines: [...value.customLines, { title: "", value: "" }],
     });
   };
 
   const removeLine = (index: number) => {
-    const newLines = value.lines.filter((_, i) => i !== index);
-    onChange({ lines: newLines.length ? newLines : [{ title: "", value: "" }] });
+    const newLines = value.customLines.filter((_, i) => i !== index);
+    onChange({ customLines: newLines });
   };
 
   return (
     <div className="space-y-4">
-      {/* Payment Type */}
-      <div className="space-y-2">
-        <Label>Payment Type</Label>
-        <Select
-          value={value.paymentType}
-          onValueChange={(val: PaymentType) => onChange({ paymentType: val })}
+      {/* Method Tabs */}
+      <div className="flex p-1 bg-muted rounded-lg">
+        <button
+          type="button"
+          onClick={() => handleModeChange("Cash")}
+          className={cn(
+            "flex-1 text-sm font-medium py-1.5 px-3 rounded-md transition-all",
+            isCash
+              ? "bg-background text-foreground shadow-sm"
+              : "text-muted-foreground hover:bg-background/50"
+          )}
         >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {PAYMENT_TYPES.map((type) => (
-              <SelectItem key={type.value} value={type.value}>
-                {type.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          Cash
+        </button>
+        <button
+          type="button"
+          onClick={() => handleModeChange("Card")}
+          className={cn(
+            "flex-1 text-sm font-medium py-1.5 px-3 rounded-md transition-all",
+            !isCash
+              ? "bg-background text-foreground shadow-sm"
+              : "text-muted-foreground hover:bg-background/50"
+          )}
+        >
+          Card
+        </button>
       </div>
 
-      {/* Payment Lines */}
+      {/* Dynamic Lines (Title | Value) */}
       <div className="space-y-3">
-        <Label>Payment Details</Label>
-        {value.lines.map((line, index) => (
+        <div className="flex gap-2 px-1">
+          <Label className="flex-1 text-muted-foreground text-xs uppercase">Title</Label>
+          <Label className="flex-1 text-muted-foreground text-xs uppercase">Value</Label>
+          <div className="w-8" /> {/* Spacer for delete button */}
+        </div>
+
+        {value.customLines.map((line, index) => (
           <div key={index} className="flex gap-2 items-center">
             <Input
-              placeholder="Label (e.g., Card number)"
               value={line.title}
               onChange={(e) => updateLine(index, "title", e.target.value)}
               className="flex-1"
+              placeholder="Label"
             />
             <Input
-              placeholder="Value"
               value={line.value}
               onChange={(e) => updateLine(index, "value", e.target.value)}
               className="flex-1"
+              placeholder="Value"
             />
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               size="icon"
               onClick={() => removeLine(index)}
-              disabled={value.lines.length === 1}
-              className="text-destructive hover:text-destructive"
+              className="h-10 w-10 shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/20"
             >
-              <Trash2 className="h-4 w-4" />
+              <X className="h-4 w-4" />
             </Button>
           </div>
         ))}
+
         <Button
           type="button"
-          variant="outline"
-          size="sm"
+          variant="secondary"
+          className="w-full text-primary hover:text-primary/80 bg-primary/10 hover:bg-primary/20 border border-primary/20"
           onClick={addLine}
-          className="w-full"
         >
           <Plus className="h-4 w-4 mr-2" />
-          Add Payment Line
+          Add line
         </Button>
       </div>
 

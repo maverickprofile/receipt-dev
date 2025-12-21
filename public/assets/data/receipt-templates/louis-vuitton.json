@@ -1,0 +1,143 @@
+{
+    "id": "louis-vuitton",
+    "name": "Louis Vuitton Receipt",
+    "thumbnail": "/assets/img/receipts/louis-vuitton-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-lv",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/lv-logo.png",
+            "logoWidth": 150,
+            "businessName": "LOUIS VUITTON",
+            "address": "LV Atlanta Lenox Square\n3393 Peachtree Rd N.E. Suite 4004A\nATLANTA, GA 30326\nUnited States\n+1 404-565-3674",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "meta-lv",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Store: 3076 Register: 6\nDate: 04/14/2025 Time: 2:10 PM\nTicket: 14030\nCashier: 16405",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-lv",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Time Out Sneaker 1A35N8",
+                    "price": 900.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 900.00
+                },
+                {
+                    "title": "Tax",
+                    "value": 80.10
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 980.10
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-lv",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "Debit",
+                "cardNumber": "4932"
+            },
+            "customLines": [
+                {
+                    "title": "Card Number",
+                    "value": "**** **** **** 4932"
+                },
+                {
+                    "title": "Card Type",
+                    "value": "Debit"
+                },
+                {
+                    "title": "Card Entry",
+                    "value": "Chip"
+                },
+                {
+                    "title": "Date/Time",
+                    "value": "11/20/2019 11:09 AM"
+                },
+                {
+                    "title": "Reference #",
+                    "value": "62845285090245240585C"
+                },
+                {
+                    "title": "Status",
+                    "value": "APPROVED"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-legal-lv",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "I agree to pay the above total amount\naccording to the card issuer's agreement.\nItems can be returned within 30 days of\nreceipt. Products must be in their original\ncondition with all packaging intact.",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-lv",
+            "type": "barcode",
+            "value": "123456789012345678",
+            "displayValue": false,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

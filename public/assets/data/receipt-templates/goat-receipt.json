@@ -1,0 +1,128 @@
+{
+    "id": "goat-receipt",
+    "name": "GOAT Receipt",
+    "thumbnail": "/assets/img/receipts/goat-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-goat",
+            "type": "header",
+            "alignment": "right",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/goat-logo.png",
+            "logoWidth": 120,
+            "businessName": "INVOICE\nGOAT",
+            "address": "<GOAT>\n3433 W Exposition Pl\nLos Angeles, CA 90018\nUnited States of America",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "bill-ship-goat",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "Bill To",
+                    "value": "John Doe\nUnit 4, 56 Queen Street\nSouthbank VIC 3006\nAUSTRALIA"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "Ship To",
+                    "value": "John Doe\nUnit 4, 56 Queen Street\nSouthbank VIC 3006\nAUSTRALIA"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "invoice-meta-goat",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "Receipt No:",
+                    "value": "INV52703"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "Payment Date:",
+                    "value": "12-21-2025"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-goat",
+            "type": "items_list",
+            "headers": {
+                "qty": "QTY",
+                "item": "DESCRIPTION",
+                "price": "UNIT PRICE"
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Nike Air Max Dn8",
+                    "price": 200.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": true,
+                "style": "solid"
+            },
+            "totalLines": [
+                {
+                    "title": "SUBTOTAL",
+                    "value": 200.00
+                },
+                {
+                    "title": "TOTAL TAX",
+                    "value": 0.00
+                },
+                {
+                    "title": "SHIPPING/HANDLING",
+                    "value": 20.00
+                }
+            ],
+            "total": {
+                "title": "BALANCE PAID",
+                "value": 220.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "solid"
+            }
+        },
+        {
+            "id": "footer-notes-goat",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Notes\n\nTo ensure quality and authentic items, we only allow a select group of sellers. We encourage you to request to become a seller on GOAT by tapping on the sell tab on the app and filling out the required information.\n\nIf your product is found to be inauthentic or not as described, we'll notify you during our verification process and offer you a full refund for your order.\n\nIt's our hope that through our efforts, we can create a safe and trustworthy global marketplace.",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

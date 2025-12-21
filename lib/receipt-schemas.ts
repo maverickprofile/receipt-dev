@@ -7,47 +7,40 @@ import { z } from "zod";
 export const DividerStyleSchema = z.enum(["---", "===", "...", ":::", "***", "blank"]);
 export type DividerStyle = z.infer<typeof DividerStyleSchema>;
 
-export const AlignmentSchema = z.enum(["left", "center", "right"]);
-export type Alignment = z.infer<typeof AlignmentSchema>;
-
-export const CurrencyFormatSchema = z.enum(["prefix", "suffix", "suffix_space"]);
-export type CurrencyFormat = z.infer<typeof CurrencyFormatSchema>;
-
-export const FontStyleSchema = z.enum(["font1", "font2", "font3"]);
-export type FontStyle = z.infer<typeof FontStyleSchema>;
-
-export const BackgroundStyleSchema = z.enum(["1", "2", "3", "4", "5"]);
-export type BackgroundStyle = z.infer<typeof BackgroundStyleSchema>;
-
-export const PaymentTypeSchema = z.enum(["cash", "card"]);
-export type PaymentType = z.infer<typeof PaymentTypeSchema>;
-
-export const TotalSizePercentageSchema = z.enum(["+10%", "+20%", "+50%", "+75%", "+100%"]);
-export type TotalSizePercentage = z.infer<typeof TotalSizePercentageSchema>;
-
-export const SectionTypeSchema = z.enum([
-  "header",
-  "datetime",
-  "custom_message",
-  "two_column",
-  "items_list",
-  "payment",
-  "barcode",
-]);
-export type SectionType = z.infer<typeof SectionTypeSchema>;
-
-// =============================================================================
-// Divider Config
-// =============================================================================
-
 export const DividerConfigSchema = z.object({
   enabled: z.boolean(),
   style: DividerStyleSchema,
 });
 export type DividerConfig = z.infer<typeof DividerConfigSchema>;
 
+export const AlignmentSchema = z.enum(["left", "center", "right"]);
+export type Alignment = z.infer<typeof AlignmentSchema>;
+
+export const CurrencyFormatSchema = z.enum(["prefix", "suffix", "suffix_space"]);
+export type CurrencyFormat = z.infer<typeof CurrencyFormatSchema>;
+
+export const FontStyleSchema = z.enum(["font1", "font2", "font3", "hypermarket", "ocr-b"]);
+export type FontStyle = z.infer<typeof FontStyleSchema>;
+
+export const BackgroundStyleSchema = z.enum(["1", "2", "3", "4", "5"]);
+export type BackgroundStyle = z.infer<typeof BackgroundStyleSchema>;
+
+export const PdfSizeSchema = z.enum(["80mm", "110mm", "A4"]);
+export type PdfSize = z.infer<typeof PdfSizeSchema>;
+
+export const PaymentTypeSchema = z.enum(["Cash", "Credit Card", "Debit Card", "Mobile Payment"]);
+export type PaymentType = z.infer<typeof PaymentTypeSchema>;
+
+// Helper types for UI components
+export type PaymentMethod = "Cash" | "Credit Card";
+export type PaymentLine = { title: string; value: string };
+export type KeyValuePair = { key: string; value: string };
+
+export const BarcodeCodeTypeSchema = z.enum(["CODE128", "EAN13", "UPC_A", "QR_CODE"]);
+export type BarcodeCodeType = z.infer<typeof BarcodeCodeTypeSchema>;
+
 // =============================================================================
-// Settings Section
+// Section Schemas
 // =============================================================================
 
 export const SettingsSectionSchema = z.object({
@@ -59,38 +52,36 @@ export const SettingsSectionSchema = z.object({
     enabled: z.boolean(),
     style: BackgroundStyleSchema,
   }),
+  pdfSize: PdfSizeSchema.default("80mm"),
+  watermark: z.boolean().default(true),
 });
 export type SettingsSection = z.infer<typeof SettingsSectionSchema>;
 
-// =============================================================================
-// Section Schemas
-// =============================================================================
-
-// Header Section
 export const HeaderSectionSchema = z.object({
   id: z.string(),
   type: z.literal("header"),
   alignment: AlignmentSchema,
-  logo: z.object({
-    url: z.string(),
-    size: z.number().min(0).max(100),
-  }),
-  businessDetails: z.string(),
+  showLogo: z.boolean(),
+  logoUrl: z.string().optional(),
+  logoWidth: z.number().optional(),
+  businessName: z.string(),
+  address: z.string().optional(),
+  phone: z.string().optional(),
+  website: z.string().optional(),
+  extraInfo: z.string().optional(),
   divider: DividerConfigSchema,
 });
 export type HeaderSection = z.infer<typeof HeaderSectionSchema>;
 
-// DateTime Section
 export const DateTimeSectionSchema = z.object({
   id: z.string(),
   type: z.literal("datetime"),
   alignment: AlignmentSchema,
-  dateTime: z.string(),
+  dateTime: z.string(), // ISO string
   divider: DividerConfigSchema,
 });
 export type DateTimeSection = z.infer<typeof DateTimeSectionSchema>;
 
-// Custom Message Section
 export const CustomMessageSectionSchema = z.object({
   id: z.string(),
   type: z.literal("custom_message"),
@@ -100,85 +91,65 @@ export const CustomMessageSectionSchema = z.object({
 });
 export type CustomMessageSection = z.infer<typeof CustomMessageSectionSchema>;
 
-// Key-Value Pair for Two Column
-export const KeyValuePairSchema = z.object({
-  key: z.string(),
-  value: z.string(),
-});
-export type KeyValuePair = z.infer<typeof KeyValuePairSchema>;
-
-// Two Column Section
 export const TwoColumnSectionSchema = z.object({
   id: z.string(),
   type: z.literal("two_column"),
-  column1: z.array(KeyValuePairSchema),
-  column2: z.array(KeyValuePairSchema),
+  column1: z.array(z.object({ key: z.string(), value: z.string() })),
+  column2: z.array(z.object({ key: z.string(), value: z.string() })),
   divider: DividerConfigSchema,
 });
 export type TwoColumnSection = z.infer<typeof TwoColumnSectionSchema>;
 
-// Receipt Item
-export const ReceiptItemSchema = z.object({
-  quantity: z.number(),
-  name: z.string(),
-  price: z.number(),
-});
-export type ReceiptItem = z.infer<typeof ReceiptItemSchema>;
-
-// Total Line
-export const TotalLineSchema = z.object({
-  title: z.string(),
-  value: z.number(),
-});
-export type TotalLine = z.infer<typeof TotalLineSchema>;
-
-// Items List Section
 export const ItemsListSectionSchema = z.object({
   id: z.string(),
   type: z.literal("items_list"),
-  items: z.array(ReceiptItemSchema),
-  divider: DividerConfigSchema,
-  totalLines: z.array(TotalLineSchema),
-  total: TotalLineSchema,
-  increaseTotalSize: z.object({
-    enabled: z.boolean(),
-    percentage: TotalSizePercentageSchema,
+  headers: z.object({
+    qty: z.string(),
+    item: z.string(),
+    price: z.string(),
   }),
-  bottomDivider: DividerConfigSchema,
+  items: z.array(
+    z.object({
+      quantity: z.number(),
+      name: z.string(),
+      price: z.number(),
+    })
+  ),
+  showTotals: z.boolean(),
+  totalLines: z.array(z.object({ title: z.string(), value: z.number() })).optional(),
+  total: z.object({ title: z.string(), value: z.number() }).optional(),
+  increaseTotalSize: z.object({ enabled: z.boolean(), percentage: z.string() }).optional(),
+  divider: DividerConfigSchema,
+  bottomDivider: DividerConfigSchema.optional(),
 });
 export type ItemsListSection = z.infer<typeof ItemsListSectionSchema>;
 
-// Payment Line
-export const PaymentLineSchema = z.object({
-  title: z.string(),
-  value: z.string(),
-});
-export type PaymentLine = z.infer<typeof PaymentLineSchema>;
-
-// Payment Section
 export const PaymentSectionSchema = z.object({
   id: z.string(),
   type: z.literal("payment"),
-  paymentType: PaymentTypeSchema,
-  lines: z.array(PaymentLineSchema),
+  method: z.string(), // Allowing free text or enum? Using string for flexibility or PaymentTypeSchema? Let's use string to support custom methods if needed, or PaymentTypeSchema. The default uses "Credit Card".
+  cardDetails: z.object({
+    cardType: z.string(),
+    cardNumber: z.string(),
+  }).optional(),
+  customLines: z.array(z.object({ title: z.string(), value: z.string() })),
   divider: DividerConfigSchema,
 });
 export type PaymentSection = z.infer<typeof PaymentSectionSchema>;
 
-// Barcode Section
 export const BarcodeSectionSchema = z.object({
   id: z.string(),
   type: z.literal("barcode"),
-  size: z.number().min(20).max(100),
-  length: z.number().min(50).max(100),
+  codeType: BarcodeCodeTypeSchema,
+  value: z.string(),
+  showText: z.boolean(),
+  height: z.number(),
+  width: z.number(),
   divider: DividerConfigSchema,
 });
 export type BarcodeSection = z.infer<typeof BarcodeSectionSchema>;
 
-// =============================================================================
-// Union of All Sections
-// =============================================================================
-
+// Union of all sections
 export const ReceiptSectionSchema = z.discriminatedUnion("type", [
   HeaderSectionSchema,
   DateTimeSectionSchema,
@@ -189,44 +160,19 @@ export const ReceiptSectionSchema = z.discriminatedUnion("type", [
   BarcodeSectionSchema,
 ]);
 export type ReceiptSection = z.infer<typeof ReceiptSectionSchema>;
+export type SectionType = ReceiptSection["type"];
 
-// =============================================================================
-// Main Receipt Schema
-// =============================================================================
-
-export const ReceiptSchema = z.object({
+export const ReceiptTypeSchema = z.object({
   id: z.string(),
   name: z.string(),
-  thumbnail: z.string().optional(),
   settings: SettingsSectionSchema,
   sections: z.array(ReceiptSectionSchema),
 });
-export type ReceiptType = z.infer<typeof ReceiptSchema>;
-
-// =============================================================================
-// Template Index Schema
-// =============================================================================
-
-export const TemplateInfoSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  thumbnail: z.string().optional(),
-});
-export type TemplateInfo = z.infer<typeof TemplateInfoSchema>;
-
-export const TemplateIndexSchema = z.object({
-  templates: z.array(TemplateInfoSchema),
-});
-export type TemplateIndex = z.infer<typeof TemplateIndexSchema>;
+export type ReceiptType = z.infer<typeof ReceiptTypeSchema>;
 
 // =============================================================================
 // Default Values
 // =============================================================================
-
-export const DEFAULT_DIVIDER: DividerConfig = {
-  enabled: false,
-  style: "---",
-};
 
 export const DEFAULT_SETTINGS: SettingsSection = {
   currency: "$",
@@ -237,13 +183,21 @@ export const DEFAULT_SETTINGS: SettingsSection = {
     enabled: false,
     style: "1",
   },
+  pdfSize: "80mm",
+  watermark: true,
 };
 
 export const DEFAULT_HEADER_SECTION: Omit<HeaderSection, "id"> = {
   type: "header",
   alignment: "center",
-  logo: { url: "", size: 75 },
-  businessDetails: "Your Business Name\n123 Main St\nAnytown, USA",
+  showLogo: false,
+  logoUrl: "",
+  logoWidth: 100,
+  businessName: "Your Business Name",
+  address: "123 Main St\nAnytown, USA 12345",
+  phone: "",
+  website: "",
+  extraInfo: "",
   divider: { enabled: true, style: "---" },
 };
 
@@ -263,14 +217,19 @@ export const DEFAULT_CUSTOM_MESSAGE_SECTION: Omit<CustomMessageSection, "id"> = 
 
 export const DEFAULT_TWO_COLUMN_SECTION: Omit<TwoColumnSection, "id"> = {
   type: "two_column",
-  column1: [{ key: "Item", value: "" }],
-  column2: [{ key: "Price", value: "" }],
+  column1: [
+    { key: "Table", value: "415" },
+    { key: "Server", value: "Rebecca" },
+  ],
+  column2: [{ key: "Guests", value: "2" }],
   divider: { enabled: false, style: "---" },
 };
 
 export const DEFAULT_ITEMS_LIST_SECTION: Omit<ItemsListSection, "id"> = {
   type: "items_list",
+  headers: { qty: "Qty", item: "Item", price: "Price" },
   items: [{ quantity: 1, name: "Item 1", price: 10.0 }],
+  showTotals: true,
   divider: { enabled: true, style: "---" },
   totalLines: [{ title: "Subtotal", value: 10.0 }],
   total: { title: "Total", value: 10.0 },
@@ -280,18 +239,25 @@ export const DEFAULT_ITEMS_LIST_SECTION: Omit<ItemsListSection, "id"> = {
 
 export const DEFAULT_PAYMENT_SECTION: Omit<PaymentSection, "id"> = {
   type: "payment",
-  paymentType: "card",
-  lines: [
-    { title: "Card number", value: "****-****-****-1234" },
-    { title: "Status", value: "APPROVED" },
+  method: "Cash",
+  cardDetails: {
+    cardType: "VISA",
+    cardNumber: "****-****-****-1234",
+  },
+  customLines: [
+    { title: "Cash", value: "20.00" },
+    { title: "Change", value: "3.45" },
   ],
   divider: { enabled: true, style: "---" },
 };
 
 export const DEFAULT_BARCODE_SECTION: Omit<BarcodeSection, "id"> = {
   type: "barcode",
-  size: 50,
-  length: 100,
+  codeType: "CODE128",
+  value: "",
+  showText: true,
+  height: 50,
+  width: 100,
   divider: { enabled: false, style: "---" },
 };
 
@@ -307,4 +273,3 @@ export function createSection<T extends Omit<ReceiptSection, "id">>(
     id: `${section.type}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
   };
 }
-

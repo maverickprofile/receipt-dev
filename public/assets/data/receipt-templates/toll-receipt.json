@@ -1,0 +1,90 @@
+{
+    "id": "toll-receipt",
+    "name": "Toll Receipt",
+    "thumbnail": "/assets/img/receipts/toll-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-toll",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "businessName": "TURNPIKE",
+            "address": "www.turnpike.com",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "datetime-toll",
+            "type": "datetime",
+            "alignment": "center",
+            "dateTime": "2025-12-21T17:25:00.000Z",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "trip-details-toll",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Entry Florida\nTime 5:25 PM\nExit California\nLane 02\nTime 5:25 PM\nClass 01 Axles 02\nCollector ID 1234",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-toll",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "",
+                "cardNumber": ""
+            },
+            "customLines": [
+                {
+                    "title": "Payment :",
+                    "value": "VISA 2121"
+                },
+                {
+                    "title": "Toll Due",
+                    "value": "$20"
+                },
+                {
+                    "title": "Paid",
+                    "value": "$20"
+                },
+                {
+                    "title": "Bal Due",
+                    "value": "$0.00"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-toll",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "LOST TICKET - MAXIMUM TOLL",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

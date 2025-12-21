@@ -4,19 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type {
   SettingsSection as SettingsSectionType,
   CurrencyFormat,
   FontStyle,
-  BackgroundStyle,
 } from "@/lib/receipt-schemas";
 
 interface SettingsSectionProps {
@@ -25,23 +19,17 @@ interface SettingsSectionProps {
 }
 
 const CURRENCY_FORMATS: { value: CurrencyFormat; label: string }[] = [
-  { value: "prefix", label: "Prefix ($10)" },
-  { value: "suffix", label: "Suffix (10$)" },
-  { value: "suffix_space", label: "Suffix with space (10 $)" },
+  { value: "prefix", label: "$2.99" },
+  { value: "suffix", label: "2.99$" },
+  { value: "suffix_space", label: "2.99 $" },
 ];
 
 const FONTS: { value: FontStyle; label: string }[] = [
-  { value: "font1", label: "Roboto Mono" },
-  { value: "font2", label: "Space Mono" },
-  { value: "font3", label: "Inconsolata" },
-];
-
-const BACKGROUND_STYLES: { value: BackgroundStyle; label: string }[] = [
-  { value: "1", label: "Style 1" },
-  { value: "2", label: "Style 2" },
-  { value: "3", label: "Style 3" },
-  { value: "4", label: "Style 4" },
-  { value: "5", label: "Style 5" },
+  { value: "font1", label: "Font 1" },
+  { value: "font2", label: "Font 2" },
+  { value: "font3", label: "Font 3" },
+  { value: "hypermarket", label: "Hypermarket" },
+  { value: "ocr-b", label: "OCR-B" },
 ];
 
 export default function SettingsSection({ value, onChange }: SettingsSectionProps) {
@@ -53,83 +41,83 @@ export default function SettingsSection({ value, onChange }: SettingsSectionProp
           Settings
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Currency Symbol */}
-        <div className="space-y-2">
-          <Label htmlFor="currency">Currency Symbol</Label>
-          <Input
-            id="currency"
-            value={value.currency}
-            onChange={(e) => onChange({ currency: e.target.value })}
-            placeholder="$"
-            className="w-20"
-          />
-        </div>
+      <CardContent className="space-y-6">
+        {/* Currency & Format in one row */}
+        <div className="grid grid-cols-2 gap-6">
+          {/* Currency Symbol */}
+          <div className="space-y-2">
+            <Label htmlFor="currency">Currency</Label>
+            <Input
+              id="currency"
+              value={value.currency}
+              onChange={(e) => onChange({ currency: e.target.value })}
+              placeholder="$"
+              className="w-20"
+            />
+          </div>
 
-        {/* Currency Format */}
-        <div className="space-y-2">
-          <Label>Currency Format</Label>
-          <Select
-            value={value.currencyFormat}
-            onValueChange={(val: CurrencyFormat) => onChange({ currencyFormat: val })}
-          >
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
+          {/* Currency Format - Button Group */}
+          <div className="space-y-2">
+            <Label>Format</Label>
+            <div className="flex gap-2">
               {CURRENCY_FORMATS.map((format) => (
-                <SelectItem key={format.value} value={format.value}>
+                <Button
+                  key={format.value}
+                  type="button"
+                  variant={value.currencyFormat === format.value ? "default" : "outline"}
+                  onClick={() => onChange({ currencyFormat: format.value })}
+                  className={cn(
+                    "flex-1",
+                    value.currencyFormat === format.value && "bg-primary text-primary-foreground"
+                  )}
+                >
                   {format.label}
-                </SelectItem>
+                </Button>
               ))}
-            </SelectContent>
-          </Select>
+            </div>
+          </div>
         </div>
 
-        {/* Font */}
+        {/* Font - Button Group */}
         <div className="space-y-2">
           <Label>Font</Label>
-          <Select
-            value={value.font}
-            onValueChange={(val: FontStyle) => onChange({ font: val })}
-          >
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {FONTS.map((font) => (
-                <SelectItem key={font.value} value={font.value}>
-                  {font.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="flex gap-2">
+            {FONTS.map((font) => (
+              <Button
+                key={font.value}
+                type="button"
+                variant={value.font === font.value ? "default" : "outline"}
+                onClick={() => onChange({ font: font.value })}
+                className={cn(
+                  "flex-1",
+                  value.font === font.value && "bg-primary text-primary-foreground"
+                )}
+              >
+                {font.label}
+              </Button>
+            ))}
+          </div>
         </div>
 
         {/* Text Color */}
         <div className="space-y-2">
-          <Label htmlFor="textColor">Text Color</Label>
-          <div className="flex gap-2">
+          <Label htmlFor="textColor">Text color</Label>
+          <div className="flex gap-2 items-center">
             <Input
               id="textColor"
               type="color"
               value={value.textColor}
               onChange={(e) => onChange({ textColor: e.target.value })}
-              className="w-12 h-10 p-1 cursor-pointer"
+              className="w-16 h-10 p-1 cursor-pointer"
             />
-            <Input
-              value={value.textColor}
-              onChange={(e) => onChange({ textColor: e.target.value })}
-              placeholder="#000000"
-              className="flex-1"
-            />
+            <span className="text-sm text-muted-foreground">{value.textColor}</span>
           </div>
         </div>
 
-        {/* Show Background */}
+        {/* Show Background - Toggle with Style Selector */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <Label>Show receipt background</Label>
+            <Label className="cursor-pointer">Show receipt background</Label>
             <Switch
               checked={value.showBackground.enabled}
               onCheckedChange={(enabled) =>
@@ -140,26 +128,28 @@ export default function SettingsSection({ value, onChange }: SettingsSectionProp
             />
           </div>
 
+          {/* Background Style Buttons (when enabled) */}
           {value.showBackground.enabled && (
-            <Select
-              value={value.showBackground.style}
-              onValueChange={(val: BackgroundStyle) =>
-                onChange({
-                  showBackground: { ...value.showBackground, style: val },
-                })
-              }
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {BACKGROUND_STYLES.map((style) => (
-                  <SelectItem key={style.value} value={style.value}>
-                    {style.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex gap-2">
+              {["1", "2", "3", "4", "5"].map((style) => (
+                <Button
+                  key={style}
+                  type="button"
+                  variant={value.showBackground.style === style ? "default" : "outline"}
+                  onClick={() =>
+                    onChange({
+                      showBackground: { ...value.showBackground, style: style as any },
+                    })
+                  }
+                  className={cn(
+                    "flex-1",
+                    value.showBackground.style === style && "bg-primary text-primary-foreground"
+                  )}
+                >
+                  #{style}
+                </Button>
+              ))}
+            </div>
           )}
         </div>
       </CardContent>

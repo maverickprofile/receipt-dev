@@ -1,0 +1,141 @@
+{
+    "id": "clothing-receipt",
+    "name": "Clothing Receipt",
+    "thumbnail": "/assets/img/receipts/clothing-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-clothing",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "businessName": "CHARLIE TSHIRTS",
+            "address": "641 W Lionshead circle\n970 333-9888",
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "meta-clothing",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "Receipt",
+                    "value": "263238"
+                },
+                {
+                    "key": "Date",
+                    "value": "12/21/2025"
+                },
+                {
+                    "key": "Cashier",
+                    "value": "DUANTE"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "Store",
+                    "value": "0"
+                },
+                {
+                    "key": "Register",
+                    "value": "272788"
+                },
+                {
+                    "key": "Salesperson",
+                    "value": "DUANTE"
+                }
+            ],
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "items-clothing",
+            "type": "items_list",
+            "headers": {
+                "qty": "Qty",
+                "item": "Item",
+                "price": "Price"
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Short Sleeved Shirts",
+                    "price": 10.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            },
+            "totalLines": [
+                {
+                    "title": "Total Units",
+                    "value": 1.00
+                },
+                {
+                    "title": "Subtotal",
+                    "value": 10.00
+                },
+                {
+                    "title": "Tax",
+                    "value": 1.00
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 11.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-clothing",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "9898"
+            },
+            "customLines": [
+                {
+                    "title": "12/21 5:38 PM",
+                    "value": "$11.00"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-clothing",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "You Saved $0.00\nExchange Only No Refunds\nThank You for Shopping at charlie tshirt\n\nWWW.CHARLESTSHIRTS.COM",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

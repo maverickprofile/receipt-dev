@@ -39,7 +39,7 @@ export async function generateReceiptPdfService(req: NextRequest) {
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inconsolata:wght@400;500;600;700&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inconsolata:wght@400;500;600;700&family=Libre+Barcode+39&display=swap" rel="stylesheet">
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
             body { 
@@ -47,7 +47,10 @@ export async function generateReceiptPdfService(req: NextRequest) {
               background: white;
               display: flex;
               justify-content: center;
-              padding: 20px;
+              padding: 0; /* Removed padding to fit thermal receipts exactly */
+              margin: 0;
+              /* Define variable manually for PDF context since layout isn't present */
+              --font-libre-barcode-39: 'Libre Barcode 39', cursive;
             }
           </style>
         </head>
@@ -78,7 +81,7 @@ export async function generateReceiptPdfService(req: NextRequest) {
 
     page = await browser.newPage();
     await page.setContent(fullHtml, {
-      waitUntil: ["networkidle0", "load", "domcontentloaded"],
+      waitUntil: "load",
       timeout: 30000,
     });
 
@@ -89,11 +92,37 @@ export async function generateReceiptPdfService(req: NextRequest) {
     // Wait for fonts to load
     await page.evaluateHandle("document.fonts.ready");
 
-    const pdf: Uint8Array = await page.pdf({
-      format: "a4",
+    // Calculate height for thermal receipts
+    const bodyHeight = await page.evaluate(() => document.body.scrollHeight);
+
+    // Determine PDF options based on size
+    let pdfOptions: any = {
       printBackground: true,
-      preferCSSPageSize: true,
-    });
+      preferCSSPageSize: true, // Respect @page CSS
+    };
+
+    if (body.settings.pdfSize === "A4") {
+      pdfOptions.format = "A4";
+    } else {
+      // For thermal receipts (80mm, 110mm), use visual viewport width and dynamic height
+      // Disable CSS page size preference to FORCE manual width/height
+      pdfOptions.preferCSSPageSize = false;
+
+      const widthStr = body.settings.pdfSize; // "80mm" or "110mm"
+      const widthPx = widthStr === "80mm" ? 302 : 415; // Approx 96 DPI: 80mm ~ 302px, 110mm ~ 415px
+
+      // Set viewport to match thermal printer width to ensure correct reflow/centering
+      await page.setViewport({ width: widthPx, height: 800 });
+
+      // Recalculate height with new viewport
+      const newBodyHeight = await page.evaluate(() => document.body.scrollHeight);
+
+      pdfOptions.width = widthStr;
+      pdfOptions.height = newBodyHeight + 2 + "px"; // Exact fit with small buffer
+      pdfOptions.pageRanges = "1";
+    }
+
+    const pdf: Uint8Array = await page.pdf(pdfOptions);
 
     return new NextResponse(new Blob([pdf], { type: "application/pdf" }), {
       headers: {

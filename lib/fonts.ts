@@ -5,6 +5,10 @@ import {
     Great_Vibes,
     Outfit,
     Parisienne,
+    Roboto_Mono,
+    Space_Mono,
+    Inconsolata,
+    Libre_Barcode_39,
 } from "next/font/google";
 
 // Default Fonts
@@ -44,5 +48,32 @@ export const alexBrush = Alex_Brush({
     weight: "400",
     variable: "--font-alex-brush",
     preload: true,
+    display: "swap",
+});
+
+// Receipt Fonts
+export const robotoMono = Roboto_Mono({
+    subsets: ["latin"],
+    variable: "--font-roboto-mono",
+    display: "swap",
+});
+
+export const spaceMono = Space_Mono({
+    subsets: ["latin"],
+    weight: "400",
+    variable: "--font-space-mono",
+    display: "swap",
+});
+
+export const inconsolata = Inconsolata({
+    subsets: ["latin"],
+    variable: "--font-inconsolata",
+    display: "swap",
+});
+
+export const libreBarcode39 = Libre_Barcode_39({
+    subsets: ["latin"],
+    weight: "400",
+    variable: "--font-libre-barcode-39",
     display: "swap",
 });

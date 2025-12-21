@@ -1,0 +1,152 @@
+{
+    "id": "walmart",
+    "name": "Walmart Receipt",
+    "thumbnail": "/assets/img/receipts/walmart-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "top-promo-walmart",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "See back of receipt for your chance\nto win $1000",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "header-walmart",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/walmart-logo.png",
+            "logoWidth": 120,
+            "businessName": "Walmart",
+            "address": "Save money. Live better.\n\n(555) 555-5555\nMANAGER RENE FUENTES",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "store-meta-walmart",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "ST# 02626  OP# 009020  TE# 93  TR# 08477",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-walmart",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "HMM CN SWTGRN",
+                    "price": 3.98
+                },
+                {
+                    "quantity": 1,
+                    "name": "STRAWBERRIES 1LB",
+                    "price": 2.98
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "SUBTOTAL",
+                    "value": 6.96
+                },
+                {
+                    "title": "TAX 1",
+                    "value": 0.56
+                }
+            ],
+            "total": {
+                "title": "TOTAL",
+                "value": 7.52
+            },
+            "increaseTotalSize": {
+                "enabled": true,
+                "percentage": "+10%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-walmart",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "",
+                "cardNumber": ""
+            },
+            "customLines": [
+                {
+                    "title": "DEBIT TEND",
+                    "value": "7.52"
+                },
+                {
+                    "title": "CHANGE DUE",
+                    "value": "0.00"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-walmart",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "# ITEMS SOLD 2\n\nTC# 7973 8393 8498 8392 3992",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-walmart",
+            "type": "barcode",
+            "value": "79738393849883923992",
+            "displayValue": false,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "date-footer-walmart",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "12/21/2025  17:55:00",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

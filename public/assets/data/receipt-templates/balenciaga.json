@@ -1,0 +1,131 @@
+{
+    "id": "balenciaga",
+    "name": "Balenciaga Receipt",
+    "thumbnail": "/assets/img/receipts/balenciaga-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-balenciaga",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "businessName": "BALENCIAGA",
+            "address": "412 Marina Bay\nSAN FRANCISCO, CA 91232\n(415) 515-4441",
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "date-line-balenciaga",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Date: 07/04/2025 5:43 PM",
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "items-balenciaga",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Hourglass Bag",
+                    "price": 2850.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 2850.00
+                },
+                {
+                    "title": "Tax",
+                    "value": 362.18
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 3212.18
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "payment-balenciaga",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "4932"
+            },
+            "customLines": [
+                {
+                    "title": "CARD NUMBER",
+                    "value": "**** **** **** 4932"
+                },
+                {
+                    "title": "CARD TYPE",
+                    "value": "DEBIT"
+                },
+                {
+                    "title": "CARD ENTRY",
+                    "value": "CHIP"
+                },
+                {
+                    "title": "DATE/TIME",
+                    "value": "11/20/2019 11:09 AM"
+                },
+                {
+                    "title": "REFERENCE #",
+                    "value": "62845285090245240585C"
+                },
+                {
+                    "title": "STATUS",
+                    "value": "APPROVED"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-balenciaga",
+            "type": "barcode",
+            "value": "12345678901234567890",
+            "displayValue": false,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

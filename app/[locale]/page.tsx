@@ -1,10 +1,13 @@
 // Components
-import { InvoiceMain } from "@/app/components";
+import { ReceiptMain } from "@/app/components";
+import { ReceiptContextProvider } from "@/contexts/ReceiptContext";
 
 export default function Home() {
     return (
         <main className="py-10 lg:container">
-            <InvoiceMain />
+            <ReceiptContextProvider templateId="home-default">
+                <ReceiptMain />
+            </ReceiptContextProvider>
         </main>
     );
 }

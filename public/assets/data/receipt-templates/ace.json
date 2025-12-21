@@ -1,0 +1,173 @@
+{
+    "id": "ace",
+    "name": "Ace Hardware Receipt",
+    "thumbnail": "/assets/img/receipts/ace-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-ace",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/ace-logo.png",
+            "logoWidth": 80,
+            "businessName": "ACE Hardware",
+            "address": "Thank You for Shopping at\nAce Hardware of Davis\n4640 Solana Pkwy, Davis, CA 95618\nPhone: (530) 750-1800",
+            "phone": "",
+            "website": "",
+            "extraInfo": "",
+            "divider": {
+                "enabled": false,
+                "style": "---"
+            }
+        },
+        {
+            "id": "datetime-ace",
+            "type": "datetime",
+            "alignment": "center",
+            "dateTime": "2024-11-14T17:46:31.000Z",
+            "divider": {
+                "enabled": false,
+                "style": "---"
+            }
+        },
+        {
+            "id": "two-column-ace",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "Reg",
+                    "value": "2"
+                },
+                {
+                    "key": "Trans",
+                    "value": "4938"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "Cashier",
+                    "value": "John D"
+                },
+                {
+                    "key": "Store",
+                    "value": "2044"
+                }
+            ],
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "items-ace",
+            "type": "items_list",
+            "headers": {
+                "qty": "Qty",
+                "item": "Item",
+                "price": "Price"
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Hammer 16oz",
+                    "price": 12.99
+                },
+                {
+                    "quantity": 2,
+                    "name": "Nails 100ct",
+                    "price": 3.49
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 19.97
+                },
+                {
+                    "title": "Tax (8%)",
+                    "value": 1.60
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 21.57
+            },
+            "increaseTotalSize": {
+                "enabled": true,
+                "percentage": "+50%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "payment-ace",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "****-****-****-1234"
+            },
+            "customLines": [
+                {
+                    "title": "Card Type",
+                    "value": "VISA"
+                },
+                {
+                    "title": "Card Num",
+                    "value": "**** **** **** 1234"
+                },
+                {
+                    "title": "Auth Code",
+                    "value": "055123"
+                },
+                {
+                    "title": "AID",
+                    "value": "A0000000031010"
+                }
+            ],
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "barcode-ace",
+            "type": "barcode",
+            "size": 50,
+            "length": 100,
+            "value": "202411149988",
+            "showText": true,
+            "divider": {
+                "enabled": false,
+                "style": "---"
+            }
+        },
+        {
+            "id": "footer-ace",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Thank you for shopping at ACE!\nPlease come again.",
+            "divider": {
+                "enabled": false,
+                "style": "---"
+            }
+        }
+    ]
+}

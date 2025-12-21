@@ -17,11 +17,14 @@
       "id": "header-1",
       "type": "header",
       "alignment": "center",
-      "logo": {
-        "url": "",
-        "size": 75
-      },
-      "businessDetails": "Circle K Service Station\n350 W Chicago Ave\nChicago, IL 60654",
+      "showLogo": false,
+      "logoUrl": "",
+      "logoWidth": 75,
+      "businessName": "Circle K Service Station",
+      "address": "350 W Chicago Ave\nChicago, IL 60654",
+      "phone": "",
+      "website": "",
+      "extraInfo": "",
       "divider": {
         "enabled": true,
         "style": "---"
@@ -51,10 +54,16 @@
       "id": "two-col-1",
       "type": "two_column",
       "column1": [
-        { "key": "Item", "value": "" }
+        {
+          "key": "Item",
+          "value": ""
+        }
       ],
       "column2": [
-        { "key": "Price", "value": "" }
+        {
+          "key": "Price",
+          "value": ""
+        }
       ],
       "divider": {
         "enabled": false,
@@ -65,17 +74,35 @@
       "id": "items-1",
       "type": "items_list",
       "items": [
-        { "quantity": 1, "name": "Monster Energy Drink (16 oz)", "price": 3.29 },
-        { "quantity": 1, "name": "Snickers Bar (1.86 oz)", "price": 1.49 },
-        { "quantity": 1, "name": "Lays Chips (2.75 oz)", "price": 10.00 }
+        {
+          "quantity": 1,
+          "name": "Monster Energy Drink (16 oz)",
+          "price": 3.29
+        },
+        {
+          "quantity": 1,
+          "name": "Snickers Bar (1.86 oz)",
+          "price": 1.49
+        },
+        {
+          "quantity": 1,
+          "name": "Lays Chips (2.75 oz)",
+          "price": 10.00
+        }
       ],
       "divider": {
         "enabled": true,
         "style": "---"
       },
       "totalLines": [
-        { "title": "Subtotal", "value": 16.96 },
-        { "title": "Taxes", "value": 1.40 }
+        {
+          "title": "Subtotal",
+          "value": 16.96
+        },
+        {
+          "title": "Taxes",
+          "value": 1.40
+        }
       ],
       "total": {
         "title": "Total",
@@ -93,14 +120,36 @@
     {
       "id": "payment-1",
       "type": "payment",
-      "paymentType": "card",
-      "lines": [
-        { "title": "Card number", "value": "****-****-****-6827" },
-        { "title": "Card type", "value": "Debit" },
-        { "title": "Card entry", "value": "Chip" },
-        { "title": "Date/time", "value": "11/23/2019 11:00 AM" },
-        { "title": "Reference #", "value": "6284329926024026365C" },
-        { "title": "Status", "value": "APPROVED" }
+      "method": "Debit Card",
+      "cardDetails": {
+        "cardType": "Debit",
+        "cardNumber": "****-****-****-6827"
+      },
+      "customLines": [
+        {
+          "title": "Card number",
+          "value": "****-****-****-6827"
+        },
+        {
+          "title": "Card type",
+          "value": "Debit"
+        },
+        {
+          "title": "Card entry",
+          "value": "Chip"
+        },
+        {
+          "title": "Date/time",
+          "value": "11/23/2019 11:00 AM"
+        },
+        {
+          "title": "Reference #",
+          "value": "6284329926024026365C"
+        },
+        {
+          "title": "Status",
+          "value": "APPROVED"
+        }
       ],
       "divider": {
         "enabled": true,
@@ -130,8 +179,11 @@
     {
       "id": "barcode-1",
       "type": "barcode",
-      "size": 50,
-      "length": 100,
+      "codeType": "CODE128",
+      "value": "",
+      "showText": true,
+      "height": 50,
+      "width": 100,
       "divider": {
         "enabled": false,
         "style": "---"
@@ -139,4 +191,3 @@
     }
   ]
 }
-

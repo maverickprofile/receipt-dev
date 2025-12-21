@@ -1,0 +1,151 @@
+{
+    "id": "famous-pharmacy",
+    "name": "Famous Pharmacy",
+    "thumbnail": "/assets/img/receipts/pharmacy-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-pharmacy",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/pharmacy-logo.png",
+            "logoWidth": 80,
+            "businessName": "Famous Pharmacy",
+            "address": "123 Main St, Anytown, USA\n1234567890",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "datetime-pharmacy",
+            "type": "datetime",
+            "alignment": "center",
+            "dateTime": "2025-12-21T17:02:00.000Z",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "reg-info-pharmacy",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "REG#75   TRANS#10   CSHR#12   STR#21\nHELPED BY:   MIGGEL",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-pharmacy",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Teeth Whitening Strip\nITEM 1",
+                    "price": 100.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "SUBTOTAL",
+                    "value": 100.00
+                },
+                {
+                    "title": "Sales Tax",
+                    "value": 0.00
+                }
+            ],
+            "total": {
+                "title": "TOTAL",
+                "value": 100.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-pharmacy",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "VISA",
+                "cardNumber": "XXXXXXXXXXXX4932"
+            },
+            "customLines": [
+                {
+                    "title": "CHARGE",
+                    "value": "$100.00"
+                },
+                {
+                    "title": "CHANGE",
+                    "value": "$0.00"
+                },
+                {
+                    "title": "APPROVED#",
+                    "value": "917276"
+                },
+                {
+                    "title": "REF#",
+                    "value": "3919625"
+                },
+                {
+                    "title": "AID",
+                    "value": "X62I1P0FMDG5ZEGW"
+                },
+                {
+                    "title": "TC",
+                    "value": "00Z1EBHTNJ5VEUS9"
+                },
+                {
+                    "title": "TERMINAL#",
+                    "value": "37336314"
+                },
+                {
+                    "title": "CVM",
+                    "value": "146275"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-sig-pharmacy",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "SIGNATURE: MIGGEL\n\nTHANKS FOR SHOPPING WITH US",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

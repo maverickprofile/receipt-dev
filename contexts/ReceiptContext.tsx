@@ -52,7 +52,7 @@ interface ReceiptContextType {
 
   // Template Operations
   loadTemplate: (templateId: string) => Promise<void>;
-  resetToTemplate: () => void;
+  resetToTemplate: () => Promise<void>;
 
   // Settings Operations
   updateSettings: (settings: Partial<SettingsSection>) => void;
@@ -70,6 +70,7 @@ interface ReceiptContextType {
   printPdf: () => void;
   previewPdfInTab: () => void;
   removeFinalPdf: () => void;
+  downloadImage: () => Promise<void>;
 
   // Save/Load Operations
   saveReceipt: () => void;
@@ -87,28 +88,29 @@ const defaultReceiptContext: ReceiptContextType = {
   pdfUrl: null,
   isLoading: true,
 
-  loadTemplate: async () => {},
-  resetToTemplate: () => {},
+  loadTemplate: async () => { },
+  resetToTemplate: async () => { },
 
-  updateSettings: () => {},
+  updateSettings: () => { },
 
-  addSection: () => {},
-  removeSection: () => {},
-  updateSection: () => {},
-  reorderSections: () => {},
-  duplicateSection: () => {},
+  addSection: () => { },
+  removeSection: () => { },
+  updateSection: () => { },
+  reorderSections: () => { },
+  duplicateSection: () => { },
 
-  generatePdf: async () => {},
-  downloadPdf: () => {},
-  printPdf: () => {},
-  previewPdfInTab: () => {},
-  removeFinalPdf: () => {},
+  generatePdf: async () => { },
+  downloadPdf: () => { },
+  printPdf: () => { },
+  previewPdfInTab: () => { },
+  removeFinalPdf: () => { },
+  downloadImage: async () => { },
 
-  saveReceipt: () => {},
-  deleteReceipt: () => {},
-  loadReceipt: () => {},
-  exportReceiptAsJson: () => {},
-  importReceipt: () => {},
+  saveReceipt: () => { },
+  deleteReceipt: () => { },
+  loadReceipt: () => { },
+  exportReceiptAsJson: () => { },
+  importReceipt: () => { },
 };
 
 export const ReceiptContext = createContext<ReceiptContextType>(defaultReceiptContext);
@@ -224,15 +226,22 @@ export const ReceiptContextProvider = ({
         if (draftJSON) {
           const draft = JSON.parse(draftJSON);
           if (draft.id === id) {
-            setReceipt(draft);
-            // Still load original template for reset functionality
-            const response = await fetch(`${RECEIPT_TEMPLATES_PATH}/${id}.json`);
-            if (response.ok) {
-              const templateData = await response.json();
-              setOriginalTemplate(templateData);
+            // Check if this is a "bad draft" (fallback) that stuck around
+            // If the draft is named "New Receipt" but we are loading a specific template (not default), ignore it.
+            if (draft.name === "New Receipt" && id !== "home-default") {
+              console.warn("Ignoring cached fallback draft for", id);
+              // Fall through to fetch
+            } else {
+              setReceipt(draft);
+              // Still load original template for reset functionality
+              const response = await fetch(`${RECEIPT_TEMPLATES_PATH}/${id}.json`);
+              if (response.ok) {
+                const templateData = await response.json();
+                setOriginalTemplate(templateData);
+              }
+              setIsLoading(false);
+              return;
             }
-            setIsLoading(false);
-            return;
           }
         }
       }
@@ -247,27 +256,61 @@ export const ReceiptContextProvider = ({
       setOriginalTemplate(templateData);
     } catch (error) {
       console.error("Error loading template:", error);
-      // Create a minimal default receipt
-      const defaultReceipt: ReceiptType = {
-        id,
-        name: "New Receipt",
-        settings: DEFAULT_SETTINGS,
-        sections: [],
-      };
-      setReceipt(defaultReceipt);
-      setOriginalTemplate(defaultReceipt);
+
+      // Check if we have a hardcoded fallback for this ID
+      // This ensures critical templates work even if fetch/network fails
+      const fallback = (await import("@/lib/fallback-templates")).FALLBACK_TEMPLATES[id];
+
+      if (fallback) {
+        console.log("Using fallback template for:", id);
+        setReceipt(fallback);
+        setOriginalTemplate(fallback);
+      } else {
+        // Create a minimal default receipt if no fallback exists
+        const defaultReceipt: ReceiptType = {
+          id,
+          name: "New Receipt",
+          settings: DEFAULT_SETTINGS,
+          sections: [],
+        };
+        setReceipt(defaultReceipt);
+        setOriginalTemplate(defaultReceipt);
+      }
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  const resetToTemplate = useCallback(() => {
-    if (originalTemplate) {
-      setReceipt(JSON.parse(JSON.stringify(originalTemplate)));
+  const resetToTemplate = useCallback(async () => {
+    let templateToRestore = originalTemplate;
+
+    // If originalTemplate is missing (e.g. valid draft loaded but fetch failed or skipped), try to fetch it again
+    if (!templateToRestore && receipt?.id) {
+      try {
+        const response = await fetch(`${RECEIPT_TEMPLATES_PATH}/${receipt.id}.json`);
+        if (response.ok) {
+          const data = await response.json();
+          templateToRestore = data;
+          setOriginalTemplate(data);
+        }
+      } catch (error) {
+        console.error("Error fetching original template for reset:", error);
+      }
+    }
+
+    if (templateToRestore) {
+      // Clear draft from storage explicitly before state update
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem(LOCAL_STORAGE_RECEIPT_DRAFT_KEY);
+      }
+
+      setReceipt(JSON.parse(JSON.stringify(templateToRestore)));
       setReceiptPdf(new Blob());
       newInvoiceSuccess();
+    } else {
+      console.warn("Could not reset: No original template found.");
     }
-  }, [originalTemplate, newInvoiceSuccess]);
+  }, [originalTemplate, receipt, newInvoiceSuccess]);
 
   // =============================================================================
   // Settings Operations
@@ -371,27 +414,97 @@ export const ReceiptContextProvider = ({
   // PDF Operations
   // =============================================================================
 
+  // PDF Operations (Now utilizing html-to-image for client-side generation)
+  // =============================================================================
+
   const generatePdf = useCallback(async () => {
     if (!receipt) return;
 
     setReceiptPdfLoading(true);
     try {
-      const response = await fetch(GENERATE_RECEIPT_PDF_API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(receipt),
+      // 1. Generate Image from DOM
+      // Dynamically import toPng to avoid SSR issues
+      const { toPng } = await import("html-to-image");
+      // Dynamically import jsPDF
+      const { jsPDF } = await import("jspdf");
+
+      const node = document.getElementById("receipt-preview-node");
+      if (!node) {
+        throw new Error("Receipt preview node not found");
+      }
+
+      // Generate PNG data URL
+      // Use higher pixel ratio for better clarity in PDF
+      const dataUrl = await toPng(node, {
+        quality: 1.0,
+        pixelRatio: 3, // High resolution for PDF
+        backgroundColor: "#ffffff", // Ensure background is white if transparent
       });
 
-      const result = await response.blob();
-      setReceiptPdf(result);
+      // 2. Create PDF from Image
+      // Determine format
+      const pdfSize = receipt.settings.pdfSize || "80mm";
 
-      if (result.size > 0) {
+      let pdf: any;
+      const imgProps = {
+        width: node.offsetWidth,
+        height: node.offsetHeight,
+      };
+
+      // Calculate aspect ratio
+      const imgRatio = imgProps.height / imgProps.width;
+
+      if (pdfSize === "A4") {
+        // A4 is 210mm x 297mm
+        pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4"
+        });
+
+        const a4Width = 210;
+        // Standard receipts might typically be 80mm wide printed on A4? 
+        // But let's assume specific "A4" templates should fill more width or be centered.
+        // For simplicity and to match the "Image" preview, we fit it nicely.
+        // If the original template was narrow (80mm), printing it 210mm wide might look huge.
+        // However, if the user selected "A4" size in settings, the ReceiptTemplate renders with max-width: 794px (~210mm).
+        // So the image captured will be A4 proportioned roughly.
+
+        // We fit the image to the A4 width (minus margins)
+        const margin = 0; // 0 margin for full bleed or controlled by CSS padding
+        const pdfImgWidth = a4Width - (margin * 2);
+        const pdfImgHeight = pdfImgWidth * imgRatio;
+
+        pdf.addImage(dataUrl, 'PNG', margin, margin, pdfImgWidth, pdfImgHeight);
+
+      } else {
+        // Thermal Receipt (80mm or 110mm)
+        // Paper width in mm
+        const paperWidth = pdfSize === "110mm" ? 110 : 80;
+
+        // Calculate required height in mm to fit the image
+        // If width in PDF is 'paperWidth', then height is paperWidth * imgRatio.
+        const contentHeight = paperWidth * imgRatio;
+
+        // Initialize PDF with that exact height so it looks like one long strip (typical for thermal PDFs)
+        pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: [paperWidth, contentHeight]
+        });
+
+        pdf.addImage(dataUrl, 'PNG', 0, 0, paperWidth, contentHeight);
+      }
+
+      const pdfBlob = pdf.output("blob");
+      setReceiptPdf(pdfBlob);
+
+      if (pdfBlob.size > 0) {
         pdfGenerationSuccess();
       }
+
     } catch (err) {
-      console.error("Error generating PDF:", err);
+      console.error("Error generating receipt PDF:", err);
     } finally {
       setReceiptPdfLoading(false);
     }
@@ -402,7 +515,11 @@ export const ReceiptContextProvider = ({
       const url = window.URL.createObjectURL(receiptPdf);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${receipt?.name || "receipt"}.pdf`;
+
+      // Determine extension
+      const extension = receiptPdf.type.startsWith("image/") ? "png" : "pdf";
+
+      a.download = `${receipt?.name || "receipt"}.${extension}`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -413,11 +530,29 @@ export const ReceiptContextProvider = ({
   const printPdf = useCallback(() => {
     if (receiptPdf) {
       const pdfUrl = URL.createObjectURL(receiptPdf);
-      const printWindow = window.open(pdfUrl, "_blank");
-      if (printWindow) {
-        printWindow.onload = () => {
-          printWindow.print();
-        };
+
+      if (receiptPdf.type.startsWith("image/")) {
+        // For images, we need to print the image in a window
+        const printWindow = window.open("", "_blank");
+        if (printWindow) {
+          printWindow.document.write(`
+            <html>
+              <head><title>Print Receipt</title></head>
+              <body style="margin:0; display:flex; justify-content:center;">
+                <img src="${pdfUrl}" style="max-width:100%; height:auto;" onload="window.print();window.close()" />
+              </body>
+            </html>
+          `);
+          printWindow.document.close();
+        }
+      } else {
+        // PDF printing
+        const printWindow = window.open(pdfUrl, "_blank");
+        if (printWindow) {
+          printWindow.onload = () => {
+            printWindow.print();
+          };
+        }
       }
     }
   }, [receiptPdf]);
@@ -425,9 +560,37 @@ export const ReceiptContextProvider = ({
   const previewPdfInTab = useCallback(() => {
     if (receiptPdf) {
       const url = window.URL.createObjectURL(receiptPdf);
+      // For images, browsers handle it fine
       window.open(url, "_blank");
     }
   }, [receiptPdf]);
+
+  const downloadImage = useCallback(async () => {
+    if (!receipt) return;
+    try {
+      const { toPng } = await import("html-to-image");
+      const node = document.getElementById("receipt-preview-node");
+      if (!node) {
+        throw new Error("Receipt preview node not found");
+      }
+
+      // Generate PNG data URL
+      const dataUrl = await toPng(node, {
+        quality: 1.0,
+        pixelRatio: 3,
+        backgroundColor: "#ffffff",
+      });
+
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = `${receipt.name || "receipt"}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error("Error downloading image:", err);
+    }
+  }, [receipt]);
 
   const removeFinalPdf = useCallback(() => {
     setReceiptPdf(new Blob());
@@ -469,6 +632,9 @@ export const ReceiptContextProvider = ({
 
   const loadReceipt = useCallback((receiptToLoad: ReceiptType) => {
     setReceipt(receiptToLoad);
+    // When loading a saved receipt, that loaded state becomes the new baseline "original"
+    // So if they make changes and hit reset, it goes back to this loaded state.
+    setOriginalTemplate(JSON.parse(JSON.stringify(receiptToLoad)));
     setReceiptPdf(new Blob());
   }, []);
 
@@ -494,6 +660,8 @@ export const ReceiptContextProvider = ({
         try {
           const importedData = JSON.parse(event.target?.result as string);
           setReceipt(importedData);
+          // When importing, the imported file is the new baseline "original"
+          setOriginalTemplate(JSON.parse(JSON.stringify(importedData)));
           setReceiptPdf(new Blob());
         } catch (error) {
           console.error("Error parsing JSON file:", error);
@@ -535,6 +703,7 @@ export const ReceiptContextProvider = ({
         printPdf,
         previewPdfInTab,
         removeFinalPdf,
+        downloadImage,
 
         saveReceipt,
         deleteReceipt,

@@ -15,8 +15,8 @@ export default function ReceiptMain() {
         </div>
 
         {/* Right Column: Actions & Preview */}
-        <div className="space-y-4">
-          <Card className="sticky top-4">
+        <div className="space-y-4 lg:sticky lg:top-8 h-fit">
+          <Card>
             <CardHeader>
               <CardTitle>Actions</CardTitle>
               <CardDescription>Operations and preview</CardDescription>

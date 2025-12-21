@@ -1,0 +1,121 @@
+{
+    "id": "bar-receipt",
+    "name": "Bar / Pub Receipt",
+    "thumbnail": "/assets/img/receipts/bar-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-bar",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "businessName": "Bar Name Here",
+            "address": "Bar Address Here\nTel: 021-544",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "datetime-bar",
+            "type": "datetime",
+            "alignment": "center",
+            "dateTime": "2025-12-21T16:48:00.000Z",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "terminal-info",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "TERMINAL 2",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-bar",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Airen",
+                    "price": 1000.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Amount",
+                    "value": 1100.00
+                },
+                {
+                    "title": "SUB-TOTAL",
+                    "value": 1000.00
+                },
+                {
+                    "title": "TAX",
+                    "value": 100.00
+                }
+            ],
+            "total": {
+                "title": "BALANCE",
+                "value": 1100.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "auth-bar",
+            "type": "payment",
+            "method": "Card",
+            "customLines": [
+                {
+                    "title": "CREDIT CARD AUTH",
+                    "value": "VISA ####9898"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-sig-bar",
+            "type": "custom_message",
+            "alignment": "right",
+            "message": "TIP              $1\nTOTAL        $1101.00\n\n\n\nX _________________________\n          SIGNATURE          ",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

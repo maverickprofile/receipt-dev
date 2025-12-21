@@ -1,0 +1,152 @@
+import { ReceiptType } from "./receipt-schemas";
+
+export const FALLBACK_TEMPLATES: Record<string, ReceiptType> = {
+    walgreens: {
+        id: "walgreens",
+        name: "Walgreens Receipt",
+        settings: {
+            currency: "$",
+            currencyFormat: "prefix",
+            font: "font1",
+            textColor: "#000000",
+            showBackground: {
+                enabled: true,
+                style: "clean",
+            },
+            pdfSize: "80mm",
+            watermark: true,
+        },
+        sections: [
+            {
+                id: "header-walgreens",
+                type: "header",
+                alignment: "center",
+                showLogo: false,
+                businessName: "Walgreens",
+                address: "Store # 5835\n3568 BRADSHAW RD\nSACRAMENTO, CA 95827",
+                phone: "(916) 366-5555",
+                divider: {
+                    enabled: false,
+                    style: "---",
+                },
+            },
+            {
+                id: "datetime-walgreens",
+                type: "datetime",
+                alignment: "center",
+                dateTime: "2019-11-20T11:39:00.000Z",
+                divider: {
+                    enabled: true,
+                    style: "---",
+                },
+            },
+            {
+                id: "items-walgreens",
+                type: "items_list",
+                headers: {
+                    qty: "Qty",
+                    item: "Item",
+                    price: "Price",
+                },
+                items: [
+                    {
+                        quantity: 1,
+                        name: "Monster Energy Drink (16 oz)",
+                        price: 3.29,
+                    },
+                    {
+                        quantity: 1,
+                        name: "Snickers Bar (1.86 oz)",
+                        price: 1.49,
+                    },
+                    {
+                        quantity: 1,
+                        name: "Lays Chips (2.75 oz)",
+                        price: 10.0,
+                    },
+                ],
+                showTotals: true,
+                divider: {
+                    enabled: true,
+                    style: "---",
+                },
+                totalLines: [
+                    {
+                        title: "Subtotal",
+                        value: 14.78,
+                    },
+                    {
+                        title: "Tax (8%)",
+                        value: 1.22,
+                    },
+                ],
+                total: {
+                    title: "Total",
+                    value: 16.0,
+                },
+                increaseTotalSize: {
+                    enabled: true,
+                    percentage: "+50%",
+                },
+                bottomDivider: {
+                    enabled: true,
+                    style: "---",
+                },
+            },
+            {
+                id: "payment-walgreens",
+                type: "payment",
+                method: "Card",
+                cardDetails: {
+                    cardType: "Debit",
+                    cardNumber: "****-****-****-7502",
+                },
+                customLines: [
+                    {
+                        title: "Card number",
+                        value: "x7502",
+                    },
+                    {
+                        title: "Verified By",
+                        value: "PIN",
+                    },
+                    {
+                        title: "Auth Code",
+                        value: "055412",
+                    },
+                    {
+                        title: "Ref #",
+                        value: "7874",
+                    },
+                ],
+                divider: {
+                    enabled: true,
+                    style: "---",
+                },
+            },
+            {
+                id: "barcode-walgreens",
+                type: "barcode",
+                codeType: "CODE128",
+                value: "042607142646200557502",
+                showText: true,
+                height: 60,
+                width: 100,
+                divider: {
+                    enabled: false,
+                    style: "---",
+                },
+            },
+            {
+                id: "footer-walgreens",
+                type: "custom_message",
+                alignment: "center",
+                message: "How did we do?\n1-800-222-2222\n\nThank You for Shopping at Walgreens!",
+                divider: {
+                    enabled: false,
+                    style: "---",
+                },
+            },
+        ],
+    },
+};

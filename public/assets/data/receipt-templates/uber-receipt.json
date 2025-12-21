@@ -1,0 +1,105 @@
+{
+    "id": "uber-receipt",
+    "name": "Uber Receipt",
+    "thumbnail": "/assets/img/receipts/uber-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-uber",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/uber-logo.png",
+            "logoWidth": 100,
+            "businessName": "Uber",
+            "address": "NOVEMBER 14, 2025\n\nPickup Address: 800 W 5th St, Austin, TX 78701\nDestination Address: 1530 Dalton Spring Road,\nAustin, TX 78704",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "driver-info",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Driver: Jeremy\nCar: Toyota Corolla\nLicense: JDW492",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-uber",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Base Fare",
+                    "price": 3.48
+                },
+                {
+                    "quantity": 1,
+                    "name": "Distance (5.5 miles | 0.99/mile)",
+                    "price": 5.87
+                },
+                {
+                    "quantity": 1,
+                    "name": "Time (16 min | 0.22/min)",
+                    "price": 2.68
+                },
+                {
+                    "quantity": 1,
+                    "name": "Service Fee",
+                    "price": 1.82
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 13.85
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 13.85
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-uber",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Fare does not include fees that may be charged by\nyour bank. Please ensure that the\npayment method has sufficient funds.\n\nCard Number: **** **** **** 4932\nCard Type: Debit\nCard Entry: Chip\nDate: 11/20/2019 11:09 AM\nRef #: 62845285090245240585C\nStatus: APPROVED",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

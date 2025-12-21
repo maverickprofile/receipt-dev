@@ -1,0 +1,108 @@
+{
+    "id": "wells-fargo-atm",
+    "name": "Wells Fargo ATM Receipt",
+    "thumbnail": "/assets/img/receipts/wells-fargo-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-wf",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "businessName": "WELLS FARGO",
+            "address": "",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "meta-wf",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "Date",
+                    "value": "12/21/2025"
+                },
+                {
+                    "key": "Location",
+                    "value": "MOUNT-ROYAL-C"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "Time",
+                    "value": "5:51 PM"
+                },
+                {
+                    "key": "ATM",
+                    "value": "2941I"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "transaction-details-wf",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Customer Card:   XXXXXXXXXXXX6125\nTransaction #:   1198\nTransaction:     Withdraw From Checking",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "financials-wf",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "",
+                "cardNumber": ""
+            },
+            "customLines": [
+                {
+                    "title": "Amount:",
+                    "value": "$200.00"
+                },
+                {
+                    "title": "From Account #:",
+                    "value": "XXXXXXXX8387"
+                },
+                {
+                    "title": "Available Balance:",
+                    "value": "$482313.13"
+                },
+                {
+                    "title": "Total Balance:",
+                    "value": "$482313.13"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-wf",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Thank you for using our ATM.\nFor questions, call 1-800-869-3557\nBusiness customers call\n1-800-225-5935",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

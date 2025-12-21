@@ -1,0 +1,115 @@
+{
+    "id": "stockx-receipt",
+    "name": "StockX Receipt",
+    "thumbnail": "/assets/img/receipts/stockx-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-stockx",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/stockx-logo.png",
+            "logoWidth": 120,
+            "businessName": "StockX",
+            "address": "StockX LLC\n1046 Woodward Ave\nDetroit, MI 48226",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "order-info-stockx",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Order Number: 14593849\nOrder Date: 04/14/2025\n\nProduct Name: Jordan 1 Retro High OG\nStyle: 555088-101",
+            "divider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "product-details-stockx",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Size: 10 US\nColorway: Chicago\nCondition: New / 100% Authentic",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-stockx",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Purchase Price",
+                    "price": 350.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "Sales Tax",
+                    "price": 0.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "Processing Fee",
+                    "price": 13.95
+                },
+                {
+                    "quantity": 1,
+                    "name": "Shipping",
+                    "price": 13.95
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Grand Total",
+                    "value": 377.90
+                }
+            ],
+            "total": {
+                "title": "Total Payout",
+                "value": 377.90
+            },
+            "increaseTotalSize": {
+                "enabled": true,
+                "percentage": "+10%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "footer-stockx",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Please inspect the item. StockX will not\naccept the return once the tag is removed.\n\nVerified Authentic",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

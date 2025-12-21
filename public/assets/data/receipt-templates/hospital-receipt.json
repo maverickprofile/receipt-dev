@@ -1,0 +1,116 @@
+{
+    "id": "hospital-receipt",
+    "name": "Hospital / Dental Proposal",
+    "thumbnail": "/assets/img/receipts/hospital-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-hospital",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": false,
+            "businessName": "Proposal Treatment",
+            "address": "Dr. John Doe\n123 Main St, Anytown, USA",
+            "phone": "(555) 123-4567",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "patient-info",
+            "type": "two_column",
+            "column1": [
+                {
+                    "key": "Date",
+                    "value": "12/21/2025"
+                },
+                {
+                    "key": "Provider",
+                    "value": "Dr. Doe"
+                }
+            ],
+            "column2": [
+                {
+                    "key": "Pat",
+                    "value": "Jane Doe"
+                },
+                {
+                    "key": "ID",
+                    "value": "9941"
+                }
+            ],
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "items-hospital",
+            "type": "items_list",
+            "headers": {
+                "qty": "Code",
+                "item": "Description",
+                "price": "Fee"
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "D0150 Comprehensive Exam",
+                    "price": 50.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "D0210 Intraoral - Complete",
+                    "price": 50.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": true,
+                "style": "---"
+            },
+            "totalLines": [
+                {
+                    "title": "Total Fee",
+                    "value": 100.00
+                },
+                {
+                    "title": "Pri Ins",
+                    "value": 50.00
+                }
+            ],
+            "total": {
+                "title": "Pat Pay",
+                "value": 50.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "---"
+            }
+        },
+        {
+            "id": "disclaimer-hospital",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Insurance coverage is only an estimate. Paramet is\nresponsible for all payments regardless of insurance.\nThis Proposal remains valid for 90 days.\n\nI have been advised of the treatment plan and financial resp.\n\n\nPatient / Guardian Signature: ______________________\n\nDate: ______________________",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

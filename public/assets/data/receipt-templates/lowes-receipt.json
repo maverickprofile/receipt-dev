@@ -1,0 +1,134 @@
+{
+    "id": "lowes-receipt",
+    "name": "Lowe's Receipt",
+    "thumbnail": "/assets/img/receipts/lowes-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-lowes",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/lowes-logo.png",
+            "logoWidth": 120,
+            "businessName": "LOWE'S",
+            "address": "LOWE'S HOME CENTERS, LLC\n2499 VAN ASPY ROAD\nAPPLETON, WI 54911 (920) 039-3700",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "sale-info-lowes",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "- SALE -\nSALES#: S918 45 TRANS#: 1598 05-25-25",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-lowes",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "TIMBERLINE 40OZ CHARCOAL",
+                    "price": 839.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "WALLPAPER",
+                    "price": 2.20
+                },
+                {
+                    "quantity": 2,
+                    "name": "32131257 EG NEUTRAL",
+                    "price": 1.98
+                },
+                {
+                    "quantity": 1,
+                    "name": "S69321 ORCHID 2.5G",
+                    "price": 5.99
+                },
+                {
+                    "quantity": 1,
+                    "name": "DRILL 8953213 SPONGE",
+                    "price": 60.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 5413.07
+                },
+                {
+                    "title": "Tax",
+                    "value": 207.72
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 5750.79
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "store-meta-lowes",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "STORE: 3255 TERMINAL: 15  05/25/25",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-lowes",
+            "type": "barcode",
+            "value": "325515052525",
+            "displayValue": false,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-lowes",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "THANK YOU FOR SHOPPING LOWE'S.\n\nFOR DETAILS ON OUR RETURN POLICY,\nVISIT LOWES.COM/RETURNS\nA WRITTEN COPY OF THE RETURN POLICY\nIS AVAILABLE AT OUR CUSTOMER SERVICE\nDESK\n\nSTORE MANAGER: DOUG WILLIAMS\n\nLOWE'S PRICE PROMISE\nFOR MORE DETAILS, VISIT\nLOWES.COM/PRICEPROMISE",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

@@ -1,0 +1,133 @@
+{
+    "id": "target-receipt",
+    "name": "Target Receipt",
+    "thumbnail": "/assets/img/receipts/target-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-target",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/target-logo.png",
+            "logoWidth": 60,
+            "businessName": "TARGET",
+            "address": "2500 East Second St.\nReno, NV 89595\n(775) 323-5550",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "transaction-target",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "ST# 01234  OP# 567890  TE# 23  TR# 03111",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-target",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "ALBEISS CLEANING WIPES\nPRODUCT SERIAL # TIK6000122",
+                    "price": 8.99
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 8.99
+                },
+                {
+                    "title": "Tax",
+                    "value": 0.72
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 9.71
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-target",
+            "type": "payment",
+            "method": "Cash",
+            "customLines": [
+                {
+                    "title": "Cash",
+                    "value": "$10.00"
+                },
+                {
+                    "title": "Change",
+                    "value": "$0.29"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "date-target",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "12/21/2025   10:59:56 AM",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-target",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "# ITEMS SOLD 1\n\nTC# 4894 4435 0893 5332 0948",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-target",
+            "type": "barcode",
+            "value": "48944435089353320948",
+            "displayValue": false,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

@@ -1,0 +1,153 @@
+{
+    "id": "saks-receipt",
+    "name": "Saks Fifth Avenue Receipt",
+    "thumbnail": "/assets/img/receipts/saks-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-saks",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/saks-logo.png",
+            "logoWidth": 150,
+            "businessName": "Saks OFF 5TH",
+            "address": "1530 Houston Outlets Blvd, Ste 435\nTexas City, TX 77591\n281-332-6800",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "meta-saks",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "STORE: 5485 REG: 21 TRANS: 7688\nASSOC: 1253065 SA\n\nST 7755 7780 0000 TRN 000032",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-saks",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Michael Kors Wallet",
+                    "price": 149.99
+                },
+                {
+                    "quantity": 1,
+                    "name": "Calvin Klein Shirt",
+                    "price": 59.99
+                },
+                {
+                    "quantity": 1,
+                    "name": "Home Decor",
+                    "price": 49.99
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 259.97
+                },
+                {
+                    "title": "Total Tax",
+                    "value": 21.45
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 281.42
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-saks",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "Debit",
+                "cardNumber": "4932"
+            },
+            "customLines": [
+                {
+                    "title": "Card Number",
+                    "value": "**** **** **** 4932"
+                },
+                {
+                    "title": "Card Type",
+                    "value": "Debit"
+                },
+                {
+                    "title": "Card Entry",
+                    "value": "Chip"
+                },
+                {
+                    "title": "Date/Time",
+                    "value": "11/20/2019 11:09 AM"
+                },
+                {
+                    "title": "Reference #",
+                    "value": "62845285090245240585C"
+                },
+                {
+                    "title": "Status",
+                    "value": "APPROVED"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-saks",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "At Saks OFF 5TH, we want you to be pleased with your purchase. If for any reason you are not completely satisfied, you may return or exchange your purchase within 30 days of receipt. Products must be in their original condition.",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-saks",
+            "type": "barcode",
+            "value": "123456789012345678",
+            "displayValue": false,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

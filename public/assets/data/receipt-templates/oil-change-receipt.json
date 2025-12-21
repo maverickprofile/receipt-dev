@@ -1,0 +1,163 @@
+{
+    "id": "oil-change-receipt",
+    "name": "Oil Change Receipt",
+    "thumbnail": "/assets/img/receipts/oil-change-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font2",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-oil",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/precision-auto-logo.png",
+            "logoWidth": 60,
+            "businessName": "Precision Auto & Tire, LLC",
+            "address": "2150 Traders Highway\nCleveland, OH 44119\nPhone: (216) 123-4567\nService@PrecisionAuto.com",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-top",
+            "type": "barcode",
+            "value": "370123456789",
+            "displayValue": false,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "meta-oil",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "Oil Change Receipt\n\nAll Work Guaranteed\nService: Honda Civic",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-oil",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "Full Synthetic Oil Change",
+                    "price": 90.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 90.00
+                },
+                {
+                    "title": "Tax",
+                    "value": 2.00
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 92.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "payment-oil",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "Debit",
+                "cardNumber": "4932"
+            },
+            "customLines": [
+                {
+                    "title": "Card Number",
+                    "value": "**** **** **** 4932"
+                },
+                {
+                    "title": "Card Type",
+                    "value": "Debit"
+                },
+                {
+                    "title": "Card Entry",
+                    "value": "Chip"
+                },
+                {
+                    "title": "Date/Time",
+                    "value": "11/20/2019 11:09 AM"
+                },
+                {
+                    "title": "Reference #",
+                    "value": "62845285090245240585C"
+                },
+                {
+                    "title": "Status",
+                    "value": "APPROVED"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-warranty",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "All parts 90 day warranty. Labor\nwarranted for 30 days or 3,000\nmiles, whichever comes first. Any\nimplied warranty of merchantability\nis valid for the same duration as\nsatisfaction warrantied.",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-thanks",
+            "type": "custom_message",
+            "alignment": "center",
+            "message": "THANK YOU FOR CHOOSING PRECISION AUTO GARAGE.",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-policy",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "We offer a limited warranty on labor and parts for 90 days or 3,000 miles.\nAny disputes shall be resolved in the state of Ohio.",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}

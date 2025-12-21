@@ -1,0 +1,153 @@
+{
+    "id": "abortion-receipt",
+    "name": "Medical Service Receipt",
+    "thumbnail": "/assets/img/receipts/abortion-thumb.png",
+    "settings": {
+        "currency": "$",
+        "currencyFormat": "prefix",
+        "font": "font1",
+        "textColor": "#000000",
+        "showBackground": {
+            "enabled": true,
+            "style": "1"
+        }
+    },
+    "sections": [
+        {
+            "id": "header-medical",
+            "type": "header",
+            "alignment": "center",
+            "showLogo": true,
+            "logoUrl": "/assets/img/receipts/hopecare-logo.png",
+            "logoWidth": 60,
+            "businessName": "HopeCare Women's Health Services, LLC",
+            "address": "Address: 1530 St Andrews Rd, Suite A\nColumbia, SC 29210\nPhone: (803) 772-7917\nEmail: info@hopecarewhs.com",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "patient-info",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Patient Name: Samantha Hages\nDate of Birth: Mar 14, 1997\nPhone Number: (803) 555-0199\nAccount #: 99543210-0\nTicket #: 1049-22458",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "items-medical",
+            "type": "items_list",
+            "headers": {
+                "qty": "",
+                "item": "",
+                "price": ""
+            },
+            "items": [
+                {
+                    "quantity": 1,
+                    "name": "1. Consultation",
+                    "price": 150.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "2. Ultrasound",
+                    "price": 200.00
+                },
+                {
+                    "quantity": 1,
+                    "name": "3. Surgical Abortion Procedure (1st Trim)",
+                    "price": 350.00
+                }
+            ],
+            "showTotals": true,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            },
+            "totalLines": [
+                {
+                    "title": "Subtotal",
+                    "value": 700.00
+                },
+                {
+                    "title": "Tax",
+                    "value": 0.00
+                }
+            ],
+            "total": {
+                "title": "Total",
+                "value": 700.00
+            },
+            "increaseTotalSize": {
+                "enabled": false,
+                "percentage": "+0%"
+            },
+            "bottomDivider": {
+                "enabled": true,
+                "style": "dashed"
+            }
+        },
+        {
+            "id": "payment-medical",
+            "type": "payment",
+            "method": "Card",
+            "cardDetails": {
+                "cardType": "Debit",
+                "cardNumber": "4932"
+            },
+            "customLines": [
+                {
+                    "title": "Card Number",
+                    "value": "**** **** **** 4932"
+                },
+                {
+                    "title": "Card Type",
+                    "value": "Debit"
+                },
+                {
+                    "title": "Card Entry",
+                    "value": "Chip"
+                },
+                {
+                    "title": "Date/Time",
+                    "value": "11/20/2019 11:09 AM"
+                },
+                {
+                    "title": "Reference #",
+                    "value": "62845285090245240585C"
+                },
+                {
+                    "title": "Status",
+                    "value": "APPROVED"
+                }
+            ],
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "footer-medical",
+            "type": "custom_message",
+            "alignment": "left",
+            "message": "Full payment for all services is\nrequired prior to receiving\nservices or treatment. It is\npatient/guarantor's responsibility\nto verify if HopeCare is in network\nwith their insurance plan.\nDue to the nature of medical\nservices provided and supplies\nused, refund requests are approved on a\ncase-by-case basis. Typical\ncancellations must be made 24 hours\nbefore the scheduled appointment for\neligibility for a refund or credit.\nThank you for choosing us.",
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        },
+        {
+            "id": "barcode-medical",
+            "type": "barcode",
+            "value": "24710210763579",
+            "displayValue": false,
+            "divider": {
+                "enabled": false,
+                "style": "blank"
+            }
+        }
+    ]
+}
