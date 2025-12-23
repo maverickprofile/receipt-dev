@@ -2,6 +2,15 @@ import { betterAuth } from "better-auth";
 import { Pool } from "pg";
 
 export const auth = betterAuth({
+    baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+    trustedOrigins: [
+        "http://localhost:3000",
+        "https://receipt.dev",
+        "https://www.receipt.dev",
+        "https://makereceipt.com",
+        "https://www.makereceipt.com",
+        "https://make-receipt.vercel.app",
+    ],
     database: new Pool({
         connectionString: process.env.DATABASE_URL,
     }),

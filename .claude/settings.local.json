@@ -12,7 +12,9 @@
       "Bash(node db/migrate.js:*)",
       "Bash(dir /s /b \"C:\\\\Users\\\\SURESH\\\\Desktop\\\\FOLDERS\\\\AI Projects\\\\invoify-dev\\\\app\")",
       "Bash(findstr:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "WebFetch(domain:developers.google.com)",
+      "Bash(git add:*)"
     ]
   }
 }
