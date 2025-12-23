@@ -35,14 +35,14 @@ export default function DividerConfigComponent({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       <div className="flex items-center justify-between">
-        <Label>{label}</Label>
+        <Label className="text-xs sm:text-sm">{label}</Label>
         <Switch checked={value.enabled} onCheckedChange={handleEnabledChange} />
       </div>
 
       {value.enabled && (
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
           {DIVIDER_STYLES.map((style) => (
             <Button
               key={style.value}
@@ -50,7 +50,7 @@ export default function DividerConfigComponent({
               variant={value.style === style.value ? "default" : "outline"}
               onClick={() => handleStyleChange(style.value)}
               className={cn(
-                "flex-1 font-mono",
+                "flex-1 min-w-[40px] sm:min-w-[50px] font-mono h-8 sm:h-10 text-xs sm:text-sm px-2 sm:px-3",
                 value.style === style.value && "bg-primary text-primary-foreground"
               )}
             >

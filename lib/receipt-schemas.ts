@@ -35,6 +35,21 @@ export type PaymentType = z.infer<typeof PaymentTypeSchema>;
 export type PaymentMethod = "Cash" | "Credit Card";
 export type PaymentLine = { title: string; value: string };
 export type KeyValuePair = { key: string; value: string };
+export type ReceiptItem = { quantity: number; name: string; price: number };
+export type TotalLine = { title: string; value: number };
+export type TotalSizePercentage = "+10%" | "+20%" | "+25%" | "+50%" | "+75%" | "+100%";
+
+// Template types
+export type TemplateInfo = {
+  id: string;
+  name: string;
+  description?: string;
+  thumbnail?: string;
+};
+
+export type TemplateIndex = {
+  templates: TemplateInfo[];
+};
 
 export const BarcodeCodeTypeSchema = z.enum(["CODE128", "EAN13", "UPC_A", "QR_CODE"]);
 export type BarcodeCodeType = z.infer<typeof BarcodeCodeTypeSchema>;

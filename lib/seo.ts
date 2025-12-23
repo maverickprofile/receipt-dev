@@ -1,31 +1,33 @@
 import { AUTHOR_WEBSITE, BASE_URL } from "@/lib/variables";
 
 export const ROOTKEYWORDS = [
+    "receipt",
+    "receipt generator",
+    "receipt maker",
+    "receipt template",
+    "free receipt generator",
     "invoice",
     "invoice generator",
-    "invoice generating",
-    "invoice app",
-    "invoice generator app",
-    "free invoice generator",
 ];
 
 export const JSONLD = {
     "@context": "https://schema.org",
     "@type": "Website",
-    name: "Invoify",
-    description: "An Invoice Generator Web App",
+    name: "ReceiptMaker",
+    description: "A Receipt Generator Web App",
     keywords: ROOTKEYWORDS,
     url: BASE_URL,
-    image: "https://invoify.vercel.app/_next/static/media/invoify-logo.7ef8fa33.svg",
+    image: "/assets/img/receiptmaker-logo.svg",
     mainEntityOfPage: {
         "@type": "WebPage",
         "@id": `${BASE_URL}/#website`,
     },
-    author: {
-        "@type": "Person",
-        name: "Ali Abbasov",
-        url: AUTHOR_WEBSITE,
-    },
+    // Author information - commented out
+    // author: {
+    //     "@type": "Person",
+    //     name: "Ali Abbasov",
+    //     url: AUTHOR_WEBSITE,
+    // },
     "@graph": [
         {
             "@type": "WebSite",

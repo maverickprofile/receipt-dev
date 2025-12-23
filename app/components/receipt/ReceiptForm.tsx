@@ -69,11 +69,11 @@ export default function ReceiptForm() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Receipt Name Header */}
       <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="text-xl">{receipt.name}</CardTitle>
+        <CardHeader className="pb-2 p-3 sm:p-6 sm:pb-2">
+          <CardTitle className="text-base sm:text-xl">{receipt.name}</CardTitle>
         </CardHeader>
       </Card>
 
@@ -86,19 +86,19 @@ export default function ReceiptForm() {
       {/* Add Section Button */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full h-9 sm:h-10 text-xs sm:text-sm">
             <Plus className="h-4 w-4 mr-2" />
             Add Section
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" className="w-56">
+        <DropdownMenuContent align="center" className="w-48 sm:w-56">
           {RECEIPT_SECTION_TYPES.map((section) => {
             const Icon = iconMap[section.icon];
             return (
               <DropdownMenuItem
                 key={section.value}
                 onClick={() => handleAddSection(section.value as SectionType)}
-                className="cursor-pointer"
+                className="cursor-pointer text-xs sm:text-sm"
               >
                 {Icon && <Icon className="h-4 w-4 mr-2" />}
                 {section.label}

@@ -23,7 +23,7 @@ export default function DateTimeSectionForm({ value, onChange }: DateTimeSection
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Alignment */}
       <AlignmentSelector
         value={value.alignment}
@@ -31,13 +31,14 @@ export default function DateTimeSectionForm({ value, onChange }: DateTimeSection
       />
 
       {/* Date & Time */}
-      <div className="space-y-2">
-        <Label htmlFor="datetime">Date & Time</Label>
+      <div className="space-y-1.5 sm:space-y-2">
+        <Label htmlFor="datetime" className="text-xs sm:text-sm">Date & Time</Label>
         <Input
           id="datetime"
           type="datetime-local"
           value={dateTimeLocalValue}
           onChange={handleDateTimeChange}
+          className="h-9 sm:h-10 text-sm"
         />
       </div>
 

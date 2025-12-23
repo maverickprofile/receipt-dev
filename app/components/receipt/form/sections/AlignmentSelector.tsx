@@ -24,8 +24,8 @@ export default function AlignmentSelector({
   ];
 
   return (
-    <div className="space-y-2">
-      <Label>{label}</Label>
+    <div className="space-y-1.5 sm:space-y-2">
+      <Label className="text-xs sm:text-sm">{label}</Label>
       <div className="flex gap-1">
         {alignments.map((alignment) => (
           <Button
@@ -34,7 +34,7 @@ export default function AlignmentSelector({
             variant="outline"
             size="sm"
             className={cn(
-              "flex-1",
+              "flex-1 h-8 sm:h-9",
               value === alignment.value && "bg-primary text-primary-foreground hover:bg-primary/90"
             )}
             onClick={() => onChange(alignment.value)}

@@ -184,7 +184,7 @@ export default function SortableSectionList() {
 
   if (!receipt || receipt.sections.length === 0) {
     return (
-      <div className="text-center py-8 text-muted-foreground">
+      <div className="text-center py-6 sm:py-8 text-muted-foreground text-xs sm:text-sm">
         No sections added. Click &quot;Add Section&quot; to get started.
       </div>
     );
@@ -200,7 +200,7 @@ export default function SortableSectionList() {
         items={receipt.sections.map((s) => s.id)}
         strategy={verticalListSortingStrategy}
       >
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           {receipt.sections.map((section) => (
             <SortableItem key={section.id} section={section} />
           ))}

@@ -28,16 +28,16 @@ const BARCODE_TYPES: { value: BarcodeCodeType; label: string }[] = [
 
 export default function BarcodeSectionForm({ value, onChange }: BarcodeSectionFormProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header with Title is handled by parent, we just render content */}
 
       {/* Barcode Value Input Removed as per user request */}
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {/* Size (Height) */}
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           <div className="flex justify-between">
-            <Label>Size</Label>
+            <Label className="text-xs sm:text-sm">Size</Label>
             <span className="text-xs text-muted-foreground">{value.height}</span>
           </div>
           <Slider
@@ -51,14 +51,14 @@ export default function BarcodeSectionForm({ value, onChange }: BarcodeSectionFo
         </div>
 
         {/* Length (Width/Scale) */}
-        {/* Note: react-barcode uses 'width' as bar width (1, 2, 3...). 
+        {/* Note: react-barcode uses 'width' as bar width (1, 2, 3...).
             But our schema has 'width' as pixel width for the container.
             We will map 'width' slider to a scale factor or keep it as container width.
-            For simple matching of "Length" slider, we'll map it to 'width' 100-300px roughly. 
+            For simple matching of "Length" slider, we'll map it to 'width' 100-300px roughly.
         */}
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           <div className="flex justify-between">
-            <Label>Length</Label>
+            <Label className="text-xs sm:text-sm">Length</Label>
             <span className="text-xs text-muted-foreground">{value.width || "Auto"}</span>
           </div>
           <Slider

@@ -16,7 +16,7 @@ export default function CustomMessageSectionForm({
   onChange,
 }: CustomMessageSectionFormProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Alignment */}
       <AlignmentSelector
         value={value.alignment}
@@ -24,14 +24,15 @@ export default function CustomMessageSectionForm({
       />
 
       {/* Message */}
-      <div className="space-y-2">
-        <Label htmlFor="message">Message</Label>
+      <div className="space-y-1.5 sm:space-y-2">
+        <Label htmlFor="message" className="text-xs sm:text-sm">Message</Label>
         <Textarea
           id="message"
           value={value.message}
           onChange={(e) => onChange({ message: e.target.value })}
           placeholder="Enter your custom message..."
           rows={4}
+          className="text-sm resize-none"
         />
       </div>
 

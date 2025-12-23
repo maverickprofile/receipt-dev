@@ -229,20 +229,23 @@ const ItemsListSectionRender = ({ section, settings }: SectionProps) => {
 
 const PaymentSectionRender = ({ section }: SectionProps) => {
   if (section.type !== "payment") return null;
+  const customLines = section.customLines || [];
   return (
     <div>
       <div className="font-semibold mb-2">
         {section.method}
       </div>
-      <div className="space-y-1">
-        {section.customLines.map((line, idx) => (
-          <div key={idx} className="flex justify-between">
-            <span>{line.title}</span>
-            <span>{line.value}</span>
-          </div>
-        ))}
-      </div>
-      {section.divider.enabled && renderDivider(section.divider.style)}
+      {customLines.length > 0 && (
+        <div className="space-y-1">
+          {customLines.map((line, idx) => (
+            <div key={idx} className="flex justify-between">
+              <span>{line.title}</span>
+              <span>{line.value}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {section.divider?.enabled && renderDivider(section.divider.style)}
     </div>
   );
 };
@@ -376,16 +379,16 @@ export function ReceiptTemplate({ receipt }: ReceiptTemplateProps) {
       {/* Watermark Overlay */}
       {settings.watermark && (
         <div
-          className="absolute inset-0 pointer-events-none opacity-[0.03] select-none flex flex-wrap content-center justify-center overflow-hidden z-0"
+          className="absolute inset-0 pointer-events-none opacity-[0.05] select-none flex flex-wrap content-center justify-center overflow-hidden z-0"
           style={{ transform: "scale(1.5)" }}
         >
           {Array.from({ length: 20 }).map((_, i) => (
             <div
               key={i}
-              className="whitespace-nowrap font-bold text-4xl p-8 rotate-[-45deg]"
+              className="whitespace-nowrap font-bold text-3xl p-6 rotate-[-45deg]"
               style={{ color: "#000" }}
             >
-              INVOIFY
+              MakeReceipt
             </div>
           ))}
         </div>

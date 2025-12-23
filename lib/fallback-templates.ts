@@ -11,7 +11,7 @@ export const FALLBACK_TEMPLATES: Record<string, ReceiptType> = {
             textColor: "#000000",
             showBackground: {
                 enabled: true,
-                style: "clean",
+                style: "1",
             },
             pdfSize: "80mm",
             watermark: true,

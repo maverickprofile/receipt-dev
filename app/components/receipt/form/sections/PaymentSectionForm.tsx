@@ -29,6 +29,7 @@ const DEFAULT_CARD_LINES: PaymentLine[] = [
 
 export default function PaymentSectionForm({ value, onChange }: PaymentSectionFormProps) {
   const isCash = value.method === "Cash";
+  const customLines = value.customLines || [];
 
   const handleModeChange = (mode: "Cash" | "Card") => {
     if (mode === "Cash") {
@@ -45,31 +46,31 @@ export default function PaymentSectionForm({ value, onChange }: PaymentSectionFo
   };
 
   const updateLine = (index: number, field: keyof PaymentLine, newValue: string) => {
-    const newLines = [...value.customLines];
+    const newLines = [...customLines];
     newLines[index] = { ...newLines[index], [field]: newValue };
     onChange({ customLines: newLines });
   };
 
   const addLine = () => {
     onChange({
-      customLines: [...value.customLines, { title: "", value: "" }],
+      customLines: [...customLines, { title: "", value: "" }],
     });
   };
 
   const removeLine = (index: number) => {
-    const newLines = value.customLines.filter((_, i) => i !== index);
+    const newLines = customLines.filter((_, i) => i !== index);
     onChange({ customLines: newLines });
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Method Tabs */}
       <div className="flex p-1 bg-muted rounded-lg">
         <button
           type="button"
           onClick={() => handleModeChange("Cash")}
           className={cn(
-            "flex-1 text-sm font-medium py-1.5 px-3 rounded-md transition-all",
+            "flex-1 text-xs sm:text-sm font-medium py-1.5 px-2 sm:px-3 rounded-md transition-all",
             isCash
               ? "bg-background text-foreground shadow-sm"
               : "text-muted-foreground hover:bg-background/50"
@@ -81,7 +82,7 @@ export default function PaymentSectionForm({ value, onChange }: PaymentSectionFo
           type="button"
           onClick={() => handleModeChange("Card")}
           className={cn(
-            "flex-1 text-sm font-medium py-1.5 px-3 rounded-md transition-all",
+            "flex-1 text-xs sm:text-sm font-medium py-1.5 px-2 sm:px-3 rounded-md transition-all",
             !isCash
               ? "bg-background text-foreground shadow-sm"
               : "text-muted-foreground hover:bg-background/50"
@@ -92,43 +93,52 @@ export default function PaymentSectionForm({ value, onChange }: PaymentSectionFo
       </div>
 
       {/* Dynamic Lines (Title | Value) */}
-      <div className="space-y-3">
-        <div className="flex gap-2 px-1">
+      <div className="space-y-2 sm:space-y-3">
+        {/* Headers - hidden on mobile */}
+        <div className="hidden sm:flex gap-2 px-1">
           <Label className="flex-1 text-muted-foreground text-xs uppercase">Title</Label>
           <Label className="flex-1 text-muted-foreground text-xs uppercase">Value</Label>
           <div className="w-8" /> {/* Spacer for delete button */}
         </div>
 
-        {value.customLines.map((line, index) => (
-          <div key={index} className="flex gap-2 items-center">
-            <Input
-              value={line.title}
-              onChange={(e) => updateLine(index, "title", e.target.value)}
-              className="flex-1"
-              placeholder="Label"
-            />
-            <Input
-              value={line.value}
-              onChange={(e) => updateLine(index, "value", e.target.value)}
-              className="flex-1"
-              placeholder="Value"
-            />
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              onClick={() => removeLine(index)}
-              className="h-10 w-10 shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/20"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+        {customLines.map((line, index) => (
+          <div key={index} className="flex flex-col sm:flex-row gap-2 p-2 sm:p-0 border sm:border-0 rounded-lg sm:rounded-none bg-muted/30 sm:bg-transparent">
+            {/* Mobile: Label for Title */}
+            <div className="flex gap-2 items-center">
+              <div className="sm:hidden text-xs text-muted-foreground w-12">Title</div>
+              <Input
+                value={line.title}
+                onChange={(e) => updateLine(index, "title", e.target.value)}
+                className="flex-1 bg-background h-9 sm:h-10 text-sm"
+                placeholder="Label"
+              />
+            </div>
+            {/* Mobile: Label for Value + Delete */}
+            <div className="flex gap-2 items-center">
+              <div className="sm:hidden text-xs text-muted-foreground w-12">Value</div>
+              <Input
+                value={line.value}
+                onChange={(e) => updateLine(index, "value", e.target.value)}
+                className="flex-1 bg-background h-9 sm:h-10 text-sm"
+                placeholder="Value"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => removeLine(index)}
+                className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10 border-transparent sm:border-destructive/20"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         ))}
 
         <Button
           type="button"
           variant="secondary"
-          className="w-full text-primary hover:text-primary/80 bg-primary/10 hover:bg-primary/20 border border-primary/20"
+          className="w-full h-9 sm:h-10 text-xs sm:text-sm text-primary hover:text-primary/80 bg-primary/10 hover:bg-primary/20 border border-primary/20"
           onClick={addLine}
         >
           <Plus className="h-4 w-4 mr-2" />

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Users\\\\SURESH\\\\Desktop\\\\FOLDERS\\\\AI Projects\\\\invoify-dev\\\\app\\\\[locale]\\\\\\(auth\\)\")",
+      "Bash(dir /s /b \"C:\\\\Users\\\\SURESH\\\\Desktop\\\\FOLDERS\\\\AI Projects\\\\invoify-dev\\\\app\\\\[locale]\\\\\\(auth\\)\")",
+      "Bash(find:*)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm ls:*)",
+      "Bash(npx @better-auth/cli generate)",
+      "Bash(node db/migrate.js:*)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\SURESH\\\\Desktop\\\\FOLDERS\\\\AI Projects\\\\invoify-dev\\\\app\")",
+      "Bash(findstr:*)",
+      "Bash(dir:*)"
+    ]
+  }
+}

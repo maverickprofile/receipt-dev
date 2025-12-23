@@ -76,19 +76,19 @@ export default function SectionWrapper({
       )}
     >
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CardHeader className="p-4 pb-0">
-          <div className="flex items-center justify-between">
+        <CardHeader className="p-3 sm:p-4 pb-0">
+          <div className="flex items-center justify-between gap-2">
             {/* Left side: Icon, Label, Chevron */}
             <CollapsibleTrigger asChild>
               <button
                 type="button"
-                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity min-w-0"
               >
-                <Icon className="h-5 w-5 text-muted-foreground" />
-                <span className="font-semibold">{label}</span>
+                <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground shrink-0" />
+                <span className="font-semibold text-sm sm:text-base truncate">{label}</span>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-muted-foreground transition-transform duration-200",
+                    "h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground transition-transform duration-200 shrink-0",
                     isOpen && "rotate-180"
                   )}
                 />
@@ -96,7 +96,7 @@ export default function SectionWrapper({
             </CollapsibleTrigger>
 
             {/* Right side: Actions */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
               {/* Duplicate button */}
               {onDuplicate && (
                 <Button
@@ -104,10 +104,10 @@ export default function SectionWrapper({
                   variant="ghost"
                   size="icon"
                   onClick={onDuplicate}
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                  className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground"
                   aria-label="Duplicate section"
                 >
-                  <Copy className="h-4 w-4" />
+                  <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </Button>
               )}
 
@@ -115,7 +115,7 @@ export default function SectionWrapper({
               <button
                 type="button"
                 className={cn(
-                  "h-8 w-8 flex items-center justify-center rounded-md",
+                  "h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-md",
                   "text-muted-foreground hover:text-foreground hover:bg-accent",
                   "cursor-grab active:cursor-grabbing",
                   "transition-colors"
@@ -123,7 +123,7 @@ export default function SectionWrapper({
                 aria-label="Drag to reorder"
                 {...dragHandleProps}
               >
-                <GripVertical className="h-4 w-4" />
+                <GripVertical className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </button>
 
               {/* Remove button */}
@@ -132,17 +132,17 @@ export default function SectionWrapper({
                 variant="ghost"
                 size="icon"
                 onClick={onRemove}
-                className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                className="h-7 w-7 sm:h-8 sm:w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
                 aria-label="Remove section"
               >
-                <X className="h-4 w-4" />
+                <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </Button>
             </div>
           </div>
         </CardHeader>
 
         <CollapsibleContent>
-          <CardContent className="p-4 pt-4">{children}</CardContent>
+          <CardContent className="p-3 sm:p-4 pt-3 sm:pt-4">{children}</CardContent>
         </CollapsibleContent>
       </Collapsible>
     </Card>

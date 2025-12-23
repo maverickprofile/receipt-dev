@@ -7,10 +7,12 @@ import React, {
   useEffect,
   useMemo,
   useState,
+  useRef,
 } from "react";
 
 // Hooks
 import useToasts from "@/hooks/useToasts";
+import { useSession } from "@/lib/auth-client";
 
 // Variables
 import {
@@ -50,9 +52,15 @@ interface ReceiptContextType {
   pdfUrl: string | null;
   isLoading: boolean;
 
+  // Sync State (for authenticated users)
+  isSyncing: boolean;
+  lastSyncedAt: Date | null;
+  isAuthenticated: boolean;
+
   // Template Operations
   loadTemplate: (templateId: string) => Promise<void>;
   resetToTemplate: () => Promise<void>;
+  clearAllSections: () => void;
 
   // Settings Operations
   updateSettings: (settings: Partial<SettingsSection>) => void;
@@ -88,8 +96,13 @@ const defaultReceiptContext: ReceiptContextType = {
   pdfUrl: null,
   isLoading: true,
 
+  isSyncing: false,
+  lastSyncedAt: null,
+  isAuthenticated: false,
+
   loadTemplate: async () => { },
   resetToTemplate: async () => { },
+  clearAllSections: () => { },
 
   updateSettings: () => { },
 
@@ -165,6 +178,10 @@ export const ReceiptContextProvider = ({
   const { newInvoiceSuccess, pdfGenerationSuccess, saveInvoiceSuccess, importInvoiceError } =
     useToasts();
 
+  // Auth - detect if user is logged in
+  const { data: session } = useSession();
+  const isAuthenticated = !!session?.user?.id;
+
   // State
   const [receipt, setReceipt] = useState<ReceiptType | null>(null);
   const [originalTemplate, setOriginalTemplate] = useState<ReceiptType | null>(null);
@@ -172,6 +189,11 @@ export const ReceiptContextProvider = ({
   const [receiptPdfLoading, setReceiptPdfLoading] = useState<boolean>(false);
   const [savedReceipts, setSavedReceipts] = useState<ReceiptType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Sync State (for authenticated users)
+  const [isSyncing, setIsSyncing] = useState<boolean>(false);
+  const [lastSyncedAt, setLastSyncedAt] = useState<Date | null>(null);
+  const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load saved receipts from localStorage
   useEffect(() => {
@@ -197,6 +219,48 @@ export const ReceiptContextProvider = ({
       console.error("Error saving receipt draft:", e);
     }
   }, [receipt]);
+
+  // Auto-save to database for authenticated users (debounced)
+  useEffect(() => {
+    if (!isAuthenticated || !receipt) return;
+
+    // Clear any existing timeout
+    if (syncTimeoutRef.current) {
+      clearTimeout(syncTimeoutRef.current);
+    }
+
+    // Debounce: Wait 2 seconds before saving to database
+    syncTimeoutRef.current = setTimeout(async () => {
+      try {
+        setIsSyncing(true);
+        const response = await fetch('/api/user-receipts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: receipt.id,
+            name: receipt.name,
+            templateId: receipt.id,
+            receiptData: receipt,
+          }),
+        });
+
+        if (response.ok) {
+          setLastSyncedAt(new Date());
+        }
+      } catch (error) {
+        console.error("Error syncing receipt to database:", error);
+      } finally {
+        setIsSyncing(false);
+      }
+    }, 2000);
+
+    // Cleanup timeout on unmount or receipt change
+    return () => {
+      if (syncTimeoutRef.current) {
+        clearTimeout(syncTimeoutRef.current);
+      }
+    };
+  }, [receipt, isAuthenticated]);
 
   // Load template on mount or when templateId changes
   useEffect(() => {
@@ -363,6 +427,20 @@ export const ReceiptContextProvider = ({
     });
   }, []);
 
+  // Clear all sections - keeps settings, removes all sections for a fresh start
+  const clearAllSections = useCallback(() => {
+    setReceipt((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        id: "custom",
+        name: "Custom Receipt",
+        sections: [],
+      };
+    });
+    setReceiptPdf(new Blob());
+  }, []);
+
   const updateSection = useCallback((sectionId: string, updates: Partial<ReceiptSection>) => {
     setReceipt((prev) => {
       if (!prev) return prev;
@@ -510,7 +588,27 @@ export const ReceiptContextProvider = ({
     }
   }, [receipt, pdfGenerationSuccess]);
 
-  const downloadPdf = useCallback(() => {
+  // Helper to track downloads for authenticated users
+  const trackDownload = useCallback(async (downloadType: 'pdf' | 'image') => {
+    if (!isAuthenticated || !receipt) return;
+
+    try {
+      await fetch('/api/user-downloads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          receiptId: receipt.id,
+          templateId: receipt.id,
+          templateName: receipt.name,
+          downloadType,
+        }),
+      });
+    } catch (error) {
+      console.error("Error tracking download:", error);
+    }
+  }, [isAuthenticated, receipt]);
+
+  const downloadPdf = useCallback(async () => {
     if (receiptPdf instanceof Blob && receiptPdf.size > 0) {
       const url = window.URL.createObjectURL(receiptPdf);
       const a = document.createElement("a");
@@ -519,13 +617,16 @@ export const ReceiptContextProvider = ({
       // Determine extension
       const extension = receiptPdf.type.startsWith("image/") ? "png" : "pdf";
 
-      a.download = `${receipt?.name || "receipt"}.${extension}`;
+      a.download = `MakeReceipt-${receipt?.name || "receipt"}.${extension}`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+
+      // Track download for authenticated users
+      await trackDownload('pdf');
     }
-  }, [receiptPdf, receipt]);
+  }, [receiptPdf, receipt, trackDownload]);
 
   const printPdf = useCallback(() => {
     if (receiptPdf) {
@@ -583,14 +684,17 @@ export const ReceiptContextProvider = ({
 
       const a = document.createElement("a");
       a.href = dataUrl;
-      a.download = `${receipt.name || "receipt"}.png`;
+      a.download = `MakeReceipt-${receipt.name || "receipt"}.png`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+
+      // Track download for authenticated users
+      await trackDownload('image');
     } catch (err) {
       console.error("Error downloading image:", err);
     }
-  }, [receipt]);
+  }, [receipt, trackDownload]);
 
   const removeFinalPdf = useCallback(() => {
     setReceiptPdf(new Blob());
@@ -646,7 +750,7 @@ export const ReceiptContextProvider = ({
     const url = window.URL.createObjectURL(dataBlob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${receipt.name || "receipt"}.json`;
+    a.download = `MakeReceipt-${receipt.name || "receipt"}.json`;
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -687,8 +791,13 @@ export const ReceiptContextProvider = ({
         pdfUrl,
         isLoading,
 
+        isSyncing,
+        lastSyncedAt,
+        isAuthenticated,
+
         loadTemplate,
         resetToTemplate,
+        clearAllSections,
 
         updateSettings,
 

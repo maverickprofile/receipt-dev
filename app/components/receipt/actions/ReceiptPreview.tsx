@@ -21,8 +21,10 @@ export default function ReceiptPreview() {
         const { toPng } = await import("html-to-image");
         const dataUrl = await toPng(node, {
           quality: 0.95,
-          pixelRatio: 2,
+          pixelRatio: 1.5, // Reduced from 2 to avoid memory issues
           backgroundColor: "#ffffff",
+          skipAutoScale: true, // Prevent scaling artifacts
+          cacheBust: true, // Ensure fresh images
         });
         setPreviewImage(dataUrl);
       } catch (e) {
@@ -42,11 +44,11 @@ export default function ReceiptPreview() {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Live Preview</CardTitle>
+        <CardHeader className="pb-2 sm:pb-4">
+          <CardTitle className="text-base sm:text-lg">Live Preview</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="animate-pulse bg-muted rounded h-96" />
+        <CardContent className="p-3 sm:p-6">
+          <div className="animate-pulse bg-muted rounded h-64 sm:h-96" />
         </CardContent>
       </Card>
     );
@@ -57,8 +59,8 @@ export default function ReceiptPreview() {
     const isImage = receiptPdf.type.startsWith("image/");
     return (
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Generated {isImage ? "Image" : "PDF"}</CardTitle>
+        <CardHeader className="pb-2 sm:pb-4">
+          <CardTitle className="text-base sm:text-lg">Generated {isImage ? "Image" : "PDF"}</CardTitle>
         </CardHeader>
         <CardContent className="p-0 flex justify-center bg-gray-100 dark:bg-gray-900 rounded-b-lg overflow-hidden">
           {isImage ? (
@@ -66,13 +68,13 @@ export default function ReceiptPreview() {
             <img
               src={pdfUrl}
               alt="Receipt Preview"
-              className="max-w-full h-auto shadow-lg my-4"
-              style={{ maxHeight: "800px" }}
+              className="max-w-full h-auto shadow-lg my-2 sm:my-4"
+              style={{ maxHeight: "500px" }}
             />
           ) : (
             <iframe
               src={pdfUrl}
-              className="w-full min-h-[600px] border-0"
+              className="w-full min-h-[350px] sm:min-h-[500px] lg:min-h-[600px] border-0"
               title="Receipt PDF Preview"
             />
           )}
@@ -84,10 +86,10 @@ export default function ReceiptPreview() {
   if (!receipt) {
     return (
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Live Preview</CardTitle>
+        <CardHeader className="pb-2 sm:pb-4">
+          <CardTitle className="text-base sm:text-lg">Live Preview</CardTitle>
         </CardHeader>
-        <CardContent className="text-center text-muted-foreground py-16">
+        <CardContent className="text-center text-muted-foreground py-10 sm:py-16 text-sm">
           No receipt data to preview
         </CardContent>
       </Card>
@@ -96,13 +98,13 @@ export default function ReceiptPreview() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-lg flex items-center gap-2">
+      <CardHeader className="pb-2 sm:pb-4">
+        <CardTitle className="text-base sm:text-lg flex items-center gap-2">
           Live Preview
-          {isGenerating && <span className="text-xs font-normal text-muted-foreground">(Updating...)</span>}
+          {isGenerating && <span className="text-[10px] sm:text-xs font-normal text-muted-foreground">(Updating...)</span>}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex justify-center bg-gray-100 dark:bg-gray-900 rounded-lg p-4 min-h-[400px]">
+      <CardContent className="flex justify-center bg-gray-100 dark:bg-gray-900 rounded-lg p-2 sm:p-4 min-h-[280px] sm:min-h-[400px]">
         {/* Visible Generated Image Preview */}
         {previewImage ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -110,10 +112,10 @@ export default function ReceiptPreview() {
             src={previewImage}
             alt="Live Receipt Preview"
             className="max-w-full h-auto shadow-lg transition-opacity duration-300"
-            style={{ opacity: isGenerating ? 0.7 : 1 }}
+            style={{ opacity: isGenerating ? 0.7 : 1, maxHeight: "400px" }}
           />
         ) : (
-          <div className="animate-pulse bg-muted rounded w-full h-96" />
+          <div className="animate-pulse bg-muted rounded w-full h-64 sm:h-96" />
         )}
 
         {/* Hidden Source Node for Capture */}
