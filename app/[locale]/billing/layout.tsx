@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Billing | ReceiptMaker',
+    title: 'Billing | MakeReceipt',
     robots: {
         index: false,
         follow: false,

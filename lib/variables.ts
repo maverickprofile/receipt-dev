@@ -190,6 +190,12 @@ export const FORM_DEFAULT_VALUES = {
 export const RECEIPT_TEMPLATES_PATH = "/assets/data/receipt-templates";
 
 /**
+ * Credit System Constants
+ */
+export const CREDITS_ON_SIGNUP = 10;
+export const CREDITS_PER_DOWNLOAD = 5;
+
+/**
  * Receipt section types
  */
 export const RECEIPT_SECTION_TYPES = [

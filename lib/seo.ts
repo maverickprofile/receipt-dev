@@ -13,7 +13,7 @@ export const ROOTKEYWORDS = [
 export const JSONLD = {
     "@context": "https://schema.org",
     "@type": "Website",
-    name: "ReceiptMaker",
+    name: "MakeReceipt",
     description: "A Receipt Generator Web App",
     keywords: ROOTKEYWORDS,
     url: BASE_URL,

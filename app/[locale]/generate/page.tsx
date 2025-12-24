@@ -3,7 +3,7 @@ import { ReceiptContextProvider } from "@/contexts/ReceiptContext";
 import ReceiptMain from "@/app/components/receipt/ReceiptMain";
 
 export const metadata: Metadata = {
-    title: "Generate Receipt | ReceiptMaker",
+    title: "Generate Receipt | MakeReceipt",
     description: "Create custom receipts with our free receipt generator. Add items, prices, taxes, payment methods, and more.",
 };
 

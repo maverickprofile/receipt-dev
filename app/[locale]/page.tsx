@@ -43,12 +43,12 @@ const HERO_FEATURES = [
 
 const FAQ_ITEMS = [
     {
-        question: "What is ReceiptMaker?",
-        answer: "ReceiptMaker is a free online tool that allows you to create professional-looking receipts for various purposes. It offers customizable templates from popular stores and businesses."
+        question: "What is MakeReceipt?",
+        answer: "MakeReceipt is a free online tool that allows you to create professional-looking receipts for various purposes. It offers customizable templates from popular stores and businesses."
     },
     {
-        question: "Is using ReceiptMaker legal?",
-        answer: "ReceiptMaker is designed for legitimate purposes such as expense tracking, record keeping, and business documentation. Users are responsible for ensuring their use complies with applicable laws and regulations."
+        question: "Is using MakeReceipt legal?",
+        answer: "MakeReceipt is designed for legitimate purposes such as expense tracking, record keeping, and business documentation. Users are responsible for ensuring their use complies with applicable laws and regulations."
     },
     {
         question: "Why would someone need a receipt generator?",
@@ -80,18 +80,18 @@ const FAQ_ITEMS = [
     },
     {
         question: "Do I need to download any software?",
-        answer: "No! ReceiptMaker works entirely in your browser. No downloads, installations, or sign-ups required."
+        answer: "No! MakeReceipt works entirely in your browser. No downloads, installations, or sign-ups required."
     },
     {
         question: "Is there a watermark on the receipts?",
         answer: "Free receipts may include a small watermark. Premium users get watermark-free exports."
     },
     {
-        question: "Is ReceiptMaker mobile-friendly?",
+        question: "Is MakeReceipt mobile-friendly?",
         answer: "Yes, our tool is fully responsive and works great on smartphones, tablets, and desktop computers."
     },
     {
-        question: "Is ReceiptMaker free to use?",
+        question: "Is MakeReceipt free to use?",
         answer: "Yes! Basic features are completely free. We also offer premium plans with additional templates and features."
     },
 ];
@@ -180,24 +180,32 @@ export default async function Home({ params }: HomeProps) {
                                 href={`/${locale}/template/${slug}`}
                                 className="block group"
                             >
-                                <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer border-gray-200 dark:border-gray-700">
-                                    <CardContent className="p-2 sm:p-4">
-                                        <div className="aspect-[3/4] bg-gray-50 dark:bg-gray-800 rounded-md flex items-center justify-center overflow-hidden mb-2 sm:mb-3 p-1 sm:p-2">
+                                <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] cursor-pointer border-0 bg-sky-100 dark:bg-slate-800 rounded-xl">
+                                    <CardContent className="p-0">
+                                        {/* Thumbnail Container - clips the receipt */}
+                                        <div className="aspect-[4/5] overflow-hidden relative flex justify-center pt-4 px-3">
                                             {template.thumbnail ? (
-                                                <Image
-                                                    src={template.thumbnail}
-                                                    alt={template.name}
-                                                    width={200}
-                                                    height={267}
-                                                    className="w-full h-full object-contain"
-                                                />
+                                                <div className="relative w-[85%] h-[140%]">
+                                                    <Image
+                                                        src={template.thumbnail}
+                                                        alt={template.name}
+                                                        width={200}
+                                                        height={400}
+                                                        className="w-full h-auto object-contain object-top shadow-lg rounded-sm transition-transform duration-300 group-hover:scale-[1.02]"
+                                                    />
+                                                </div>
                                             ) : (
-                                                <Receipt className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400" />
+                                                <div className="w-[85%] h-full bg-white dark:bg-gray-700 rounded-sm shadow-lg flex items-center justify-center">
+                                                    <Receipt className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400 dark:text-gray-500" />
+                                                </div>
                                             )}
                                         </div>
-                                        <p className="text-xs sm:text-sm font-medium text-center text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-2">
-                                            {template.name}
-                                        </p>
+                                        {/* Name */}
+                                        <div className="p-2 sm:p-3 text-center bg-sky-100 dark:bg-slate-800">
+                                            <p className="text-xs sm:text-sm font-medium text-gray-800 dark:text-white truncate">
+                                                {template.name}
+                                            </p>
+                                        </div>
                                     </CardContent>
                                 </Card>
                             </Link>
@@ -366,7 +374,7 @@ export default async function Home({ params }: HomeProps) {
                         <div className="flex justify-center lg:justify-end">
                             <div className="relative w-full max-w-md lg:max-w-none">
                                 <Image
-                                    src="/assets/img/Generate-Receipt-ReceiptMaker-12-23-2025_10_30_PM.png"
+                                    src="/assets/img/Generate-Receipt-MakeReceipt-12-23-2025_10_30_PM.png"
                                     alt="Receipt Generator Interface"
                                     width={600}
                                     height={450}

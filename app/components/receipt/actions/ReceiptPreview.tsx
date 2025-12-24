@@ -47,8 +47,8 @@ export default function ReceiptPreview() {
         <CardHeader className="pb-2 sm:pb-4">
           <CardTitle className="text-base sm:text-lg">Live Preview</CardTitle>
         </CardHeader>
-        <CardContent className="p-3 sm:p-6">
-          <div className="animate-pulse bg-muted rounded h-64 sm:h-96" />
+        <CardContent className="p-3 sm:p-6 bg-sky-100 dark:bg-gray-900 rounded-lg">
+          <div className="animate-pulse bg-muted rounded h-64 sm:h-96 lg:h-[500px]" />
         </CardContent>
       </Card>
     );
@@ -62,18 +62,17 @@ export default function ReceiptPreview() {
         <CardHeader className="pb-2 sm:pb-4">
           <CardTitle className="text-base sm:text-lg">Generated {isImage ? "Image" : "PDF"}</CardTitle>
         </CardHeader>
-        <CardContent className="p-0 flex justify-center bg-gray-100 dark:bg-gray-900 rounded-b-lg overflow-hidden">
+        <CardContent className="p-2 sm:p-4 lg:p-6 flex justify-center bg-sky-100 dark:bg-gray-900 rounded-b-lg overflow-hidden min-h-[280px] sm:min-h-[400px] lg:min-h-[600px]">
           {isImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={pdfUrl}
               alt="Receipt Preview"
-              className="max-w-full h-auto shadow-lg my-2 sm:my-4"
-              style={{ maxHeight: "500px" }}
+              className="max-w-full h-auto shadow-lg lg:max-h-[550px]"
             />
           ) : (
             <iframe
-              src={pdfUrl}
+              src={`${pdfUrl}#toolbar=0`}
               className="w-full min-h-[350px] sm:min-h-[500px] lg:min-h-[600px] border-0"
               title="Receipt PDF Preview"
             />
@@ -89,7 +88,7 @@ export default function ReceiptPreview() {
         <CardHeader className="pb-2 sm:pb-4">
           <CardTitle className="text-base sm:text-lg">Live Preview</CardTitle>
         </CardHeader>
-        <CardContent className="text-center text-muted-foreground py-10 sm:py-16 text-sm">
+        <CardContent className="text-center text-muted-foreground py-10 sm:py-16 lg:py-32 text-sm bg-sky-100 dark:bg-gray-900 rounded-lg min-h-[280px] sm:min-h-[400px] lg:min-h-[600px] flex items-center justify-center">
           No receipt data to preview
         </CardContent>
       </Card>
@@ -104,18 +103,18 @@ export default function ReceiptPreview() {
           {isGenerating && <span className="text-[10px] sm:text-xs font-normal text-muted-foreground">(Updating...)</span>}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex justify-center bg-gray-100 dark:bg-gray-900 rounded-lg p-2 sm:p-4 min-h-[280px] sm:min-h-[400px]">
+      <CardContent className="flex justify-center bg-sky-100 dark:bg-gray-900 rounded-lg p-2 sm:p-4 lg:p-6 min-h-[280px] sm:min-h-[400px] lg:min-h-[600px]">
         {/* Visible Generated Image Preview */}
         {previewImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={previewImage}
             alt="Live Receipt Preview"
-            className="max-w-full h-auto shadow-lg transition-opacity duration-300"
-            style={{ opacity: isGenerating ? 0.7 : 1, maxHeight: "400px" }}
+            className="max-w-full h-auto shadow-lg transition-opacity duration-300 lg:max-h-[600px] lg:scale-110 origin-top"
+            style={{ opacity: isGenerating ? 0.7 : 1 }}
           />
         ) : (
-          <div className="animate-pulse bg-muted rounded w-full h-64 sm:h-96" />
+          <div className="animate-pulse bg-muted rounded w-full h-64 sm:h-96 lg:h-[500px]" />
         )}
 
         {/* Hidden Source Node for Capture */}

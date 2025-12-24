@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signUp, signIn } from "@/lib/auth-client";
-import { Loader2 } from "lucide-react";
+import { Loader2, Mail, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
@@ -23,6 +23,7 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
+    const [emailSent, setEmailSent] = useState(false);
     const router = useRouter();
     const { toast } = useToast();
 
@@ -31,6 +32,15 @@ export default function SignUp() {
             toast({
                 title: "Error",
                 description: "Please fill in all fields",
+                variant: "destructive",
+            });
+            return;
+        }
+
+        if (password.length < 8) {
+            toast({
+                title: "Error",
+                description: "Password must be at least 8 characters",
                 variant: "destructive",
             });
             return;
@@ -53,7 +63,8 @@ export default function SignUp() {
                         setLoading(false);
                     },
                     onSuccess: () => {
-                        router.push("/");
+                        setEmailSent(true);
+                        setLoading(false);
                     },
                 },
             });
@@ -62,6 +73,51 @@ export default function SignUp() {
             setLoading(false);
         }
     };
+
+    // Show email verification sent message
+    if (emailSent) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
+                <Card className="w-full max-w-md">
+                    <CardHeader className="text-center">
+                        <div className="mx-auto w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
+                            <Mail className="w-8 h-8 text-green-600 dark:text-green-400" />
+                        </div>
+                        <CardTitle className="text-2xl font-bold">
+                            Check Your Email
+                        </CardTitle>
+                        <CardDescription className="mt-2">
+                            We&apos;ve sent a verification link to
+                        </CardDescription>
+                        <p className="font-medium text-foreground mt-1">{email}</p>
+                    </CardHeader>
+                    <CardContent className="text-center space-y-4">
+                        <p className="text-sm text-muted-foreground">
+                            Click the link in your email to verify your account and start creating receipts.
+                        </p>
+                        <div className="bg-muted/50 rounded-lg p-4 text-sm">
+                            <p className="text-muted-foreground">
+                                Didn&apos;t receive the email? Check your spam folder or{" "}
+                                <button
+                                    onClick={() => setEmailSent(false)}
+                                    className="text-blue-600 hover:underline"
+                                >
+                                    try again
+                                </button>
+                            </p>
+                        </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-center">
+                        <Link href="/sign-in">
+                            <Button variant="outline">
+                                Back to Sign In
+                            </Button>
+                        </Link>
+                    </CardFooter>
+                </Card>
+            </div>
+        );
+    }
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">

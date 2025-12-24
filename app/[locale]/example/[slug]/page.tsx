@@ -10,7 +10,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { RECEIPT_EXAMPLES } from "@/app/[locale]/examples/page";
+import { RECEIPT_EXAMPLES, ReceiptExample } from "@/lib/receipt-examples";
 import { generateExampleSlug, generateTemplateSlug } from "@/lib/utils";
 
 interface ExamplePageProps {
@@ -39,12 +39,12 @@ const HERO_FEATURES = [
 
 const FAQ_ITEMS = [
     {
-        question: "What is ReceiptMaker?",
-        answer: "ReceiptMaker is a free online tool that allows you to create professional-looking receipts for various purposes. It offers customizable templates from popular stores and businesses."
+        question: "What is MakeReceipt?",
+        answer: "MakeReceipt is a free online tool that allows you to create professional-looking receipts for various purposes. It offers customizable templates from popular stores and businesses."
     },
     {
-        question: "Is using ReceiptMaker legal?",
-        answer: "ReceiptMaker is designed for legitimate purposes such as expense tracking, record keeping, and business documentation. Users are responsible for ensuring their use complies with applicable laws and regulations."
+        question: "Is using MakeReceipt legal?",
+        answer: "MakeReceipt is designed for legitimate purposes such as expense tracking, record keeping, and business documentation. Users are responsible for ensuring their use complies with applicable laws and regulations."
     },
     {
         question: "Why would someone need a receipt generator?",
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: ExamplePageProps): Promise<Me
         : example.items[0].name;
 
     return {
-        title: `${example.templateName} Receipt Example - ${itemsList} | ReceiptMaker`,
+        title: `${example.templateName} Receipt Example - ${itemsList} | MakeReceipt`,
         description: `View this ${example.templateName} receipt example with ${itemsList} totalling ${example.totalFormatted}. Create your own custom receipt using our free generator.`,
     };
 }

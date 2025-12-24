@@ -379,7 +379,7 @@ export function ReceiptTemplate({ receipt }: ReceiptTemplateProps) {
       {/* Watermark Overlay */}
       {settings.watermark && (
         <div
-          className="absolute inset-0 pointer-events-none opacity-[0.05] select-none flex flex-wrap content-center justify-center overflow-hidden z-0"
+          className="absolute inset-0 pointer-events-none opacity-[0.20] select-none flex flex-wrap content-center justify-center overflow-hidden z-0"
           style={{ transform: "scale(1.5)" }}
         >
           {Array.from({ length: 20 }).map((_, i) => (

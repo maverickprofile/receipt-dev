@@ -7,7 +7,7 @@ import type { TemplateIndex } from "@/lib/receipt-schemas";
 import TemplatesGrid from "@/app/components/templates/TemplatesGrid";
 
 export const metadata: Metadata = {
-    title: "Receipt Templates | ReceiptMaker",
+    title: "Receipt Templates | MakeReceipt",
     description:
         "Choose from a variety of receipt templates including Walmart, Target, CVS, luxury brands, and more. Create professional receipts in minutes.",
 };

@@ -26,7 +26,7 @@ const BaseFooter = () => {
                         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                             <Receipt className="w-4 h-4 text-white" />
                         </div>
-                        <span className="text-lg font-bold">ReceiptMaker</span>
+                        <span className="text-lg font-bold">MakeReceipt</span>
                     </div>
                     <p className="text-gray-400 text-sm max-w-md">
                         Make receipts with custom information from selected templates in seconds!
@@ -50,7 +50,7 @@ const BaseFooter = () => {
                 <div className="border-t border-gray-800 pt-6 sm:pt-8">
                     <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                         <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">
-                            © {new Date().getFullYear()} ReceiptMaker. All rights reserved.
+                            © {new Date().getFullYear()} MakeReceipt. All rights reserved.
                         </p>
                         <div className="flex items-center gap-2">
                             <span className="text-xs sm:text-sm text-gray-500 hidden sm:inline">Hi! Ask any question here!</span>

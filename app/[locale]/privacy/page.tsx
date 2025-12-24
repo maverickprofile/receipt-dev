@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Privacy Policy | ReceiptMaker",
-    description: "Learn how ReceiptMaker collects, uses, stores, and protects your information.",
+    title: "Privacy Policy | MakeReceipt",
+    description: "Learn how MakeReceipt collects, uses, stores, and protects your information.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -15,9 +15,9 @@ export default function PrivacyPolicyPage() {
                         Privacy Policy
                     </h1>
                     <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                        ReceiptMaker (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This
+                        MakeReceipt (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This
                         Privacy Policy explains how we collect, use, store, and disclose information when
-                        you use our service. By using ReceiptMaker, you agree to the terms outlined in
+                        you use our service. By using MakeReceipt, you agree to the terms outlined in
                         this policy.
                     </p>
                 </div>
@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
                             1. Information We Collect
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 mb-6">
-                            ReceiptMaker is designed to minimize data collection. However, we may collect the
+                            MakeReceipt is designed to minimize data collection. However, we may collect the
                             following types of information:
                         </p>
 
@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
                             1.1 User-Generated Receipts
                         </h3>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-2 mb-6">
-                            <li>When you create a receipt using ReceiptMaker, the generated receipt may be
+                            <li>When you create a receipt using MakeReceipt, the generated receipt may be
                                 stored on our servers for the sole purpose of providing receipt examples to other
                                 users.</li>
                             <li>We do not link stored receipts to personal user data.</li>
@@ -78,7 +78,7 @@ export default function PrivacyPolicyPage() {
                             We use collected information for the following purposes:
                         </p>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-2">
-                            <li>To provide and improve the ReceiptMaker service.</li>
+                            <li>To provide and improve the MakeReceipt service.</li>
                             <li>To generate receipt examples for other users.</li>
                             <li>To analyze website traffic and improve user experience.</li>
                             <li>To process payments for premium features.</li>
@@ -107,7 +107,7 @@ export default function PrivacyPolicyPage() {
                             4. Sharing and Disclosure of Information
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 mb-4">
-                            ReceiptMaker does not share, sell, or rent user data. However, we may disclose
+                            MakeReceipt does not share, sell, or rent user data. However, we may disclose
                             information in the following circumstances:
                         </p>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-3">
@@ -143,7 +143,7 @@ export default function PrivacyPolicyPage() {
                             6. Third-Party Links
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
-                            ReceiptMaker may contain links to third-party websites. We are not responsible for
+                            MakeReceipt may contain links to third-party websites. We are not responsible for
                             the privacy practices of external sites. We encourage users to review the privacy
                             policies of any third-party services they interact with.
                         </p>
@@ -160,7 +160,7 @@ export default function PrivacyPolicyPage() {
                             updated policy.
                         </p>
                         <p className="text-gray-600 dark:text-gray-400">
-                            We reserve the right to suspend or terminate access to ReceiptMaker at our
+                            We reserve the right to suspend or terminate access to MakeReceipt at our
                             discretion, without notice, if we believe a user has violated these Terms &
                             Conditions.
                         </p>

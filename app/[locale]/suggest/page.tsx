@@ -507,7 +507,7 @@ export default function SuggestFeaturePage() {
                                 Suggest a Feature
                             </h1>
                             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
-                                Help us make ReceiptMaker better by sharing your ideas
+                                Help us make MakeReceipt better by sharing your ideas
                             </p>
                         </div>
 
@@ -522,7 +522,7 @@ export default function SuggestFeaturePage() {
                                 <DialogHeader>
                                     <DialogTitle>Suggest a new feature</DialogTitle>
                                     <DialogDescription>
-                                        Describe the feature you'd like to see in ReceiptMaker.
+                                        Describe the feature you'd like to see in MakeReceipt.
                                     </DialogDescription>
                                 </DialogHeader>
                                 <div className="space-y-4 mt-4">

@@ -2,30 +2,28 @@
 
 import {
   Download,
-  FileText,
   Loader2,
-  Printer,
   RotateCcw,
-  Upload,
-  Eye,
-  Trash2,
-  Plus,
-  ChevronUp,
-  FileJson,
-  FileImage,
   LogIn,
+  Lock,
+  Sparkles,
+  Save,
+  Upload,
+  FileImage,
+  FileText,
+  Plus,
+  ChevronDown,
 } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-// Components
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
@@ -38,16 +36,14 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useReceiptContext } from "@/contexts/ReceiptContext";
+import OutOfCreditsModal from "@/app/components/modals/credits/OutOfCreditsModal";
+import { useCredits } from "@/hooks/useCredits";
 
 export default function ReceiptActions() {
   const {
     receipt,
-    receiptPdf,
     receiptPdfLoading,
     generatePdf,
-    downloadPdf,
-    printPdf,
-    previewPdfInTab,
     resetToTemplate,
     clearAllSections,
     saveReceipt,
@@ -61,8 +57,16 @@ export default function ReceiptActions() {
   const params = useParams();
   const locale = params?.locale || 'en';
 
-  const [acceptedTerms, setAcceptedTerms] = useState(true);
+  // Get subscription status for watermark lock
+  const { credits } = useCredits();
+  const hasActiveSubscription = credits?.hasActiveSubscription ?? false;
+
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [showCreditsModal, setShowCreditsModal] = useState(false);
+  const [creditsModalData, setCreditsModalData] = useState<{ currentBalance: number; required: number }>({
+    currentBalance: 0,
+    required: 5,
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Listen for auth-required event from ReceiptContext
@@ -77,6 +81,29 @@ export default function ReceiptActions() {
     };
   }, []);
 
+  // Listen for credits-exhausted event from ReceiptContext
+  useEffect(() => {
+    const handleCreditsExhausted = (event: CustomEvent<{ currentBalance: number; required: number }>) => {
+      setCreditsModalData({
+        currentBalance: event.detail?.currentBalance ?? 0,
+        required: event.detail?.required ?? 5,
+      });
+      setShowCreditsModal(true);
+    };
+
+    window.addEventListener('credits-exhausted', handleCreditsExhausted as EventListener);
+    return () => {
+      window.removeEventListener('credits-exhausted', handleCreditsExhausted as EventListener);
+    };
+  }, []);
+
+  // Force watermark ON for free users (prevent bypassing)
+  useEffect(() => {
+    if (!hasActiveSubscription && receipt?.settings && !receipt.settings.watermark) {
+      updateSettings({ watermark: true });
+    }
+  }, [hasActiveSubscription, receipt?.settings, updateSettings]);
+
   const handleSignIn = () => {
     setShowAuthDialog(false);
     router.push(`/${locale}/sign-in`);
@@ -87,10 +114,13 @@ export default function ReceiptActions() {
     router.push(`/${locale}/sign-up`);
   };
 
-  if (!receipt) return null;
-  const { settings } = receipt;
-
-  const hasPdf = receiptPdf && receiptPdf.size > 0;
+  const handleRemoveWatermark = () => {
+    if (hasActiveSubscription) {
+      updateSettings({ watermark: false });
+    } else {
+      router.push(`/${locale}/pricing`);
+    }
+  };
 
   const handleImportClick = () => {
     fileInputRef.current?.click();
@@ -104,124 +134,153 @@ export default function ReceiptActions() {
     }
   };
 
+  if (!receipt) return null;
+  const { settings } = receipt;
+
+  const templateName = receipt.name || "Receipt";
+
   return (
-    <div className="space-y-2 sm:space-y-3">
-      {/* Generate Actions */}
-      {/* Checkboxes */}
-      <div className="space-y-2 mb-2 sm:mb-3">
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="watermark"
-            checked={!settings.watermark}
-            onCheckedChange={(checked) => updateSettings({ watermark: !checked })}
-          />
-          <Label htmlFor="watermark" className="text-xs sm:text-sm font-normal cursor-pointer select-none">
-            Without Watermark
-          </Label>
-        </div>
-
-        <div className="flex items-start space-x-2">
-          <Checkbox
-            id="terms"
-            checked={acceptedTerms}
-            onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)}
-            className="mt-0.5"
-          />
-          <Label htmlFor="terms" className="text-xs sm:text-sm font-normal cursor-pointer select-none leading-tight">
-            Accept <a href="#" className="text-blue-500 hover:underline">Terms and Conditions</a> of Create Receipt
-          </Label>
-        </div>
-      </div>
-
-      {/* Create Receipt Button Group */}
-      <div className="flex w-full mb-2 sm:mb-3">
+    <div className="space-y-3">
+      {/* Row 1: Title & Save Button */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+          {templateName}
+        </h2>
         <Button
-          className="flex-1 rounded-r-none bg-blue-600 hover:bg-blue-700 text-white font-bold h-10 sm:h-12 text-xs sm:text-sm md:text-base shadow-lg transition-all px-2 sm:px-4"
-          onClick={generatePdf}
-          disabled={receiptPdfLoading || !acceptedTerms}
+          variant="outline"
+          size="sm"
+          onClick={saveReceipt}
+          className="h-8 sm:h-9 text-xs sm:text-sm"
         >
-          {receiptPdfLoading ? (
-            <>
-              <Loader2 className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
-              <span className="hidden xs:inline">Generating...</span>
-              <span className="xs:hidden">...</span>
-            </>
-          ) : hasPdf ? (
-            <>
-              <span className="hidden sm:inline">REGENERATE ({settings.pdfSize || "80mm"})</span>
-              <span className="sm:hidden">REGENERATE</span>
-            </>
-          ) : (
-            <>
-              <span className="hidden sm:inline">CREATE RECEIPT ({settings.pdfSize || "80mm"})</span>
-              <span className="sm:hidden">CREATE</span>
-            </>
-          )}
+          <Save className="h-3.5 w-3.5 mr-1.5" />
+          <span className="hidden sm:inline">Save as new template</span>
+          <span className="sm:hidden">Save</span>
         </Button>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              className="rounded-l-none border-l border-blue-700 bg-blue-600 hover:bg-blue-700 text-white h-10 sm:h-12 px-2 sm:px-3 shadow-lg"
-              disabled={receiptPdfLoading || !acceptedTerms}
-            >
-              <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-[160px] sm:w-[200px]">
-            <DropdownMenuItem onClick={() => updateSettings({ pdfSize: "80mm" })}>
-              80mm
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => updateSettings({ pdfSize: "110mm" })}>
-              110mm
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => updateSettings({ pdfSize: "A4" })}>
-              A4
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
 
-      {/* PDF Actions (only show when PDF is generated) */}
-      {hasPdf && (
-        <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-          <Button onClick={downloadPdf} className="w-full h-9 sm:h-10 text-xs sm:text-sm">
-            <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" /> Download
+      {/* Row 2: Reset | Remove Watermark | Download */}
+      <div className="flex items-center justify-between gap-2">
+        {/* Reset Button - Left */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={resetToTemplate}
+          className="h-8 sm:h-9 text-xs sm:text-sm text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600 dark:border-red-800 dark:hover:bg-red-950"
+        >
+          <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+          Reset
+        </Button>
+
+        {/* Right side buttons */}
+        <div className="flex items-center gap-2">
+          {/* Remove Watermark Button */}
+          <Button
+            size="sm"
+            onClick={handleRemoveWatermark}
+            disabled={!settings.watermark && hasActiveSubscription}
+            className={`h-8 sm:h-9 text-xs sm:text-sm ${
+              settings.watermark
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
+                : "bg-gray-400 text-white cursor-not-allowed"
+            }`}
+          >
+            {!hasActiveSubscription ? (
+              <>
+                <Lock className="h-3.5 w-3.5 mr-1.5" />
+                <span className="hidden sm:inline">Remove watermark</span>
+                <span className="sm:hidden">Watermark</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                <span className="hidden sm:inline">{settings.watermark ? "Remove watermark" : "No watermark"}</span>
+                <span className="sm:hidden">{settings.watermark ? "Remove" : "None"}</span>
+              </>
+            )}
           </Button>
-          <Button onClick={printPdf} variant="secondary" className="w-full h-9 sm:h-10 text-xs sm:text-sm">
-            <Printer className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" /> Print
+
+          {/* Download Dropdown Button */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                size="sm"
+                disabled={receiptPdfLoading}
+                className="h-8 sm:h-9 text-xs sm:text-sm bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                {receiptPdfLoading ? (
+                  <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                ) : (
+                  <Download className="h-3.5 w-3.5 mr-1.5" />
+                )}
+                Download
+                <ChevronDown className="h-3.5 w-3.5 ml-1" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuLabel className="text-xs text-muted-foreground">Download as PDF</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => { updateSettings({ pdfSize: "80mm" }); generatePdf(); }}>
+                <FileText className="h-4 w-4 mr-2" />
+                PDF - 80mm
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { updateSettings({ pdfSize: "110mm" }); generatePdf(); }}>
+                <FileText className="h-4 w-4 mr-2" />
+                PDF - 110mm
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { updateSettings({ pdfSize: "A4" }); generatePdf(); }}>
+                <FileText className="h-4 w-4 mr-2" />
+                PDF - A4
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel className="text-xs text-muted-foreground">Download as Image</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => { updateSettings({ pdfSize: "80mm" }); setTimeout(() => downloadImage(), 100); }}>
+                <FileImage className="h-4 w-4 mr-2" />
+                PNG - 80mm
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { updateSettings({ pdfSize: "110mm" }); setTimeout(() => downloadImage(), 100); }}>
+                <FileImage className="h-4 w-4 mr-2" />
+                PNG - 110mm
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { updateSettings({ pdfSize: "A4" }); setTimeout(() => downloadImage(), 100); }}>
+                <FileImage className="h-4 w-4 mr-2" />
+                PNG - A4
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+
+      {/* Row 3: Secondary Actions */}
+      <div className="flex items-center justify-between gap-2 pt-1 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex items-center gap-1.5">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleImportClick}
+            className="h-7 text-xs text-muted-foreground hover:text-foreground"
+          >
+            <Upload className="h-3.5 w-3.5 mr-1" />
+            Load
           </Button>
-          <Button onClick={previewPdfInTab} variant="outline" className="col-span-2 h-9 sm:h-10 text-xs sm:text-sm">
-            <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
-            Open in New Tab
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={exportReceiptAsJson}
+            className="h-7 text-xs text-muted-foreground hover:text-foreground"
+          >
+            <Download className="h-3.5 w-3.5 mr-1" />
+            Export
           </Button>
         </div>
-      )}
-
-      {/* Divider */}
-      <div className="border-t my-3 sm:my-4" />
-
-      {/* Secondary Actions Grid */}
-      <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
-        <Button variant="outline" onClick={handleImportClick} className="w-full h-9 sm:h-10 text-xs sm:text-sm">
-          <Upload className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" /> Load
-        </Button>
-        <Button variant="outline" onClick={exportReceiptAsJson} className="w-full h-9 sm:h-10 text-xs sm:text-sm">
-          <Download className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" /> Export
-        </Button>
-        <Button variant="outline" onClick={downloadImage} className="w-full h-9 sm:h-10 text-xs sm:text-sm">
-          <FileImage className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" /> Save Image
-        </Button>
-        <Button variant="outline" onClick={clearAllSections} className="w-full h-9 sm:h-10 text-xs sm:text-sm">
-          <Plus className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" /> New
-        </Button>
-        <Button variant="ghost" onClick={resetToTemplate} className="w-full h-9 sm:h-10 text-xs sm:text-sm text-destructive hover:text-destructive hover:bg-destructive/10 col-span-2">
-          <RotateCcw className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" /> Reset
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={clearAllSections}
+          className="h-7 text-xs text-muted-foreground hover:text-foreground"
+        >
+          <Plus className="h-3.5 w-3.5 mr-1" />
+          New
         </Button>
       </div>
-
-
-
 
       {/* Hidden file input for import */}
       <input
@@ -255,7 +314,14 @@ export default function ReceiptActions() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Out of Credits Modal */}
+      <OutOfCreditsModal
+        open={showCreditsModal}
+        onOpenChange={setShowCreditsModal}
+        currentBalance={creditsModalData.currentBalance}
+        required={creditsModalData.required}
+      />
     </div>
   );
 }
-

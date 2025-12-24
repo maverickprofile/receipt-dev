@@ -81,23 +81,27 @@ export default function TemplatesGrid({ templates, locale }: TemplatesGridProps)
                             href={`/${locale}/template/${slug}`}
                             className="group"
                         >
-                            <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:border-blue-400 dark:hover:border-blue-500 cursor-pointer bg-white dark:bg-slate-800">
+                            <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:border-blue-400 dark:hover:border-blue-500 cursor-pointer border-0 bg-sky-100 dark:bg-slate-800 rounded-xl">
                                 <CardContent className="p-0">
-                                    {/* Thumbnail */}
-                                    <div className="aspect-[3/4] bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center overflow-hidden relative p-1 sm:p-2">
+                                    {/* Thumbnail Container - clips the receipt */}
+                                    <div className="aspect-[4/5] overflow-hidden relative flex justify-center pt-4 px-3">
                                         {template.thumbnail ? (
-                                            <img
-                                                src={template.thumbnail}
-                                                alt={template.name}
-                                                className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
-                                            />
+                                            <div className="relative w-[85%] h-[140%]">
+                                                <img
+                                                    src={template.thumbnail}
+                                                    alt={template.name}
+                                                    className="w-full h-auto object-contain object-top shadow-lg rounded-sm transition-transform duration-300 group-hover:scale-[1.02]"
+                                                />
+                                            </div>
                                         ) : (
-                                            <Receipt className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400 dark:text-gray-500" />
+                                            <div className="w-[85%] h-full bg-white dark:bg-gray-700 rounded-sm shadow-lg flex items-center justify-center">
+                                                <Receipt className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400 dark:text-gray-500" />
+                                            </div>
                                         )}
                                         {/* Hover Overlay - hidden on mobile */}
-                                        <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/10 transition-colors duration-300 hidden sm:flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-colors duration-300 hidden sm:flex items-center justify-center">
                                             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                <div className="bg-blue-600 text-white px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1">
+                                                <div className="bg-blue-600 text-white px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 shadow-lg">
                                                     Use Template
                                                     <ArrowRight className="w-3 h-3" />
                                                 </div>
@@ -105,8 +109,8 @@ export default function TemplatesGrid({ templates, locale }: TemplatesGridProps)
                                         </div>
                                     </div>
                                     {/* Name */}
-                                    <div className="p-2 sm:p-3 text-center">
-                                        <h3 className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white truncate">
+                                    <div className="p-2 sm:p-3 text-center bg-sky-100 dark:bg-slate-800">
+                                        <h3 className="text-xs sm:text-sm font-medium text-gray-800 dark:text-white truncate">
                                             {template.name}
                                         </h3>
                                     </div>
@@ -118,13 +122,13 @@ export default function TemplatesGrid({ templates, locale }: TemplatesGridProps)
 
                 {/* Coming Soon Card - only show if no search */}
                 {!searchQuery && (
-                    <Card className="h-full border-dashed border-2 border-gray-300 dark:border-gray-600 bg-transparent">
-                        <CardContent className="p-0 h-full flex flex-col items-center justify-center aspect-[3/4]">
+                    <Card className="h-full border-dashed border-2 border-sky-300 dark:border-gray-600 bg-sky-50 dark:bg-slate-800/50 rounded-xl">
+                        <CardContent className="p-0 h-full flex flex-col items-center justify-center aspect-[4/5]">
                             <div className="text-center p-3 sm:p-4">
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                                    <span className="text-xl sm:text-2xl text-gray-400">+</span>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-sky-200 dark:bg-gray-700 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                                    <span className="text-xl sm:text-2xl text-sky-500 dark:text-gray-400">+</span>
                                 </div>
-                                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium">
                                     More coming soon
                                 </p>
                             </div>

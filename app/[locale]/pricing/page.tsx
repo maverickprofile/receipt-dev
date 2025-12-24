@@ -26,13 +26,35 @@ interface ProductsResponse {
     yearly: DodoProduct | null;
 }
 
-const FEATURES = [
+// Default features shown when product description is empty
+const DEFAULT_FEATURES = [
     "No watermarks",
     "Unlimited receipt downloads",
     "100+ templates to choose from",
     "Save your own templates",
     "Unlimited customization",
 ];
+
+// Parse features from product description
+// Supports: newline-separated, bullet points (•, -, *)
+function parseFeatures(description: string | null): string[] {
+    if (!description || description.trim() === "") {
+        return DEFAULT_FEATURES;
+    }
+
+    // Split by newlines and clean up each line
+    // Only strip bullet points (•, -, *) at the start, NOT numbers
+    const lines = description.split(/[\n\r]+/).map(line =>
+        line.replace(/^[\s]*[•\-\*][\s]*/, '').trim()
+    ).filter(line => line.length > 0);
+
+    // If we have features from description, return them
+    if (lines.length > 0) {
+        return lines;
+    }
+
+    return DEFAULT_FEATURES;
+}
 
 function formatPrice(priceInCents: number, currency: string = "USD"): string {
     const price = priceInCents / 100;
@@ -79,6 +101,7 @@ function PricingCard({
     const discount = product.price.discount || 0;
     const originalPrice = getOriginalPrice(currentPrice, discount);
     const currency = product.price.currency || "USD";
+    const features = parseFeatures(product.description);
 
     return (
         <Card
@@ -118,16 +141,9 @@ function PricingCard({
             </CardHeader>
 
             <CardContent className="flex-1 px-4 sm:px-6">
-                {/* Description from Dodo */}
-                {product.description && (
-                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center mb-3 sm:mb-4">
-                        {product.description}
-                    </p>
-                )}
-
-                {/* Features List */}
+                {/* Features List - parsed from Dodo product description */}
                 <ul className="space-y-2 sm:space-y-3">
-                    {FEATURES.map((feature, index) => (
+                    {features.map((feature, index) => (
                         <li key={index} className="flex items-center gap-2 sm:gap-3">
                             <div className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
                                 <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-blue-600 dark:text-blue-400" />

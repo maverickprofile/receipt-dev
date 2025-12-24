@@ -24,16 +24,36 @@ export default function ContactPage() {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Simulate form submission
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
 
-        toast({
-            title: "Message sent!",
-            description: "We'll get back to you as soon as possible.",
-        });
-
-        setFormData({ name: "", email: "", message: "" });
-        setIsSubmitting(false);
+            if (response.ok) {
+                toast({
+                    title: "Message sent!",
+                    description: "We'll get back to you as soon as possible.",
+                });
+                setFormData({ name: "", email: "", message: "" });
+            } else {
+                const data = await response.json();
+                toast({
+                    title: "Error",
+                    description: data.error || "Failed to send message. Please try again.",
+                    variant: "destructive",
+                });
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to send message. Please try again.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (
@@ -185,7 +205,7 @@ export default function ContactPage() {
                         <div className="flex justify-center lg:justify-end">
                             <div className="relative w-full max-w-md lg:max-w-none">
                                 <Image
-                                    src="/assets/img/Generate-Receipt-ReceiptMaker-12-23-2025_10_30_PM.png"
+                                    src="/assets/img/Generate-Receipt-MakeReceipt-12-23-2025_10_30_PM.png"
                                     alt="Receipt Generator Interface"
                                     width={600}
                                     height={450}

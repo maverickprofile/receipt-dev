@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Terms & Conditions | ReceiptMaker",
-    description: "Read our Terms & Conditions to understand the rules and guidelines for using ReceiptMaker.",
+    title: "Terms & Conditions | MakeReceipt",
+    description: "Read our Terms & Conditions to understand the rules and guidelines for using MakeReceipt.",
 };
 
 export default function TermsAndConditionsPage() {
@@ -15,7 +15,7 @@ export default function TermsAndConditionsPage() {
                         Terms & Conditions
                     </h1>
                     <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                        Welcome to ReceiptMaker! By accessing and using our website and services, you
+                        Welcome to MakeReceipt! By accessing and using our website and services, you
                         agree to be bound by the following Terms & Conditions. If you do not agree with
                         these terms, please do not use our services.
                     </p>
@@ -29,7 +29,7 @@ export default function TermsAndConditionsPage() {
                             1. Acceptance of Terms
                         </h2>
                         <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                            By using ReceiptMaker, you acknowledge that you have read, understood, and agree
+                            By using MakeReceipt, you acknowledge that you have read, understood, and agree
                             to be bound by these Terms & Conditions, as well as our Privacy Policy.
                         </p>
                     </section>
@@ -37,10 +37,10 @@ export default function TermsAndConditionsPage() {
                     {/* Section 2 */}
                     <section className="mb-8 sm:mb-10">
                         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                            2. Purpose of ReceiptMaker
+                            2. Purpose of MakeReceipt
                         </h2>
                         <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4">
-                            ReceiptMaker is an online tool designed to help users generate digital receipts for
+                            MakeReceipt is an online tool designed to help users generate digital receipts for
                             personal and business record-keeping, replacing lost receipts, or creating mockups
                             for design and business presentations.
                         </p>
@@ -49,7 +49,7 @@ export default function TermsAndConditionsPage() {
                             Prohibited Uses
                         </h3>
                         <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-2 sm:mb-3">
-                            Users must not use ReceiptMaker for:
+                            Users must not use MakeReceipt for:
                         </p>
                         <ul className="list-disc pl-5 sm:pl-6 text-sm sm:text-base text-gray-600 dark:text-gray-400 space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
                             <li>Creating receipts for fraudulent refunds or chargebacks.</li>
@@ -69,14 +69,14 @@ export default function TermsAndConditionsPage() {
                             3. User-Generated Content & Intellectual Property
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 mb-4">
-                            ReceiptMaker does not create, design, or endorse any specific receipt templates. All
+                            MakeReceipt does not create, design, or endorse any specific receipt templates. All
                             receipts, including logos, business names, and other elements, are created and
                             customized by users.
                         </p>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-2 mb-4">
                             <li>Users are responsible for ensuring that they have the right to use any logos,
                                 trademarks, or brand elements they upload.</li>
-                            <li>ReceiptMaker does not claim ownership over any user-generated content.</li>
+                            <li>MakeReceipt does not claim ownership over any user-generated content.</li>
                             <li>We are not liable for any copyright infringement resulting from user-generated
                                 receipts.</li>
                         </ul>
@@ -92,7 +92,7 @@ export default function TermsAndConditionsPage() {
                             4. Storage & Use of Generated Receipts
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 mb-4">
-                            ReceiptMaker stores generated receipts for the sole purpose of providing receipt
+                            MakeReceipt stores generated receipts for the sole purpose of providing receipt
                             examples for other users. By using our service, you acknowledge and agree that:
                         </p>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-2 mb-4">
@@ -115,12 +115,12 @@ export default function TermsAndConditionsPage() {
                             5. User Responsibility
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 mb-3">
-                            By using ReceiptMaker, you agree that:
+                            By using MakeReceipt, you agree that:
                         </p>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-2">
                             <li>You are responsible for how you use the generated receipts.</li>
-                            <li>You will not engage in fraudulent or illegal activities using ReceiptMaker.</li>
-                            <li>ReceiptMaker is not liable for any misuse of receipts created using our tool.</li>
+                            <li>You will not engage in fraudulent or illegal activities using MakeReceipt.</li>
+                            <li>MakeReceipt is not liable for any misuse of receipts created using our tool.</li>
                         </ul>
                     </section>
 
@@ -130,7 +130,7 @@ export default function TermsAndConditionsPage() {
                             6. Disclaimer of Warranties
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 mb-4">
-                            ReceiptMaker is provided &quot;as is&quot; and &quot;as available,&quot; without any express or implied
+                            MakeReceipt is provided &quot;as is&quot; and &quot;as available,&quot; without any express or implied
                             warranties. We do not guarantee that:
                         </p>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-2 mb-4">
@@ -139,7 +139,7 @@ export default function TermsAndConditionsPage() {
                             <li>Our tool will be free of errors, bugs, or interruptions.</li>
                         </ul>
                         <p className="text-gray-600 dark:text-gray-400">
-                            ReceiptMaker disclaims all liability for any damages resulting from the use or inability
+                            MakeReceipt disclaims all liability for any damages resulting from the use or inability
                             to use our service.
                         </p>
                     </section>
@@ -150,17 +150,17 @@ export default function TermsAndConditionsPage() {
                             7. Limitation of Liability
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 mb-4">
-                            Under no circumstances shall ReceiptMaker, its owners, affiliates, employees, or
+                            Under no circumstances shall MakeReceipt, its owners, affiliates, employees, or
                             partners be liable for any direct, indirect, incidental, or consequential damages
                             arising from:
                         </p>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-2 mb-4">
-                            <li>The use or misuse of ReceiptMaker.</li>
+                            <li>The use or misuse of MakeReceipt.</li>
                             <li>Errors, inaccuracies, or losses resulting from generated receipts.</li>
                             <li>Unauthorized access to or alteration of your data.</li>
                         </ul>
                         <p className="text-gray-600 dark:text-gray-400">
-                            Your sole remedy for dissatisfaction with the service is to stop using ReceiptMaker.
+                            Your sole remedy for dissatisfaction with the service is to stop using MakeReceipt.
                         </p>
                     </section>
 
@@ -170,7 +170,7 @@ export default function TermsAndConditionsPage() {
                             8. Payment & Refund Policy
                         </h2>
                         <ul className="list-disc pl-6 text-gray-600 dark:text-gray-400 space-y-2">
-                            <li>Some features of ReceiptMaker are offered for free, while others require a
+                            <li>Some features of MakeReceipt are offered for free, while others require a
                                 premium subscription or one-time payment.</li>
                             <li>All sales are final, and we do not offer refunds unless required by law.</li>
                             <li>If you experience technical issues with a purchased feature, please contact
@@ -184,7 +184,7 @@ export default function TermsAndConditionsPage() {
                             9. Termination of Use
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
-                            We reserve the right to suspend or terminate access to ReceiptMaker at our
+                            We reserve the right to suspend or terminate access to MakeReceipt at our
                             discretion, without notice, if we believe a user has violated these Terms &
                             Conditions.
                         </p>
@@ -196,7 +196,7 @@ export default function TermsAndConditionsPage() {
                             10. Privacy & Data Policy
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
-                            ReceiptMaker stores generated receipts only for the purpose of providing examples
+                            MakeReceipt stores generated receipts only for the purpose of providing examples
                             to other users. However, we do not collect or associate personal user data with
                             stored receipts. For more details, please refer to our Privacy Policy.
                         </p>
@@ -209,7 +209,7 @@ export default function TermsAndConditionsPage() {
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
                             We may update these Terms & Conditions at any time. Continued use of
-                            ReceiptMaker after changes constitutes acceptance of the updated terms.
+                            MakeReceipt after changes constitutes acceptance of the updated terms.
                         </p>
                     </section>
 

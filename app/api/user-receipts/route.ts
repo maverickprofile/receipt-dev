@@ -76,33 +76,34 @@ export async function POST(request: NextRequest) {
         const client = await pool.connect();
 
         try {
-            // Check if receipt already exists for this user
+            // Check if receipt already exists for this user by template_id
+            // This allows each user to have their own copy of each template
             const existing = await client.query(
                 `SELECT id FROM saved_receipt_makereceipt
-                 WHERE id = $1 AND user_id = $2`,
-                [id, userId]
+                 WHERE template_id = $1 AND user_id = $2`,
+                [templateId || id, userId]
             );
 
             let result;
 
             if (existing.rows.length > 0) {
-                // Update existing receipt
+                // Update existing receipt for this user
                 result = await client.query(
                     `UPDATE saved_receipt_makereceipt
-                     SET name = $1, template_id = $2, receipt_data = $3, updated_at = NOW()
-                     WHERE id = $4 AND user_id = $5
+                     SET name = $1, receipt_data = $2, updated_at = NOW()
+                     WHERE template_id = $3 AND user_id = $4
                      RETURNING id, name, template_id, receipt_data, created_at, updated_at`,
-                    [name, templateId || null, JSON.stringify(receiptData), id, userId]
+                    [name, JSON.stringify(receiptData), templateId || id, userId]
                 );
             } else {
-                // Create new receipt
-                const receiptId = id || generateId("rcpt");
+                // Create new receipt with a unique ID per user
+                const receiptId = generateId("rcpt");
                 result = await client.query(
                     `INSERT INTO saved_receipt_makereceipt
                         (id, user_id, name, template_id, receipt_data)
                      VALUES ($1, $2, $3, $4, $5)
                      RETURNING id, name, template_id, receipt_data, created_at, updated_at`,
-                    [receiptId, userId, name, templateId || null, JSON.stringify(receiptData)]
+                    [receiptId, userId, name, templateId || id, JSON.stringify(receiptData)]
                 );
             }
 

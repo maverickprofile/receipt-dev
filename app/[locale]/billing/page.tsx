@@ -125,7 +125,7 @@ export default function BillingPage() {
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
                             <FileText className="w-6 h-6 text-blue-500" />
-                            <span className="text-xl font-bold">ReceiptMaker</span>
+                            <span className="text-xl font-bold">MakeReceipt</span>
                         </div>
                         <p className="text-slate-400 max-w-md">
                             Make receipts with custom information from selected templates in seconds!
@@ -158,7 +158,7 @@ export default function BillingPage() {
 
                     <div className="border-t border-slate-700 pt-8">
                         <p className="text-slate-500 text-sm">
-                            © {new Date().getFullYear()} ReceiptMaker. All rights reserved.
+                            © {new Date().getFullYear()} MakeReceipt. All rights reserved.
                         </p>
                     </div>
                 </div>

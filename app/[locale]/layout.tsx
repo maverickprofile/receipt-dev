@@ -1,9 +1,12 @@
 // Components
 import { BaseFooter, BaseNavbar } from "@/app/components";
+import PaymentVerifier from "@/app/components/PaymentVerifier";
 // ShadCn
 import { Toaster } from "@/components/ui/toaster";
 // Contexts
 import Providers from "@/contexts/Providers";
+// React
+import { Suspense } from "react";
 // Fonts
 import {
     alexBrush,
@@ -30,9 +33,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
-    title: "ReceiptMaker | Free Receipt Generator",
+    title: "MakeReceipt | Free Receipt Generator",
     description:
-        "Create receipts effortlessly with ReceiptMaker, the free receipt generator. Try it now!",
+        "Create receipts effortlessly with MakeReceipt, the free receipt generator. Try it now!",
     icons: [{ rel: "icon", url: Favicon.src }],
     keywords: ROOTKEYWORDS,
     robots: {
@@ -106,6 +109,11 @@ export default async function LocaleLayout(props: {
 
                         {/* Toast component */}
                         <Toaster />
+
+                        {/* Payment verification on return from Dodo */}
+                        <Suspense fallback={null}>
+                            <PaymentVerifier />
+                        </Suspense>
 
                         {/* Vercel analytics */}
                         <Analytics />

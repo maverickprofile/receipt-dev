@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
     const cleanName = template.name.replace(/\s*Receipt\s*/gi, '').trim();
 
     return {
-        title: `Free ${cleanName} Receipt Generator | ReceiptMaker`,
+        title: `Free ${cleanName} Receipt Generator | MakeReceipt`,
         description: `Need a ${cleanName} receipt? Use our free tool to generate a detailed purchase record. Add store info, items bought, prices, tax, and payment—perfect for returns, warranties, or expense tracking.`,
     };
 }
@@ -92,12 +92,12 @@ export default async function TemplateLandingPage({ params }: TemplatePageProps)
 
     const FAQ_ITEMS = [
         {
-            question: "What is ReceiptMaker?",
-            answer: "ReceiptMaker is a free online tool that allows you to create professional-looking receipts for various purposes. It offers customizable templates from popular stores and businesses."
+            question: "What is MakeReceipt?",
+            answer: "MakeReceipt is a free online tool that allows you to create professional-looking receipts for various purposes. It offers customizable templates from popular stores and businesses."
         },
         {
-            question: "Is using ReceiptMaker legal?",
-            answer: "ReceiptMaker is designed for legitimate purposes such as expense tracking, record keeping, and business documentation. Users are responsible for ensuring their use complies with applicable laws and regulations."
+            question: "Is using MakeReceipt legal?",
+            answer: "MakeReceipt is designed for legitimate purposes such as expense tracking, record keeping, and business documentation. Users are responsible for ensuring their use complies with applicable laws and regulations."
         },
         {
             question: "Why would someone need a receipt generator?",
@@ -129,18 +129,18 @@ export default async function TemplateLandingPage({ params }: TemplatePageProps)
         },
         {
             question: "Do I need to download any software?",
-            answer: "No! ReceiptMaker works entirely in your browser. No downloads, installations, or sign-ups required."
+            answer: "No! MakeReceipt works entirely in your browser. No downloads, installations, or sign-ups required."
         },
         {
             question: "Is there a watermark on the receipts?",
             answer: "Free receipts may include a small watermark. Premium users get watermark-free exports."
         },
         {
-            question: "Is ReceiptMaker mobile-friendly?",
+            question: "Is MakeReceipt mobile-friendly?",
             answer: "Yes, our tool is fully responsive and works great on smartphones, tablets, and desktop computers."
         },
         {
-            question: "Is ReceiptMaker free to use?",
+            question: "Is MakeReceipt free to use?",
             answer: "Yes! Basic features are completely free. We also offer premium plans with additional templates and features."
         },
     ];
@@ -360,7 +360,7 @@ export default async function TemplateLandingPage({ params }: TemplatePageProps)
                         <div className="flex justify-center lg:justify-end">
                             <div className="relative w-full max-w-md lg:max-w-none">
                                 <Image
-                                    src="/assets/img/Generate-Receipt-ReceiptMaker-12-23-2025_10_30_PM.png"
+                                    src="/assets/img/Generate-Receipt-MakeReceipt-12-23-2025_10_30_PM.png"
                                     alt="Receipt Generator Interface"
                                     width={600}
                                     height={450}

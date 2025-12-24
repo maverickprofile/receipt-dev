@@ -20,6 +20,7 @@ import {
   LOCAL_STORAGE_RECEIPT_DRAFT_KEY,
   LOCAL_STORAGE_SAVED_RECEIPTS_KEY,
   RECEIPT_TEMPLATES_PATH,
+  CREDITS_PER_DOWNLOAD,
 } from "@/lib/variables";
 
 // Types & Schemas
@@ -506,6 +507,33 @@ export const ReceiptContextProvider = ({
 
     setReceiptPdfLoading(true);
     try {
+      // Check and deduct credits before generating PDF
+      const creditResponse = await fetch('/api/credits/deduct', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          downloadType: 'pdf',
+          referenceId: receipt.id,
+        }),
+      });
+
+      const creditResult = await creditResponse.json();
+
+      if (!creditResponse.ok) {
+        setReceiptPdfLoading(false);
+        // Insufficient credits - dispatch event to show upgrade modal
+        window.dispatchEvent(new CustomEvent('credits-exhausted', {
+          detail: {
+            currentBalance: creditResult.currentBalance,
+            required: creditResult.required,
+          }
+        }));
+        return;
+      }
+
+      // Credits deducted successfully - notify navbar to refresh
+      window.dispatchEvent(new CustomEvent('credits-changed'));
+
       // 1. Generate Image from DOM
       // Dynamically import toPng to avoid SSR issues
       const { toPng } = await import("html-to-image");
@@ -699,13 +727,39 @@ export const ReceiptContextProvider = ({
 
     if (!receipt) return;
     try {
+      // Check and deduct credits before downloading image
+      const creditResponse = await fetch('/api/credits/deduct', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          downloadType: 'image',
+          referenceId: receipt.id,
+        }),
+      });
+
+      const creditResult = await creditResponse.json();
+
+      if (!creditResponse.ok) {
+        // Insufficient credits - dispatch event to show upgrade modal
+        window.dispatchEvent(new CustomEvent('credits-exhausted', {
+          detail: {
+            currentBalance: creditResult.currentBalance,
+            required: creditResult.required,
+          }
+        }));
+        return;
+      }
+
+      // Credits deducted successfully - notify navbar to refresh
+      window.dispatchEvent(new CustomEvent('credits-changed'));
+
       const { toPng } = await import("html-to-image");
       const node = document.getElementById("receipt-preview-node");
       if (!node) {
         throw new Error("Receipt preview node not found");
       }
 
-      // Generate PNG data URL
+      // Generate PNG data URL with high quality
       const dataUrl = await toPng(node, {
         quality: 1.0,
         pixelRatio: 3,

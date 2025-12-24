@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: GeneratePageProps): Promise<M
     const cleanName = template.name.replace(/\s*Receipt\s*/gi, '').trim();
 
     return {
-        title: `Generate ${cleanName} Receipt | ReceiptMaker`,
+        title: `Generate ${cleanName} Receipt | MakeReceipt`,
         description: `Create a custom ${cleanName} receipt with our free receipt generator. Add items, prices, taxes, and more.`,
     };
 }

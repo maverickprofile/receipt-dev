@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { LogOut, Download, BookmarkCheck, Loader2 } from "lucide-react";
+import { LogOut, Download, BookmarkCheck, Loader2, Coins, TrendingUp, TrendingDown, Sparkles } from "lucide-react";
 import { useSession, signOut } from "@/lib/auth-client";
 import SavedReceiptCard from "@/app/components/profile/SavedReceiptCard";
 import DownloadHistoryItem from "@/app/components/profile/DownloadHistoryItem";
+import { useCredits } from "@/hooks/useCredits";
+import { CREDITS_PER_DOWNLOAD } from "@/lib/variables";
 
 interface SavedReceiptRecord {
     id: string;
@@ -33,6 +35,7 @@ export default function ProfilePage() {
     const params = useParams();
     const locale = (params.locale as string) || "en";
     const { data: session, isPending } = useSession();
+    const { credits, isLoading: creditsLoading } = useCredits();
 
     // Data state
     const [savedReceipts, setSavedReceipts] = useState<SavedReceiptRecord[]>([]);
@@ -127,6 +130,83 @@ export default function ProfilePage() {
                     >
                         Billing & Pricing
                     </Link>
+                </div>
+
+                {/* Credits Section */}
+                <div className="mt-6 sm:mt-8">
+                    {creditsLoading ? (
+                        <div className="bg-slate-900 dark:bg-slate-800 rounded-xl p-6 border border-slate-800 dark:border-slate-700">
+                            <div className="flex items-center justify-center">
+                                <Loader2 className="w-5 h-5 animate-spin text-amber-500" />
+                            </div>
+                        </div>
+                    ) : credits ? (
+                        <div className="bg-slate-900 dark:bg-slate-800 rounded-xl p-5 sm:p-6 border border-slate-800 dark:border-slate-700">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                {/* Balance */}
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center">
+                                        <Coins className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs sm:text-sm text-green-400 font-medium">
+                                            Credit Balance
+                                        </p>
+                                        <p className="text-2xl sm:text-3xl font-bold text-white">
+                                            {credits.balance}
+                                            <span className="text-sm sm:text-base font-normal text-slate-400 ml-1.5">
+                                                credits
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Stats & Actions */}
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                                    {/* Stats */}
+                                    <div className="flex items-center gap-4 sm:gap-6 text-sm">
+                                        <div className="flex items-center gap-1.5 text-green-400">
+                                            <TrendingUp className="w-4 h-4" />
+                                            <span>{credits.totalEarned} earned</span>
+                                        </div>
+                                        <div className="flex items-center gap-1.5 text-red-400">
+                                            <TrendingDown className="w-4 h-4" />
+                                            <span>{credits.totalSpent} spent</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Get More Credits Button */}
+                                    <Link href={`/${locale}/pricing`}>
+                                        <Button
+                                            className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold shadow-md"
+                                        >
+                                            <Sparkles className="w-4 h-4 mr-1.5" />
+                                            Get More Credits
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
+
+                            {/* Subscription Status */}
+                            {credits.hasActiveSubscription && credits.subscription && (
+                                <div className="mt-4 pt-4 border-t border-slate-700">
+                                    <p className="text-sm text-slate-400">
+                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full text-xs font-medium">
+                                            Active Subscription
+                                        </span>
+                                        <span className="ml-2">
+                                            {credits.subscription.planType} - {credits.subscription.creditsPerPeriod} credits/period
+                                        </span>
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Info */}
+                            <p className="mt-4 text-sm text-slate-500">
+                                Each download costs {CREDITS_PER_DOWNLOAD} credits. Subscribers get unlimited downloads.
+                            </p>
+                        </div>
+                    ) : null}
                 </div>
             </div>
 
