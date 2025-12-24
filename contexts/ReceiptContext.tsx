@@ -496,6 +496,12 @@ export const ReceiptContextProvider = ({
   // =============================================================================
 
   const generatePdf = useCallback(async () => {
+    // Require authentication to generate PDF
+    if (!isAuthenticated) {
+      window.dispatchEvent(new CustomEvent('auth-required-for-download'));
+      return;
+    }
+
     if (!receipt) return;
 
     setReceiptPdfLoading(true);
@@ -586,7 +592,7 @@ export const ReceiptContextProvider = ({
     } finally {
       setReceiptPdfLoading(false);
     }
-  }, [receipt, pdfGenerationSuccess]);
+  }, [receipt, pdfGenerationSuccess, isAuthenticated]);
 
   // Helper to track downloads for authenticated users
   const trackDownload = useCallback(async (downloadType: 'pdf' | 'image') => {
@@ -609,6 +615,12 @@ export const ReceiptContextProvider = ({
   }, [isAuthenticated, receipt]);
 
   const downloadPdf = useCallback(async () => {
+    // Require authentication to download
+    if (!isAuthenticated) {
+      window.dispatchEvent(new CustomEvent('auth-required-for-download'));
+      return;
+    }
+
     if (receiptPdf instanceof Blob && receiptPdf.size > 0) {
       const url = window.URL.createObjectURL(receiptPdf);
       const a = document.createElement("a");
@@ -626,9 +638,15 @@ export const ReceiptContextProvider = ({
       // Track download for authenticated users
       await trackDownload('pdf');
     }
-  }, [receiptPdf, receipt, trackDownload]);
+  }, [receiptPdf, receipt, trackDownload, isAuthenticated]);
 
   const printPdf = useCallback(() => {
+    // Require authentication to print
+    if (!isAuthenticated) {
+      window.dispatchEvent(new CustomEvent('auth-required-for-download'));
+      return;
+    }
+
     if (receiptPdf) {
       const pdfUrl = URL.createObjectURL(receiptPdf);
 
@@ -656,17 +674,29 @@ export const ReceiptContextProvider = ({
         }
       }
     }
-  }, [receiptPdf]);
+  }, [receiptPdf, isAuthenticated]);
 
   const previewPdfInTab = useCallback(() => {
+    // Require authentication to preview/open in new tab
+    if (!isAuthenticated) {
+      window.dispatchEvent(new CustomEvent('auth-required-for-download'));
+      return;
+    }
+
     if (receiptPdf) {
       const url = window.URL.createObjectURL(receiptPdf);
       // For images, browsers handle it fine
       window.open(url, "_blank");
     }
-  }, [receiptPdf]);
+  }, [receiptPdf, isAuthenticated]);
 
   const downloadImage = useCallback(async () => {
+    // Require authentication to download
+    if (!isAuthenticated) {
+      window.dispatchEvent(new CustomEvent('auth-required-for-download'));
+      return;
+    }
+
     if (!receipt) return;
     try {
       const { toPng } = await import("html-to-image");
@@ -694,7 +724,7 @@ export const ReceiptContextProvider = ({
     } catch (err) {
       console.error("Error downloading image:", err);
     }
-  }, [receipt, trackDownload]);
+  }, [receipt, trackDownload, isAuthenticated]);
 
   const removeFinalPdf = useCallback(() => {
     setReceiptPdf(new Blob());

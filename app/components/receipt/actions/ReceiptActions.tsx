@@ -12,9 +12,11 @@ import {
   Plus,
   ChevronUp,
   FileJson,
-  FileImage, // Added
+  FileImage,
+  LogIn,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 // Components
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -25,6 +27,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useReceiptContext } from "@/contexts/ReceiptContext";
 
 export default function ReceiptActions() {
@@ -45,8 +57,35 @@ export default function ReceiptActions() {
     downloadImage,
   } = useReceiptContext();
 
-  const [acceptedTerms, setAcceptedTerms] = useState(true); // Default to true or false? ReceiptFaker defaults true often, but safer false. Let's do true for convenience or false for strictness? Screenshot shows checked. I'll default false to force interaction or follow screenshot. Screenshot has it CHECKED. I'll default to true.
+  const router = useRouter();
+  const params = useParams();
+  const locale = params?.locale || 'en';
+
+  const [acceptedTerms, setAcceptedTerms] = useState(true);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Listen for auth-required event from ReceiptContext
+  useEffect(() => {
+    const handleAuthRequired = () => {
+      setShowAuthDialog(true);
+    };
+
+    window.addEventListener('auth-required-for-download', handleAuthRequired);
+    return () => {
+      window.removeEventListener('auth-required-for-download', handleAuthRequired);
+    };
+  }, []);
+
+  const handleSignIn = () => {
+    setShowAuthDialog(false);
+    router.push(`/${locale}/sign-in`);
+  };
+
+  const handleSignUp = () => {
+    setShowAuthDialog(false);
+    router.push(`/${locale}/sign-up`);
+  };
 
   if (!receipt) return null;
   const { settings } = receipt;
@@ -192,6 +231,30 @@ export default function ReceiptActions() {
         onChange={handleFileChange}
         className="hidden"
       />
+
+      {/* Auth Required Dialog */}
+      <AlertDialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
+        <AlertDialogContent className="max-w-md">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <LogIn className="h-5 w-5" />
+              Sign In Required
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-left">
+              To download receipts, please sign in or create a free account. This helps us provide you with a better experience and save your receipts.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+            <AlertDialogCancel className="sm:w-auto">Cancel</AlertDialogCancel>
+            <Button variant="outline" onClick={handleSignUp} className="sm:w-auto">
+              Create Account
+            </Button>
+            <AlertDialogAction onClick={handleSignIn} className="bg-blue-600 hover:bg-blue-700 sm:w-auto">
+              Sign In
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
